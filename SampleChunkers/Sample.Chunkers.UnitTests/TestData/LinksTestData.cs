@@ -30,11 +30,11 @@ internal class LinksTestData
             Index = 6,
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
-            RawContent = "[[RELATEDCHUNK]Image-Link-15[/RELATEDCHUNK]\r\n                                                    Follow](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
+            RawContent = "[[RELATEDCHUNK]Image-Link-14[/RELATEDCHUNK]\r\n                                                    Follow](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
             Data = new Dictionary<string, object>
             {
                 ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
-                ["alterText"] = "[RELATEDCHUNK]Image-Link-15[/RELATEDCHUNK]\r\n                                                    Follow",
+                ["alterText"] = "[RELATEDCHUNK]Image-Link-14[/RELATEDCHUNK]\r\n                                                    Follow",
             },
         },
         new ChunkModel
@@ -222,11 +222,11 @@ internal class LinksTestData
             Index = 22,
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
-            RawContent = "[[RELATEDCHUNK]Image-Link-15[/RELATEDCHUNK]](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
+            RawContent = "[[RELATEDCHUNK]Image-Link-14[/RELATEDCHUNK]](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
             Data = new Dictionary<string, object>
             {
                 ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
-                ["alterText"] = "[RELATEDCHUNK]Image-Link-15[/RELATEDCHUNK]",
+                ["alterText"] = "[RELATEDCHUNK]Image-Link-14[/RELATEDCHUNK]",
             },
         },
         new ChunkModel
@@ -263,11 +263,11 @@ internal class LinksTestData
             Index = 25,
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
-            RawContent = "[[RELATEDCHUNK]Image-Link-84[/RELATEDCHUNK]\r\n                                                    Follow](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
+            RawContent = "[[RELATEDCHUNK]Image-Link-82[/RELATEDCHUNK]\r\n                                                    Follow](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
             Data = new Dictionary<string, object>
             {
                 ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
-                ["alterText"] = "[RELATEDCHUNK]Image-Link-84[/RELATEDCHUNK]\r\n                                                    Follow",
+                ["alterText"] = "[RELATEDCHUNK]Image-Link-82[/RELATEDCHUNK]\r\n                                                    Follow",
             },
         },
         new ChunkModel
@@ -383,11 +383,11 @@ internal class LinksTestData
             Index = 35,
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
-            RawContent = "[[RELATEDCHUNK]Image-Link-84[/RELATEDCHUNK]](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
+            RawContent = "[[RELATEDCHUNK]Image-Link-82[/RELATEDCHUNK]](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
             Data = new Dictionary<string, object>
             {
                 ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
-                ["alterText"] = "[RELATEDCHUNK]Image-Link-84[/RELATEDCHUNK]",
+                ["alterText"] = "[RELATEDCHUNK]Image-Link-82[/RELATEDCHUNK]",
             },
         },
         new ChunkModel

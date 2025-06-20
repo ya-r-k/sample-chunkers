@@ -62,14 +62,30 @@ public static class ComplexDataChunkerExtensions
         return result;
     }
 
-    public static Dictionary<ChunkType, List<ChunkModel>> ExtractSemanticChunksDeeply(this string text, int chunkWordsCount, SemanticsType semanticsType, double overlapPercentage = 0.0, bool withTables = true, bool withCodeBlocks = true, bool withImages = true, bool withLinks = true, int lastUsedIndex = 0)
+    public static Dictionary<ChunkType, List<ChunkModel>> ExtractSemanticChunksDeeply(this string text,
+        int chunkWordsCount, 
+        SemanticsType semanticsType, 
+        double overlapPercentage = 0.0, 
+        bool withTables = true, 
+        bool withCodeBlocks = true, 
+        bool withImages = true, 
+        bool withLinks = true, 
+        int lastUsedIndex = 0)
     {
         var dataChunks = text.RetrieveChunksFromText(withTables, withCodeBlocks, withImages, withLinks, lastUsedIndex);
         var processedText = text.ReplaceChunksWithLabels(dataChunks)
                                 .PreprocessNaturalTextForChunking();
 
-        var index = dataChunks.SelectMany(x => x.Value).Select(x => x.Index).Max();
-        dataChunks.Add(ChunkType.Text, processedText.ExtractSemanticChunks(index, chunkWordsCount, semanticsType, overlapPercentage));
+        var index = 0;
+        foreach (var pair in dataChunks)
+        {
+            foreach (var chunk in pair.Value)
+            {
+                index = Math.Max(index, chunk.Index);
+            }
+        }
+
+        dataChunks[ChunkType.Text] = processedText.ExtractSemanticChunks(index, chunkWordsCount, semanticsType, overlapPercentage);
 
         return dataChunks;
     }
@@ -124,7 +140,7 @@ public static class ComplexDataChunkerExtensions
 
     public static string ReplaceChunksWithLabels(this string text, Dictionary<ChunkType, List<ChunkModel>> chunks)
     {
-        if (chunks.Keys.Count == 0)
+        if (chunks.Count == 0)
         {
             return text;
         }
@@ -133,25 +149,27 @@ public static class ComplexDataChunkerExtensions
 
         foreach (var type in chunkTypes)
         {
-            if (chunks.TryGetValue(type, out var currentChunks) &&
-                currentChunks.Count > 0 &&
-                labelsTemplatesChunkTypesPairs.TryGetValue(type, out var labelTemplate))
+            if (!chunks.TryGetValue(type, out var currentChunks) ||
+                currentChunks.Count == 0 ||
+                !labelsTemplatesChunkTypesPairs.TryGetValue(type, out var labelTemplate))
+                continue;
+
+            if (type == ChunkType.ExternalLink)
             {
-                if (type == ChunkType.ExternalLink)
+                foreach (var chunk in currentChunks)
                 {
-                    var linksData = currentChunks.Where(x => x.Data.Keys.Count > 0).Select(x => x.Data).ToArray();
-                    
-                    for (var i = 0; i < linksData.Length; i++)
+                    if (chunk.Data.TryGetValue("alterText", out var altText))
                     {
-                        processedText.Replace(currentChunks[i].RawContent, linksData[i]["alterText"] + string.Format(labelTemplate, currentChunks[i].Index));
+                        var replacement = altText + string.Format(labelTemplate, chunk.Index);
+                        processedText.Replace(chunk.RawContent, replacement);
                     }
                 }
-                else
+            }
+            else
+            {
+                foreach (var chunk in currentChunks)
                 {
-                    foreach (var chunk in currentChunks)
-                    {
-                        processedText.Replace(chunk.RawContent, string.Format(labelTemplate, chunk.Index));
-                    }
+                    processedText.Replace(chunk.RawContent, string.Format(labelTemplate, chunk.Index));
                 }
             }
         }

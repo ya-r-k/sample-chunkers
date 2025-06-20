@@ -241,7 +241,6 @@ This is about what elite developers do mentally and emotionally — and how to i
             "In this article, you'll learn how to turn your programming into a craft, build mental rituals, and transform debugging, learning, and building into something far more powerful.\n\nThere are thousands of articles on:\n\n- Best IDEs\n- Fastest frameworks\n",
             "There are thousands of articles on:\n\n- Best IDEs\n- Fastest frameworks\n- Which language to learn in 2025\n\nThis isn't that.\n\n",
             "This isn't that.\n\nThis is about what elite developers do mentally and emotionally - and how to install those behaviors into your workflow, no matter what tools you use.",
-            "This is about what elite developers do mentally and emotionally - and how to install those behaviors into your workflow, no matter what tools you use.",
         };
 
         // Act

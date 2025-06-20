@@ -11,4 +11,5 @@ public enum RelationshipType
     HasNextTopic = 6,
     HasFirstSubtopic = 7,
     HasNextChunk = 8,
+    LoadedFrom = 9,
 }

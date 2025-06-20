@@ -113,20 +113,6 @@ internal static class TextChunkTestData
             },
             RawContent = "While recursion simplifies complex problems and code readability, excessive recursive calls can lead to stack overflow errors, particularly in deeply nested structures such as trees, making iterative approaches using explicit stacks preferable in certain cases.\n\n* * *\n\n**References:**\n\nArslan, Ş. (2023, February 25). *A Comprehensive tree traversal guide in Javascript - General and binary tree traversals.* Shinar Arslan Blog. https://www.sahinarslan.tech/posts/a-comprehensive-tree-traversal-guide-in-javascript-general-and-binary-tree-traversals\n\nGeeksforGeeks (2024, August 18). *Introduction to recursion*. GeeksforGeeks. https://www.geeksforgeeks.org/introduction-to-recursion-2/Links to an external site\n\nGoodrich T, M., Tamassia, R., & Goldwasser H. M. (2023, June). Chapter 5: Algorithms recursion. *Data structures and algorithms*. zyBook ISBN: 979–8–203–40813–6.\n\n* * *\n\nOriginally published at Alex.omegapy - Mediumon September 22, 2024.",
         },
-        new ChunkModel
-        {
-            Index = 14,
-            ChunkType = ChunkType.Text,
-            RelatedChunksIndexes = new()
-            {
-                [ChunkType.ExternalLink] = [LinksTestData.DevToRealWorldArticleLinks[0].Index],
-            },
-            Data = new Dictionary<string, object>
-            {
-                ["content"] = "* * *\n\nOriginally published at Alex.omegapy - Mediumon September 22, 2024.",
-            },
-            RawContent = "* * *\n\nOriginally published at Alex.omegapy - Mediumon September 22, 2024.",
-        },
     ];
 
     // https://www.geeksforgeeks.org/data-modeling-a-comprehensive-guide-for-analysts/
@@ -450,34 +436,6 @@ internal static class TextChunkTestData
             },
             RawContent = "- Creates organized databases by defining entities, properties, and relationships.\n- Enhances data quality andintegrityby reducing anomalies and redundancy throughnormalization.- Minimizes errors in database and application development.\n- Ensures consistency in documentation and system designs across the organization.\n- Improves database and application performance.\n- Facilitates quick correlation of data across the company.\n- Strengthens communication between business intelligence and development teams.\n\nIn conclusion,Data modelling is an essential component ofdata analysisthat offers a methodical way to arrange and comprehend intricate facts. Analysts may create reliable models that improve insights and decision-making by adhering to the process's specified phases.\n\nComment\n\nMore info\n\nAdvertise with usNext ArticleWhat are the Advantages and Disadvantages of Random Forest?Rrahulpawar_7Follow\n\n5\n\nImprove\n\nArticle Tags :\n\n- Data Analysis- AI-ML-DS",
         },
-        new ChunkModel
-        {
-            Index = 48,
-            ChunkType = ChunkType.Text,
-            RelatedChunksIndexes = new()
-            {
-                [ChunkType.ImageLink] =
-                [
-                    ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[0].Index,
-                ],
-                [ChunkType.ExternalLink] =
-                [
-                    LinksTestData.GeeksForGeeksAboutDataModelingLinks[11].Index,
-                    LinksTestData.GeeksForGeeksAboutDataModelingLinks[12].Index,
-                    LinksTestData.GeeksForGeeksAboutDataModelingLinks[13].Index,
-                    LinksTestData.GeeksForGeeksAboutDataModelingLinks[14].Index,
-                    LinksTestData.GeeksForGeeksAboutDataModelingLinks[15].Index,
-                    LinksTestData.GeeksForGeeksAboutDataModelingLinks[16].Index,
-                    LinksTestData.GeeksForGeeksAboutDataModelingLinks[17].Index,
-                    LinksTestData.GeeksForGeeksAboutDataModelingLinks[18].Index,
-                ],
-            },
-            Data = new Dictionary<string, object>
-            {
-                ["content"] = "Comment\n\nMore info\n\nAdvertise with usNext ArticleWhat are the Advantages and Disadvantages of Random Forest?Rrahulpawar_7Follow\n\n5\n\nImprove\n\nArticle Tags :\n\n- Data Analysis- AI-ML-DS",
-            },
-            RawContent = "Comment\n\nMore info\n\nAdvertise with usNext ArticleWhat are the Advantages and Disadvantages of Random Forest?Rrahulpawar_7Follow\n\n5\n\nImprove\n\nArticle Tags :\n\n- Data Analysis- AI-ML-DS",
-        },
     ];
 
     // https://www.geeksforgeeks.org/basic-operators-in-relational-algebra-2/
@@ -680,61 +638,6 @@ internal static class TextChunkTestData
                 ["content"] = "Syntax:\n\nFind the person who is a student but not an employee, we can use minus operator like:\n\n**RESULT:**\n\nRename operatoris used to giving another name to a relation. Syntax:\n\nTo rename STUDENT relation to STUDENT1, we can use rename operator like:\n\nIf you want to create a relation STUDENT\\_NAMES with ROLL\\_NO and NAME from STUDENT, it can be done using rename operator as:\n\n- Intersection (∩)\n- Division (÷)\n- Join Operations (⋈)\n- Natural Join- Theta Join\n- Equi Join\n\nThese operators provide more functionality for complex queries in relational databases.\n\nRelational Algebraprovides a fundamental toolkit for querying and manipulating relations in a database. It offers a set of operators that allow users to perform basic operations like selection, projection, union, and more. Understanding these operators is essential for working with relational databases and forms the basis for more advanced SQLoperations.\n\nComment\n\nMore info\n\nAdvertise with usNext ArticleExtended Operators in Relational AlgebraGeeksforGeeks\n\n75\n\nImprove\n\nArticle Tags :\n\n- DBMS- DBMS-Relational Algebra",
             },
             RawContent = "Syntax:\n\nFind the person who is a student but not an employee, we can use minus operator like:\n\n**RESULT:**\n\nRename operatoris used to giving another name to a relation. Syntax:\n\nTo rename STUDENT relation to STUDENT1, we can use rename operator like:\n\nIf you want to create a relation STUDENT\\_NAMES with ROLL\\_NO and NAME from STUDENT, it can be done using rename operator as:\n\n- Intersection (∩)\n- Division (÷)\n- Join Operations (⋈)\n- Natural Join- Theta Join\n- Equi Join\n\nThese operators provide more functionality for complex queries in relational databases.\n\nRelational Algebraprovides a fundamental toolkit for querying and manipulating relations in a database. It offers a set of operators that allow users to perform basic operations like selection, projection, union, and more. Understanding these operators is essential for working with relational databases and forms the basis for more advanced SQLoperations.\n\nComment\n\nMore info\n\nAdvertise with usNext ArticleExtended Operators in Relational AlgebraGeeksforGeeks\n\n75\n\nImprove\n\nArticle Tags :\n\n- DBMS- DBMS-Relational Algebra",
-        },
-        new ChunkModel
-        {
-            Index = 52,
-            ChunkType = ChunkType.Text,
-            RelatedChunksIndexes = new()
-            {
-                [ChunkType.ImageLink] =
-                [
-                    ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[0].Index,
-                    ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[1].Index,
-                ],
-                [ChunkType.ExternalLink] =
-                [
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[6].Index,
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[7].Index,
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[8].Index,
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[9].Index,
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[10].Index,
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[11].Index,
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[12].Index,
-                ],
-            },
-            Data = new Dictionary<string, object>
-            {
-                ["content"] = "It offers a set of operators that allow users to perform basic operations like selection, projection, union, and more. Understanding these operators is essential for working with relational databases and forms the basis for more advanced SQLoperations.\n\nComment\n\nMore info\n\nAdvertise with usNext ArticleExtended Operators in Relational AlgebraGeeksforGeeks\n\n75\n\nImprove\n\nArticle Tags :\n\n- DBMS- DBMS-Relational Algebra",
-            },
-            RawContent = "It offers a set of operators that allow users to perform basic operations like selection, projection, union, and more. Understanding these operators is essential for working with relational databases and forms the basis for more advanced SQLoperations.\n\nComment\n\nMore info\n\nAdvertise with usNext ArticleExtended Operators in Relational AlgebraGeeksforGeeks\n\n75\n\nImprove\n\nArticle Tags :\n\n- DBMS- DBMS-Relational Algebra",
-        },
-        new ChunkModel
-        {
-            Index = 53,
-            ChunkType = ChunkType.Text,
-            RelatedChunksIndexes = new()
-            {
-                [ChunkType.ImageLink] =
-                [
-                    ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[0].Index,
-                    ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[1].Index,
-                ],
-                [ChunkType.ExternalLink] =
-                [
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[7].Index,
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[8].Index,
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[9].Index,
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[10].Index,
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[11].Index,
-                    LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[12].Index,
-                ],
-            },
-            Data = new Dictionary<string, object>
-            {
-                ["content"] = "Comment\n\nMore info\n\nAdvertise with usNext ArticleExtended Operators in Relational AlgebraGeeksforGeeks\n\n75\n\nImprove\n\nArticle Tags :\n\n- DBMS- DBMS-Relational Algebra",
-            },
-            RawContent = "Comment\n\nMore info\n\nAdvertise with usNext ArticleExtended Operators in Relational AlgebraGeeksforGeeks\n\n75\n\nImprove\n\nArticle Tags :\n\n- DBMS- DBMS-Relational Algebra",
         },
     ];
 }

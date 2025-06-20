@@ -7,66 +7,68 @@ internal static class RelationsTestData
 {
     internal static readonly List<RelationshipModel> DevToRealWorldArticleChunksRelations =
     [
+        // text chunks sequence
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[0].Index,
             SecondChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[1].Index,
             RelationshipType = RelationshipType.HasNextChunk,
-        },
+        }, // 6 - 7
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[1].Index,
             SecondChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[2].Index,
             RelationshipType = RelationshipType.HasNextChunk,
-        },
+        }, // 7 - 8
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[2].Index,
             SecondChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[3].Index,
             RelationshipType = RelationshipType.HasNextChunk,
-        },
+        }, // 8 - 9
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[3].Index,
             SecondChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[4].Index,
             RelationshipType = RelationshipType.HasNextChunk,
-        },
+        }, // 9 - 10
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[4].Index,
             SecondChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[5].Index,
             RelationshipType = RelationshipType.HasNextChunk,
-        },
+        }, // 10 - 11
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[5].Index,
             SecondChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[6].Index,
             RelationshipType = RelationshipType.HasNextChunk,
-        },
+        }, // 11 - 12
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[6].Index,
             SecondChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[7].Index,
             RelationshipType = RelationshipType.HasNextChunk,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[7].Index,
-            SecondChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[8].Index,
-            RelationshipType = RelationshipType.HasNextChunk,
-        },
+        }, // 12 - 13
+        // text chunk with index = 6 (1-th)
+        // text chunk with index = 7 (2-th)
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[1].Index,
             SecondChunkIndex = CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[0].Index,
             RelationshipType = RelationshipType.RelatedCodeBlock,
         },
+        // text chunk with index = 8 (3-th)
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[2].Index,
             SecondChunkIndex = CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[0].Index,
             RelationshipType = RelationshipType.RelatedCodeBlock,
         },
+        // text chunk with index = 9 (4-th)
+        // text chunk with index = 10 (5-th)
+        // text chunk with index = 11 (6-th)
+        // text chunk with index = 12 (7-th)
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[6].Index,
@@ -85,15 +87,10 @@ internal static class RelationsTestData
             SecondChunkIndex = CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[3].Index,
             RelationshipType = RelationshipType.RelatedCodeBlock,
         },
+        // text chunk with index = 13 (8-th)
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[7].Index,
-            SecondChunkIndex = LinksTestData.DevToRealWorldArticleLinks[0].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[8].Index,
             SecondChunkIndex = LinksTestData.DevToRealWorldArticleLinks[0].Index,
             RelationshipType = RelationshipType.AdditionalLink,
         },
@@ -186,12 +183,6 @@ internal static class RelationsTestData
             SecondChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[14].Index,
             RelationshipType = RelationshipType.HasNextChunk,
         }, // 46 - 47
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[14].Index,
-            SecondChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[15].Index,
-            RelationshipType = RelationshipType.HasNextChunk,
-        }, // 47 - 48
         // topics graph relations
         new RelationshipModel
         {
@@ -544,61 +535,6 @@ internal static class RelationsTestData
             SecondChunkIndex = LinksTestData.GeeksForGeeksAboutDataModelingLinks[18].Index,
             RelationshipType = RelationshipType.AdditionalLink,
         },
-        // text chunk with index = 48 (16-th)
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[15].Index,
-            SecondChunkIndex = ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[0].Index,
-            RelationshipType = RelationshipType.RelatedImage,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[15].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutDataModelingLinks[11].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[15].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutDataModelingLinks[12].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[15].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutDataModelingLinks[13].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[15].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutDataModelingLinks[14].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[15].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutDataModelingLinks[15].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[15].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutDataModelingLinks[16].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[15].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutDataModelingLinks[17].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks[15].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutDataModelingLinks[18].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
     ];
 
     internal static readonly List<RelationshipModel> GeeksForGeeksAboutRelationalAlgebraChunksRelations =
@@ -628,18 +564,6 @@ internal static class RelationsTestData
             SecondChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[4].Index,
             RelationshipType = RelationshipType.HasNextChunk,
         }, // 50 - 51
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[4].Index,
-            SecondChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[5].Index,
-            RelationshipType = RelationshipType.HasNextChunk,
-        }, // 51 - 52
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[5].Index,
-            SecondChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[6].Index,
-            RelationshipType = RelationshipType.HasNextChunk,
-        }, // 52 - 53
         // topics graph relations
         new RelationshipModel
         {
@@ -1114,109 +1038,5 @@ internal static class RelationsTestData
             SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[12].Index,
             RelationshipType = RelationshipType.AdditionalLink,
         },
-        // text chunk with index = 52 (6-th)
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[5].Index,
-            SecondChunkIndex = ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[0].Index,
-            RelationshipType = RelationshipType.RelatedImage,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[5].Index,
-            SecondChunkIndex = ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[1].Index,
-            RelationshipType = RelationshipType.RelatedImage,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[5].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[6].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[5].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[7].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[5].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[8].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[5].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[9].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[5].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[10].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[5].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[11].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[5].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[12].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        // text chunk with index = 53 (7-th)
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[6].Index,
-            SecondChunkIndex = ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[0].Index,
-            RelationshipType = RelationshipType.RelatedImage,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[6].Index,
-            SecondChunkIndex = ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[1].Index,
-            RelationshipType = RelationshipType.RelatedImage,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[6].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[7].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[6].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[8].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[6].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[9].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[6].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[10].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[6].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[11].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        },
-        new RelationshipModel
-        {
-            FirstChunkIndex = TextChunkTestData.GeeksForGeeksAboutRelationalAlgebraTextChunks[6].Index,
-            SecondChunkIndex = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[12].Index,
-            RelationshipType = RelationshipType.AdditionalLink,
-        }, 
     ];
 }

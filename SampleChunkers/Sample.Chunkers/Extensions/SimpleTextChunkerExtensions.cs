@@ -1,4 +1,5 @@
 ﻿using Sample.Chunkers.Enums;
+using Sample.Chunkers.Helpers;
 using System.Text.RegularExpressions;
 
 namespace Sample.Chunkers.Extensions;
@@ -43,15 +44,19 @@ public static class SimpleTextChunkerExtensions
 
     public static string PreprocessNaturalTextForChunking(this string text)
     {
-        return Regex.Replace(text.Trim()
-                        .Replace("\u00A0", " ")
-                        .Replace(" \r\n", "\r\n")
-                        .Replace(" \n", "\n")
-                        .Replace("\r\n\r\n", "\n\n ")
-                        .Replace("\r\n", "\n "),
-                        "( )+", " ")
-                    .Replace("\u2014", "-");
+        var cleaned = text.Trim()
+                          .Replace('\u00A0', ' ')
+                          .Replace(" \r\n", "\r\n")
+                          .Replace(" \n", "\n")
+                          .Replace("\r\n\r\n", "\n\n ")
+                          .Replace("\r\n", "\n ")
+                          .Replace("\u2014", "-");
+
+        cleaned = CommonRegexHelper.GetMultipleSpacesRegex().Replace(cleaned, " ");
+
+        return cleaned;
     }
+
 
     public static string[] PreprocessNaturalTextsForChunking(this string[] texts)
     {
@@ -76,51 +81,53 @@ public static class SimpleTextChunkerExtensions
     {
         var chunks = new List<string>();
         var currentStartIndex = 0;
-        int overlap = (int)(chunkWordsCount * overlapPercentage); // Количество слов для перекрытия
+        int overlap = (int)(chunkWordsCount * overlapPercentage);
 
         while (currentStartIndex < words.Length)
         {
-            var chunkLength = CalculateActualChunkSize(semanticsIndexes, words.Length, currentStartIndex, chunkWordsCount);
+            var maxEndIndex = currentStartIndex + chunkWordsCount;
 
-            var chunk = string.Join(" ", words.Slice(currentStartIndex, chunkLength).ToArray())
+            var currentEndIndex = words.Length - currentStartIndex <= chunkWordsCount
+                ? words.Length
+                : semanticsIndexes.Where(x => x <= maxEndIndex).Max();
+
+            var chunk = string.Join(" ", words[currentStartIndex..currentEndIndex].ToArray())
                               .Replace("\n ", "\n");
-
             chunks.Add(chunk);
 
-            if (overlap > 0)
-            {
-                currentStartIndex = CalculateChunkStartIndex(semanticsIndexes, chunkWordsCount, chunkLength, overlap, currentStartIndex);
-            }
-            else
-            {
-                currentStartIndex += chunkLength;
-            }
+            if (currentEndIndex == words.Length) break;
+
+            currentStartIndex = CalculateChunkStartIndex(semanticsIndexes, chunkWordsCount, currentEndIndex, overlap, currentStartIndex);
         }
 
         return [.. chunks];
     }
 
-    private static int CalculateActualChunkSize(int[] semanticsIndexes, int wordsLength, int currentStartIndex, int targetChunkSize)
+    private static int CalculateChunkStartIndex(int[] semanticsIndexes, int maxChunkLength, int currentEndIndex, int overlap, int currentStartIndex)
     {
-        var maxEndIndex = currentStartIndex + targetChunkSize;
-
-        return wordsLength - currentStartIndex <= targetChunkSize
-            ? wordsLength - currentStartIndex
-            : semanticsIndexes.LastOrDefault(x => x <= maxEndIndex) - currentStartIndex;
-    }
-
-    private static int CalculateChunkStartIndex(int[] semanticsIndexes, int maxChunkLength, int chunkLength, int overlap, int currentStartIndex)
-    {
-        var veryEndIndex = currentStartIndex + maxChunkLength;
-        var validIndexes = semanticsIndexes.Where(x => x > currentStartIndex && x <= veryEndIndex).ToArray();
-
-        if (validIndexes.Length == 0)
+        if (overlap <= 0)
         {
-            return currentStartIndex + chunkLength;
+            return currentEndIndex;
         }
 
-        veryEndIndex -= overlap;
+        var veryEndIndex = currentStartIndex + maxChunkLength;
+        var target = veryEndIndex - overlap;
 
-        return validIndexes.OrderBy(x => Math.Abs(x - veryEndIndex)).First();
+        var bestIndex = currentEndIndex;
+        var bestDistance = int.MaxValue;
+
+        foreach (var index in semanticsIndexes)
+        {
+            if (index <= currentStartIndex || index > veryEndIndex) continue;
+
+            int distance = Math.Abs(index - target);
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                bestIndex = index;
+            }
+        }
+
+        return bestIndex;
     }
 }
