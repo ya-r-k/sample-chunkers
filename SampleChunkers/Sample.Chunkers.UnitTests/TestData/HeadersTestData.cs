@@ -14,10 +14,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "# Data Modeling: A Comprehensive Guide for Analysts",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 1,
-                Text = "Data Modeling: A Comprehensive Guide for Analysts",
+                ["name"] = "Data Modeling: A Comprehensive Guide for Analysts",
+                ["level"] = 1,
             },
         },
         new ChunkModel
@@ -26,10 +26,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## **What is Data Modeling?**",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "**What is Data Modeling?**",
+                ["name"] = "**What is Data Modeling?**",
+                ["level"] = 2,
             },
         },
         new ChunkModel
@@ -38,10 +38,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "### **What is Data Model?**",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 3,
-                Text = "**What is Data Model?**",
+                ["name"] = "**What is Data Model?**",
+                ["level"] = 3,
             },
         },
         new ChunkModel
@@ -50,10 +50,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## Types of Data Models",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "Types of Data Models",
+                ["name"] = "Types of Data Models",
+                ["level"] = 2,
             },
         },
         new ChunkModel
@@ -62,10 +62,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## Data Modeling Process",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "Data Modeling Process",
+                ["name"] = "Data Modeling Process",
+                ["level"] = 2,
             },
         },
         new ChunkModel
@@ -74,10 +74,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## Types of Data Modeling",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "Types of Data Modeling",
+                ["name"] = "Types of Data Modeling",
+                ["level"] = 2,
             },
         },
         new ChunkModel
@@ -86,10 +86,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## Benefits of Data Modeling",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "Benefits of Data Modeling",
+                ["name"] = "Benefits of Data Modeling",
+                ["level"] = 2,
             },
         },
         new ChunkModel
@@ -98,10 +98,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## Conclusion",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "Conclusion",
+                ["name"] = "Conclusion",
+                ["level"] = 2,
             },
         },
     ];
@@ -115,10 +115,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "# Basic Operators in Relational Algebra",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 1,
-                Text = "Basic Operators in Relational Algebra",
+                ["name"] = "Basic Operators in Relational Algebra",
+                ["level"] = 1,
             },
         },
         new ChunkModel
@@ -127,10 +127,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## ***1. Selection operator (*****σ*****)***",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "***1. Selection operator (*****σ*****)***",
+                ["name"] = "***1. Selection operator (*****σ*****)***",
+                ["level"] = 2,
             },
         },
         new ChunkModel
@@ -139,10 +139,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## ***2. Projection Operator (*****∏*****)***",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "***2. Projection Operator (*****∏*****)***",
+                ["name"] = "***2. Projection Operator (*****∏*****)***",
+                ["level"] = 2,
             },
         },
         new ChunkModel
@@ -151,10 +151,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## ***3. Cross Product(X)***",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "***3. Cross Product(X)***",
+                ["name"] = "***3. Cross Product(X)***",
+                ["level"] = 2,
             },
         },
         new ChunkModel
@@ -163,10 +163,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## ***4. Union (U)***",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "***4. Union (U)***",
+                ["name"] = "***4. Union (U)***",
+                ["level"] = 2,
             },
         },
         new ChunkModel
@@ -175,10 +175,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## ***5. Minus (-) or Set Difference***",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "***5. Minus (-) or Set Difference***",
+                ["name"] = "***5. Minus (-) or Set Difference***",
+                ["level"] = 2,
             },
         },
         new ChunkModel
@@ -187,10 +187,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## ***6. Rename(*****ρ*****)***",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "***6. Rename(*****ρ*****)***",
+                ["name"] = "***6. Rename(*****ρ*****)***",
+                ["level"] = 2,
             },
         },
         new ChunkModel
@@ -199,10 +199,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "### Extended Relational Algebra Operators",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 3,
-                Text = "Extended Relational Algebra Operators",
+                ["name"] = "Extended Relational Algebra Operators",
+                ["level"] = 3,
             },
         },
         new ChunkModel
@@ -211,10 +211,10 @@ internal static class HeadersTestData
             ChunkType = ChunkType.Title,
             RelatedChunksIndexes = [],
             RawContent = "## Conclusion",
-            Data = new HeaderData
+            Data = new Dictionary<string, object>
             {
-                Level = 2,
-                Text = "Conclusion",
+                ["name"] = "Conclusion",
+                ["level"] = 2,
             },
         },
     ];

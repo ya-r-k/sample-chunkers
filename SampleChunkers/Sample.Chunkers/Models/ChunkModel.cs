@@ -10,7 +10,7 @@ public class ChunkModel
 
     public required string RawContent { get; set; }
 
-    public object? Data { get; set; }
+    public required Dictionary<string, object> Data { get; set; }
 
     public required Dictionary<ChunkType, List<int>> RelatedChunksIndexes { get; set; }
 }

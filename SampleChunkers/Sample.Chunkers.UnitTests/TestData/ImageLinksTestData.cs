@@ -14,10 +14,10 @@ internal static class ImageLinksTestData
             ChunkType = ChunkType.ImageLink,
             RelatedChunksIndexes = [],
             RawContent = "!\\[News\\](https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
-                TextDescription = "News\\",
+                ["url1"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
+                ["alterText"] = "News\\",
             },
         },
         new ChunkModel
@@ -26,10 +26,10 @@ internal static class ImageLinksTestData
             ChunkType = ChunkType.ImageLink,
             RelatedChunksIndexes = [],
             RawContent = "![Data-Modeling-in-Analysis](https://media.geeksforgeeks.org/wp-content/uploads/20240215112547/Data-Modeling-in-Analysis.webp)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://media.geeksforgeeks.org/wp-content/uploads/20240215112547/Data-Modeling-in-Analysis.webp",
-                TextDescription = "Data-Modeling-in-Analysis",
+                ["url1"] = "https://media.geeksforgeeks.org/wp-content/uploads/20240215112547/Data-Modeling-in-Analysis.webp",
+                ["alterText"] = "Data-Modeling-in-Analysis",
             },
         },
         new ChunkModel
@@ -38,10 +38,10 @@ internal static class ImageLinksTestData
             ChunkType = ChunkType.ImageLink,
             RelatedChunksIndexes = [],
             RawContent = "![modeling](https://media.geeksforgeeks.org/wp-content/uploads/20240215113046/modeling.webp)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://media.geeksforgeeks.org/wp-content/uploads/20240215113046/modeling.webp",
-                TextDescription = "modeling",
+                ["url1"] = "https://media.geeksforgeeks.org/wp-content/uploads/20240215113046/modeling.webp",
+                ["alterText"] = "modeling",
             },
         },
         new ChunkModel
@@ -50,10 +50,10 @@ internal static class ImageLinksTestData
             ChunkType = ChunkType.ImageLink,
             RelatedChunksIndexes = [],
             RawContent = "![daat](https://media.geeksforgeeks.org/wp-content/uploads/20240215113207/daat.webp)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://media.geeksforgeeks.org/wp-content/uploads/20240215113207/daat.webp",
-                TextDescription = "daat",
+                ["url1"] = "https://media.geeksforgeeks.org/wp-content/uploads/20240215113207/daat.webp",
+                ["alterText"] = "daat",
             },
         },
         new ChunkModel
@@ -62,10 +62,10 @@ internal static class ImageLinksTestData
             ChunkType = ChunkType.ImageLink,
             RelatedChunksIndexes = [],
             RawContent = "!\\[News\\](https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
-                TextDescription = "News\\",
+                ["url1"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
+                ["alterText"] = "News\\",
             },
         },
     ];
@@ -79,10 +79,10 @@ internal static class ImageLinksTestData
             ChunkType = ChunkType.ImageLink,
             RelatedChunksIndexes = [],
             RawContent = "!\\[News\\](https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
-                TextDescription = "News\\",
+                ["url1"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
+                ["alterText"] = "News\\",
             },
         },
         new ChunkModel
@@ -91,10 +91,10 @@ internal static class ImageLinksTestData
             ChunkType = ChunkType.ImageLink,
             RelatedChunksIndexes = [],
             RawContent = "![https://media.geeksforgeeks.org/auth/avatar.png](https://media.geeksforgeeks.org/wp-content/uploads/20200717172614/authPreLogo.png)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://media.geeksforgeeks.org/wp-content/uploads/20200717172614/authPreLogo.png",
-                TextDescription = "https://media.geeksforgeeks.org/auth/avatar.png",
+                ["url1"] = "https://media.geeksforgeeks.org/wp-content/uploads/20200717172614/authPreLogo.png",
+                ["alterText"] = "https://media.geeksforgeeks.org/auth/avatar.png",
             },
         },
         new ChunkModel
@@ -103,10 +103,10 @@ internal static class ImageLinksTestData
             ChunkType = ChunkType.ImageLink,
             RelatedChunksIndexes = [],
             RawContent = "!\\[News\\](https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
-                TextDescription = "News\\",
+                ["url1"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
+                ["alterText"] = "News\\",
             },
         },
     ];

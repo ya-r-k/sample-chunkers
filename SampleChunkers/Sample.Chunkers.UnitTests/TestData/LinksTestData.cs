@@ -14,10 +14,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[Alex.omegapy - Medium](https://medium.com/@alex.omegapy)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://medium.com/@alex.omegapy",
-                TextDescription = "Alex.omegapy - Medium",
+                ["url1"] = "https://medium.com/@alex.omegapy",
+                ["alterText"] = "Alex.omegapy - Medium",
             },
         },
     ];
@@ -31,10 +31,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[[RELATEDCHUNK]Image-Link-15[/RELATEDCHUNK]\r\n                                                    Follow](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
-                TextDescription = "[RELATEDCHUNK]Image-Link-15[/RELATEDCHUNK]\r\n                                                    Follow",
+                ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
+                ["alterText"] = "[RELATEDCHUNK]Image-Link-15[/RELATEDCHUNK]\r\n                                                    Follow",
             },
         },
         new ChunkModel
@@ -43,10 +43,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[data structure.](https://www.geeksforgeeks.org/data-structures/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/data-structures/",
-                TextDescription = "data structure.",
+                ["url1"] = "https://www.geeksforgeeks.org/data-structures/",
+                ["alterText"] = "data structure.",
             },
         },
         new ChunkModel
@@ -55,10 +55,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[development](https://www.geeksforgeeks.org/class-10-social-science-economics-chapter-1-development/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/class-10-social-science-economics-chapter-1-development/",
-                TextDescription = "development",
+                ["url1"] = "https://www.geeksforgeeks.org/class-10-social-science-economics-chapter-1-development/",
+                ["alterText"] = "development",
             },
         },
         new ChunkModel
@@ -67,10 +67,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[database schema.](https://www.geeksforgeeks.org/database-schemas/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/database-schemas/",
-                TextDescription = "database schema.",
+                ["url1"] = "https://www.geeksforgeeks.org/database-schemas/",
+                ["alterText"] = "database schema.",
             },
         },
         new ChunkModel
@@ -79,10 +79,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[tree.](https://www.geeksforgeeks.org/introduction-to-tree-data-structure-and-algorithm-tutorials/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/introduction-to-tree-data-structure-and-algorithm-tutorials/",
-                TextDescription = "tree.",
+                ["url1"] = "https://www.geeksforgeeks.org/introduction-to-tree-data-structure-and-algorithm-tutorials/",
+                ["alterText"] = "tree.",
             },
         },
         new ChunkModel
@@ -91,10 +91,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[database design](https://www.geeksforgeeks.org/significance-of-database-design/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/significance-of-database-design/",
-                TextDescription = "database design",
+                ["url1"] = "https://www.geeksforgeeks.org/significance-of-database-design/",
+                ["alterText"] = "database design",
             },
         },
         new ChunkModel
@@ -103,10 +103,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[relational model](https://www.geeksforgeeks.org/relational-model-in-dbms/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/relational-model-in-dbms/",
-                TextDescription = "relational model",
+                ["url1"] = "https://www.geeksforgeeks.org/relational-model-in-dbms/",
+                ["alterText"] = "relational model",
             },
         },
         new ChunkModel
@@ -115,10 +115,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[entity-relationship model (ER model)](https://www.geeksforgeeks.org/introduction-of-er-model/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/introduction-of-er-model/",
-                TextDescription = "entity-relationship model (ER model)",
+                ["url1"] = "https://www.geeksforgeeks.org/introduction-of-er-model/",
+                ["alterText"] = "entity-relationship model (ER model)",
             },
         },
         new ChunkModel
@@ -127,10 +127,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[integrity](https://www.geeksforgeeks.org/integrity-importance-and-challenges/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/integrity-importance-and-challenges/",
-                TextDescription = "integrity",
+                ["url1"] = "https://www.geeksforgeeks.org/integrity-importance-and-challenges/",
+                ["alterText"] = "integrity",
             },
         },
         new ChunkModel
@@ -139,10 +139,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[normalization.](https://www.geeksforgeeks.org/introduction-of-database-normalization/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/introduction-of-database-normalization/",
-                TextDescription = "normalization.",
+                ["url1"] = "https://www.geeksforgeeks.org/introduction-of-database-normalization/",
+                ["alterText"] = "normalization.",
             },
         },
         new ChunkModel
@@ -151,10 +151,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[data analysis](https://www.geeksforgeeks.org/data-analysis-tutorial/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/data-analysis-tutorial/",
-                TextDescription = "data analysis",
+                ["url1"] = "https://www.geeksforgeeks.org/data-analysis-tutorial/",
+                ["alterText"] = "data analysis",
             },
         },
         new ChunkModel
@@ -163,10 +163,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[Advertise with us](https://www.geeksforgeeks.org/about/contact-us/?listicles)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/about/contact-us/?listicles",
-                TextDescription = "Advertise with us",
+                ["url1"] = "https://www.geeksforgeeks.org/about/contact-us/?listicles",
+                ["alterText"] = "Advertise with us",
             },
         },
         new ChunkModel
@@ -175,10 +175,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[Next Article](https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article",
-                TextDescription = "Next Article",
+                ["url1"] = "https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article",
+                ["alterText"] = "Next Article",
             },
         },
         new ChunkModel
@@ -187,10 +187,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[What are the Advantages and Disadvantages of Random Forest?](https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article",
-                TextDescription = "What are the Advantages and Disadvantages of Random Forest?",
+                ["url1"] = "https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article",
+                ["alterText"] = "What are the Advantages and Disadvantages of Random Forest?",
             },
         },
         new ChunkModel
@@ -199,10 +199,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[R](https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user",
-                TextDescription = "R",
+                ["url1"] = "https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user",
+                ["alterText"] = "R",
             },
         },
         new ChunkModel
@@ -211,10 +211,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[rahulpawar_7](https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user",
-                TextDescription = "rahulpawar_7",
+                ["url1"] = "https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user",
+                ["alterText"] = "rahulpawar_7",
             },
         },
         new ChunkModel
@@ -223,10 +223,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[[RELATEDCHUNK]Image-Link-15[/RELATEDCHUNK]](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
-                TextDescription = "[RELATEDCHUNK]Image-Link-15[/RELATEDCHUNK]",
+                ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
+                ["alterText"] = "[RELATEDCHUNK]Image-Link-15[/RELATEDCHUNK]",
             },
         },
         new ChunkModel
@@ -235,10 +235,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[Data Analysis](https://www.geeksforgeeks.org/category/ai-ml-ds/r-data-analysis/?ref=article_category)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/category/ai-ml-ds/r-data-analysis/?ref=article_category",
-                TextDescription = "Data Analysis",
+                ["url1"] = "https://www.geeksforgeeks.org/category/ai-ml-ds/r-data-analysis/?ref=article_category",
+                ["alterText"] = "Data Analysis",
             },
         },
         new ChunkModel
@@ -247,10 +247,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[AI-ML-DS](https://www.geeksforgeeks.org/category/ai-ml-ds/?ref=article_category)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/category/ai-ml-ds/?ref=article_category",
-                TextDescription = "AI-ML-DS",
+                ["url1"] = "https://www.geeksforgeeks.org/category/ai-ml-ds/?ref=article_category",
+                ["alterText"] = "AI-ML-DS",
             },
         },
     ];
@@ -264,10 +264,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[[RELATEDCHUNK]Image-Link-84[/RELATEDCHUNK]\r\n                                                    Follow](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
-                TextDescription = "[RELATEDCHUNK]Image-Link-84[/RELATEDCHUNK]\r\n                                                    Follow",
+                ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
+                ["alterText"] = "[RELATEDCHUNK]Image-Link-84[/RELATEDCHUNK]\r\n                                                    Follow",
             },
         },
         new ChunkModel
@@ -276,10 +276,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[Note:** [SELECT operation](https://www.geeksforgeeks.org/select-operation-in-relational-algebra/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/select-operation-in-relational-algebra/",
-                TextDescription = "Note:** [SELECT operation",
+                ["url1"] = "https://www.geeksforgeeks.org/select-operation-in-relational-algebra/",
+                ["alterText"] = "Note:** [SELECT operation",
             },
         },
         new ChunkModel
@@ -288,10 +288,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[Rename operator](https://www.geeksforgeeks.org/rename-operation-in-relational-algebra/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/rename-operation-in-relational-algebra/",
-                TextDescription = "Rename operator",
+                ["url1"] = "https://www.geeksforgeeks.org/rename-operation-in-relational-algebra/",
+                ["alterText"] = "Rename operator",
             },
         },
         new ChunkModel
@@ -300,10 +300,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[Natural Join](https://www.geeksforgeeks.org/sql-natural-join/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/sql-natural-join/",
-                TextDescription = "Natural Join",
+                ["url1"] = "https://www.geeksforgeeks.org/sql-natural-join/",
+                ["alterText"] = "Natural Join",
             },
         },
         new ChunkModel
@@ -312,10 +312,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[Relational Algebra](https://www.geeksforgeeks.org/introduction-of-relational-algebra-in-dbms/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/introduction-of-relational-algebra-in-dbms/",
-                TextDescription = "Relational Algebra",
+                ["url1"] = "https://www.geeksforgeeks.org/introduction-of-relational-algebra-in-dbms/",
+                ["alterText"] = "Relational Algebra",
             },
         },
         new ChunkModel
@@ -324,10 +324,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[database](https://www.geeksforgeeks.org/what-is-database/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/what-is-database/",
-                TextDescription = "database",
+                ["url1"] = "https://www.geeksforgeeks.org/what-is-database/",
+                ["alterText"] = "database",
             },
         },
         new ChunkModel
@@ -336,10 +336,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[SQL](https://www.geeksforgeeks.org/what-is-sql/)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/what-is-sql/",
-                TextDescription = "SQL",
+                ["url1"] = "https://www.geeksforgeeks.org/what-is-sql/",
+                ["alterText"] = "SQL",
             },
         },
         new ChunkModel
@@ -348,10 +348,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[Advertise with us](https://www.geeksforgeeks.org/about/contact-us/?listicles)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/about/contact-us/?listicles",
-                TextDescription = "Advertise with us",
+                ["url1"] = "https://www.geeksforgeeks.org/about/contact-us/?listicles",
+                ["alterText"] = "Advertise with us",
             },
         },
         new ChunkModel
@@ -360,10 +360,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[Next Article](https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article",
-                TextDescription = "Next Article",
+                ["url1"] = "https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article",
+                ["alterText"] = "Next Article",
             },
         },
         new ChunkModel
@@ -372,10 +372,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[Extended Operators in Relational Algebra](https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article",
-                TextDescription = "Extended Operators in Relational Algebra",
+                ["url1"] = "https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article",
+                ["alterText"] = "Extended Operators in Relational Algebra",
             },
         },
         new ChunkModel
@@ -384,10 +384,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[[RELATEDCHUNK]Image-Link-84[/RELATEDCHUNK]](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
-                TextDescription = "[RELATEDCHUNK]Image-Link-84[/RELATEDCHUNK]",
+                ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
+                ["alterText"] = "[RELATEDCHUNK]Image-Link-84[/RELATEDCHUNK]",
             },
         },
         new ChunkModel
@@ -396,10 +396,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[DBMS](https://www.geeksforgeeks.org/category/computer-subject/dbms/?ref=article_category)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/category/computer-subject/dbms/?ref=article_category",
-                TextDescription = "DBMS",
+                ["url1"] = "https://www.geeksforgeeks.org/category/computer-subject/dbms/?ref=article_category",
+                ["alterText"] = "DBMS",
             },
         },
         new ChunkModel
@@ -408,10 +408,10 @@ internal class LinksTestData
             ChunkType = ChunkType.ExternalLink,
             RelatedChunksIndexes = [],
             RawContent = "[DBMS-Relational Algebra](https://www.geeksforgeeks.org/tag/dbms-relational-algebra/?ref=article_tag)",
-            Data = new LinkData
+            Data = new Dictionary<string, object>
             {
-                Url = "https://www.geeksforgeeks.org/tag/dbms-relational-algebra/?ref=article_tag",
-                TextDescription = "DBMS-Relational Algebra",
+                ["url1"] = "https://www.geeksforgeeks.org/tag/dbms-relational-algebra/?ref=article_tag",
+                ["alterText"] = "DBMS-Relational Algebra",
             },
         },
     ];

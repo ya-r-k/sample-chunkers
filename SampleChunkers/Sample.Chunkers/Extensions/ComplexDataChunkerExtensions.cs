@@ -139,11 +139,11 @@ public static class ComplexDataChunkerExtensions
             {
                 if (type == ChunkType.ExternalLink)
                 {
-                    var linksData = currentChunks.Select(x => x.Data as LinkData).ToArray();
-
+                    var linksData = currentChunks.Where(x => x.Data.Keys.Count > 0).Select(x => x.Data).ToArray();
+                    
                     for (var i = 0; i < linksData.Length; i++)
                     {
-                        processedText.Replace(currentChunks[i].RawContent, linksData[i]?.TextDescription + string.Format(labelTemplate, currentChunks[i].Index));
+                        processedText.Replace(currentChunks[i].RawContent, linksData[i]["alterText"] + string.Format(labelTemplate, currentChunks[i].Index));
                     }
                 }
                 else
@@ -179,6 +179,10 @@ public static class ComplexDataChunkerExtensions
                 Index = ++lastUsedIndex,
                 ChunkType = ChunkType.Text,
                 RawContent = rawChunkData.ToString(),
+                Data = new Dictionary<string, object>
+                {
+                    ["content"] = rawChunkData.ToString(),
+                },
                 RelatedChunksIndexes = relatedIndexes,
             });
         }
@@ -213,9 +217,10 @@ public static class ComplexDataChunkerExtensions
                 Index = ++lastUsedIndex,
                 RawContent = match.Value,
                 ChunkType = ChunkType.CodeBlock,
-                Data = new CodeBlockData
+                Data = new Dictionary<string, object>()
                 {
-                    Language = language,
+                    ["language"] = language,
+                    ["content"] = match.Value,
                 },
                 RelatedChunksIndexes = [],
             });
@@ -238,6 +243,10 @@ public static class ComplexDataChunkerExtensions
                 Index = ++lastUsedIndex,
                 RawContent = match.Value,
                 ChunkType = ChunkType.Table,
+                Data = new Dictionary<string, object>
+                {
+                    ["content"] = match.Value,
+                },
                 RelatedChunksIndexes = []
             };
             result.Add(currentChunk);
@@ -259,10 +268,10 @@ public static class ComplexDataChunkerExtensions
                 Index = ++lastUsedIndex,
                 RawContent = match.Value,
                 ChunkType = ChunkType.ImageLink,
-                Data = new LinkData
+                Data = new Dictionary<string, object>
                 {
-                    Url = match.Groups[2].Value,
-                    TextDescription = match.Groups[1].Value,
+                    ["url1"] = match.Groups[2].Value,
+                    ["alterText"] = match.Groups[1].Value,
                 },
                 RelatedChunksIndexes = []
             });
@@ -288,10 +297,10 @@ public static class ComplexDataChunkerExtensions
                 Index = ++lastUsedIndex,
                 RawContent = match.Value.TrimEnd(),
                 ChunkType = ChunkType.Title,
-                Data = new HeaderData
+                Data = new Dictionary<string, object>
                 {
-                    Level = match.Groups[1].Length,
-                    Text = titleText.ToString(),
+                    ["name"] = titleText.ToString(),
+                    ["level"] = match.Groups[1].Length,
                 },
                 RelatedChunksIndexes = relatedIndexes,
             });
@@ -317,10 +326,10 @@ public static class ComplexDataChunkerExtensions
                 Index = ++lastUsedIndex,
                 RawContent = match.Value,
                 ChunkType = ChunkType.ExternalLink,
-                Data = new LinkData
+                Data = new Dictionary<string, object>
                 {
-                    Url = match.Groups[2].Value,
-                    TextDescription = textDescription,
+                    ["url1"] = match.Groups[2].Value,
+                    ["alterText"] = textDescription,
                 },
                 RelatedChunksIndexes = []
             });

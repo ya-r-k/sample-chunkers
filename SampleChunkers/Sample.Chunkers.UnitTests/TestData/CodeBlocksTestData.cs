@@ -25,9 +25,21 @@ public class Factorial {
     }
 }
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+public class Factorial {
+    public static int factorial(int n) {
+    // --- Base case: factorial of 0 is 1 ----
+    if (n == 0) { 
+            return 1;  
+    // --- Recursive case ---
+    } else {
+        return n * factorial(n - 1);  
+    }
+}
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -79,9 +91,53 @@ public class DFS {
     }
 }
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+public class DFS {
+    // Node class
+    static class Node {
+        int value;
+        Node left, right;
+        // Constructor
+        Node(int value) {
+            this.value = value;
+            left = right = null; // Left and right children are null initially
+        }
+    }
+    // Recursive Depth-First Search (DFS) method
+    public static void depthFirstSearchRecursive(Node node) {
+        // --- Base case ---
+        if (node == null) {
+            return; 
+        }
+        // Process the current node (visit)
+        System.out.println(node.value);
+        // Recursively traverse the left subtree
+        depthFirstSearchRecursive(node.left);
+        //--- Recursive case ---
+        depthFirstSearchRecursive(node.right);
+        /*
+          Potential stack overflow issue: Each recursive call adds a new 
+           frame to the call stack. If the tree is too deep (e.g., with 
+           many levels), the recursion
+          depth can exceed the system's maximum stack size, causing a
+          StackOverflowError.
+         */
+    }
+    public static void main(String[] args) {
+        // Create a binary tree
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        System.out.println(""DFS Traversal using Recursion:"");
+        depthFirstSearchRecursive(root); 
+    }
+}
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -134,9 +190,54 @@ public class DFS {
     }
 }
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+import java.util.ArrayDeque;
+import java.util.Deque;
+public class DFS {
+    // Single node in the binary tree
+    static class Node {
+        int value;
+        Node left, right;
+        // Node Constructor 
+        Node(int value) {
+            this.value = value;
+            left = right = null; // Left and right children are null initially
+        }
+    }
+    // Depth-First Search (DFS) traversal method 
+    public static void depthFirstSearch(Node root) {
+        Deque stack = new ArrayDeque<>();
+        stack.push(root);
+        // traverse the stack until is empty
+        while (!stack.isEmpty()) {
+            // Pop the top node from the stack
+            Node current = stack.pop();
+            System.out.println(current.value); 
+
+            if (current.right != null) {
+                stack.push(current.right); // Add right child to stack
+            }
+            if (current.left != null) {
+                stack.push(current.left); // Add left child to stack
+            }
+        }
+    }
+    public static void main(String[] args) {
+        // Create a binary tree
+        Node root = new Node(1); 
+        root.left = new Node(2); 
+        root.right = new Node(3); 
+        root.left.left = new Node(4); 
+        root.left.right = new Node(5); 
+
+        System.out.println(""DFS Traversal using Deque:"");
+        depthFirstSearch(root); 
+    }
+}
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -152,9 +253,17 @@ DFS Traversal using Deque:
 5
 3
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+DFS Traversal using Deque:
+1
+2
+4
+5
+3
+```",
+                ["language"] = "unknown",
             },
         },
     ];
@@ -170,9 +279,12 @@ DFS Traversal using Deque:
             RawContent = @"```
 σ (Cond)(Relation Name)
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+σ (Cond)(Relation Name)
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -183,9 +295,12 @@ DFS Traversal using Deque:
             RawContent = @"```
 σ (AGE>18)(STUDENT)
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+σ (AGE>18)(STUDENT)
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -196,9 +311,12 @@ DFS Traversal using Deque:
             RawContent = @"```
 ∏(Column 1,Column 2….Column n)(Relation Name)
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+∏(Column 1,Column 2….Column n)(Relation Name)
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -209,9 +327,12 @@ DFS Traversal using Deque:
             RawContent = @"```
 ∏(ROLL_NO,NAME)(STUDENT)
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+∏(ROLL_NO,NAME)(STUDENT)
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -222,9 +343,12 @@ DFS Traversal using Deque:
             RawContent = @"```
 Relation1 X Relation2
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+Relation1 X Relation2
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -235,9 +359,12 @@ Relation1 X Relation2
             RawContent = @"```
 STUDENT X STUDENT_SPORTS
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+STUDENT X STUDENT_SPORTS
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -246,9 +373,10 @@ STUDENT X STUDENT_SPORTS
             ChunkType = ChunkType.CodeBlock,
             RelatedChunksIndexes = [],
             RawContent = "```\r\n\u00A0Relation1\u00A0U Relation2\r\n```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = "```\r\n\u00A0Relation1\u00A0U Relation2\r\n```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -259,9 +387,12 @@ STUDENT X STUDENT_SPORTS
             RawContent = @"```
 STUDENT U EMPLOYEE
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+STUDENT U EMPLOYEE
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -270,9 +401,10 @@ STUDENT U EMPLOYEE
             ChunkType = ChunkType.CodeBlock,
             RelatedChunksIndexes = [],
             RawContent = "```\r\n\u00A0Relation1 - Relation2\r\n```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = "```\r\n\u00A0Relation1 - Relation2\r\n```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -283,9 +415,12 @@ STUDENT U EMPLOYEE
             RawContent = @"```
 STUDENT - EMPLOYEE
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+STUDENT - EMPLOYEE
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -296,9 +431,12 @@ STUDENT - EMPLOYEE
             RawContent = @"```
 ρ(Relation2, Relation1)
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+ρ(Relation2, Relation1)
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -309,9 +447,12 @@ STUDENT - EMPLOYEE
             RawContent = @"```
 ρ(STUDENT1, STUDENT)
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+ρ(STUDENT1, STUDENT)
+```",
+                ["language"] = "unknown",
             },
         },
         new ChunkModel
@@ -322,9 +463,12 @@ STUDENT - EMPLOYEE
             RawContent = @"```
 ρ(STUDENT_NAMES, ∏(ROLL_NO, NAME)(STUDENT))
 ```",
-            Data = new CodeBlockData
+            Data = new Dictionary<string, object>
             {
-                Language = "unknown",
+                ["content"] = @"```
+ρ(STUDENT_NAMES, ∏(ROLL_NO, NAME)(STUDENT))
+```",
+                ["language"] = "unknown",
             },
         },
     ];

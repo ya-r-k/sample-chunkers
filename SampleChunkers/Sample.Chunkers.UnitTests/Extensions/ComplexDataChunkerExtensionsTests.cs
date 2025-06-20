@@ -53,10 +53,10 @@ More text here.";
                 ChunkType = ChunkType.Title,
                 RelatedChunksIndexes = [],
                 RawContent = @"# Main Title",
-                Data = new HeaderData
+                Data = new Dictionary<string, object>()
                 {
-                    Text = "Main Title",
-                    Level = 1,
+                    ["name"] = "Main Title",
+                    ["level"] = 1,
                 },
             },
             new ChunkModel
@@ -64,10 +64,10 @@ More text here.";
                 ChunkType = ChunkType.Title,
                 RelatedChunksIndexes = [],
                 RawContent = @"## Subtitle",
-                Data = new HeaderData
+                Data = new Dictionary<string, object>()
                 {
-                    Text = "Subtitle",
-                    Level = 2,
+                    ["name"] = "Subtitle",
+                    ["level"] = 2,
                 },
             },
             new ChunkModel
@@ -75,10 +75,10 @@ More text here.";
                 ChunkType = ChunkType.Title,
                 RelatedChunksIndexes = [],
                 RawContent = @"## Another Subtitle",
-                Data = new HeaderData
+                Data = new Dictionary<string, object>()
                 {
-                    Text = "Another Subtitle",
-                    Level = 2,
+                    ["name"] = "Another Subtitle",
+                    ["level"] = 2,
                 },
             },
         };
@@ -94,9 +94,15 @@ public class Test
     public void Method() { }
 }
 ```",
-                Data = new CodeBlockData
+                Data = new Dictionary<string, object>()
                 {
-                    Language = "csharp",
+                    ["language"] = "csharp",
+                    ["content"] = @"```csharp
+public class Test
+{
+    public void Method() { }
+}
+```",
                 },
             },
         };
@@ -106,6 +112,23 @@ public class Test
             {
                 ChunkType = ChunkType.Table,
                 RelatedChunksIndexes = [],
+                Data = new Dictionary<string, object>()
+                {
+                    ["content"] = @"<table class=""custom-table"">
+    <thead>
+        <tr>
+            <th>Header 1</th>
+            <th>Header 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Data 1</td>
+            <td>Data 2</td>
+        </tr>
+    </tbody>
+</table>",
+                },
                 RawContent = @"<table class=""custom-table"">
     <thead>
         <tr>
@@ -129,10 +152,10 @@ public class Test
                 ChunkType = ChunkType.ImageLink,
                 RelatedChunksIndexes = [],
                 RawContent = @"![Image Alt](https://example.com/image.jpg)",
-                Data = new LinkData
+                Data = new Dictionary<string, object>()
                 {
-                    Url = "https://example.com/image.jpg",
-                    TextDescription = "Image Alt",
+                    ["url1"] = "https://example.com/image.jpg",
+                    ["alterText"] = "Image Alt",
                 },
             }
         };
@@ -195,9 +218,14 @@ public class Test
     <tr><td>Nested table</td></tr>
 </table>
 ```",
-                Data = new CodeBlockData
+                Data = new Dictionary<string, object>()
                 {
-                    Language = "html",
+                    ["content"] = @"```html
+<table>
+    <tr><td>Nested table</td></tr>
+</table>
+```",
+                    ["language"] = "html",
                 },
             },
         };
@@ -207,6 +235,17 @@ public class Test
             {
                 ChunkType = ChunkType.Table,
                 RelatedChunksIndexes = [],
+                Data = new Dictionary<string, object>()
+                {
+                    ["content"] = @"<table>
+    <tr>
+        <td>
+            <h1>Nested header</h1>
+            <img src=""nested.jpg"" alt=""Nested image"">
+        </td>
+    </tr>
+</table>",
+                },
                 RawContent = @"<table>
     <tr>
         <td>
@@ -225,10 +264,10 @@ public class Test
                 ChunkType = ChunkType.ExternalLink,
                 RelatedChunksIndexes = [],
                 RawContent = @"[link](https://example.com)",
-                Data = new LinkData
+                Data = new Dictionary<string, object>()
                 {
-                    Url = "https://example.com",
-                    TextDescription = "link",
+                    ["url1"] = "https://example.com",
+                    ["alterText"] = "link",
                 },
             }
         };
@@ -239,11 +278,11 @@ public class Test
                 ChunkType = ChunkType.Title,
                 RelatedChunksIndexes = [],
                 RawContent = @"# Title with `inline code`",
-                Data = new HeaderData
+                Data = new Dictionary<string, object>()
                 {
-                    Text = "Title with `inline code`",
-                    Level = 1,
-                },
+                    ["name"] = "Title with `inline code`",
+                    ["level"] = 1,
+                } 
             },
             new ChunkModel
             {
@@ -253,10 +292,10 @@ public class Test
                     [expectedLinks[0].ChunkType] = [expectedLinks[0].Index],
                 },
                 RawContent = @$"## Subtitle with link[RELATEDCHUNK]External-Link-{expectedLinks[0].Index}[/RELATEDCHUNK]",
-                Data = new HeaderData
+                Data = new Dictionary<string, object>()
                 {
-                    Text = "Subtitle with link",
-                    Level = 2,
+                    ["name"] = "Subtitle with link",
+                    ["level"] = 2,
                 },
             },
         };
