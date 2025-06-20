@@ -50,21 +50,30 @@ public class ChunksExtensionsTests
             ArticlesTestData.DevToRealWorldArticleText,
             // https://www.geeksforgeeks.org/data-modeling-a-comprehensive-guide-for-analysts/
             ArticlesTestData.GeeksForGeeksTextAboutDataModeling,
+            // https://www.geeksforgeeks.org/basic-operators-in-relational-algebra-2/
+            ArticlesTestData.GeeksForGeeksTextAboutRelationalAlgebra,
         };
 
         var secondShiftValue = CodeBlocksTestData.DevToRealWorldArticleCodeBlocks.Length +
                                LinksTestData.DevToRealWorldArticleLinks.Length +
                                TextChunkTestData.DevToRealWorldArticleTextChunks.Length;
+        var thirdShiftValue = secondShiftValue +
+                              ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks.Length +
+                              LinksTestData.GeeksForGeeksAboutDataModelingLinks.Length +
+                              HeadersTestData.GeeksForGeeksAboutDataModelingHeaders.Length +
+                              TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks.Length;
         var indexShiftValues = new[]
         {
             0,
             secondShiftValue,
+            thirdShiftValue,
         };
 
         var rawRelations = new Dictionary<int, List<RelationshipModel>>
         {
             [0] = RelationsTestData.DevToRealWorldArticleChunksRelations,
             [1] = RelationsTestData.GeeksForGeeksAboutDataModelingChunksRelations,
+            [2] = RelationsTestData.GeeksForGeeksAboutRelationalAlgebraChunksRelations,
         }.Select(x => new
         {
             x.Key,
@@ -78,27 +87,31 @@ public class ChunksExtensionsTests
         var textChunksSequence = rawRelations.Select(x => new
         {
             x.Key,
-            Value = x.Value.Where(x => x.RelationshipType == "HAS_NEXT_CHUNK")
+            Value = x.Value.Where(x => x.RelationshipType == RelationshipType.HasNextChunk)
                 .ToList()
         }).ToDictionary(x => x.Key, x => x.Value);
         var titlesRelations = rawRelations.Select(x => new
         {
             x.Key,
-            Value = x.Value.Where(x => x.RelationshipType == "HAS_NEXT_TOPIC" || x.RelationshipType == "HAS_FIRST_SUBTOPIC")
+            Value = x.Value.Where(x => x.RelationshipType == RelationshipType.HasNextTopic || x.RelationshipType == RelationshipType.HasFirstSubtopic)
                 .ToList()
         }).ToDictionary(x => x.Key, x => x.Value);
         rawRelations = rawRelations.Select(x => new
         {
             x.Key,
-            Value = x.Value.Except(textChunksSequence[x.Key]).Except(titlesRelations[x.Key])
-                .ToList()
+            Value = x.Value.Except(textChunksSequence[x.Key])
+                           .Except(titlesRelations[x.Key])
+                           .ToList()
         }).ToDictionary(x => x.Key, x => x.Value);
 
         var expectedResult = textChunksSequence[0]
             .Concat(textChunksSequence[1])
+            .Concat(textChunksSequence[2])
             .Concat(titlesRelations[1])
+            .Concat(titlesRelations[2])
             .Concat(rawRelations[0])
             .Concat(rawRelations[1])
+            .Concat(rawRelations[2])
             .ToList();
 
         // Act

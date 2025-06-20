@@ -5,23 +5,23 @@ namespace Sample.Chunkers.Extensions;
 
 public static class ChunksExtensions
 {
-    private static readonly Dictionary<ChunkType, string> RelatedChunkRelationshipType = new()
+    private static readonly Dictionary<ChunkType, RelationshipType> RelatedChunkRelationshipType = new()
     {
-        [ChunkType.Title] = "STARTS_WITH",
-        [ChunkType.CodeBlock] = "RELATED_CODE_BLOCK",
-        [ChunkType.ImageLink] = "RELATED_IMAGE",
-        [ChunkType.Table] = "RELATED_TABLE",
-        [ChunkType.ExternalLink] = "ADDITIONAL_LINK",
+        [ChunkType.Title] = RelationshipType.StartsWith,
+        [ChunkType.CodeBlock] = RelationshipType.RelatedCodeBlock,
+        [ChunkType.ImageLink] = RelationshipType.RelatedImage,
+        [ChunkType.Table] = RelationshipType.RelatedTable,
+        [ChunkType.ExternalLink] = RelationshipType.AdditionalLink,
     };
 
-    private static readonly ChunkType[] RelatedChunkTypeSequence = new[]
-    {
+    private static readonly ChunkType[] RelatedChunkTypeSequence =
+    [
         ChunkType.Title,
         ChunkType.CodeBlock,
         ChunkType.ImageLink,
         ChunkType.Table,
         ChunkType.ExternalLink,
-    };
+    ];
 
     public static List<RelationshipModel> BuildRelationsGraph(this Dictionary<ChunkType, List<ChunkModel>> chunks)
     {
@@ -29,12 +29,12 @@ public static class ChunksExtensions
 
         if (chunks.TryGetValue(ChunkType.Text, out var headersChunks))
         {
-            result.AddRange(headersChunks.BuildSequenceRelations());
+            result.AddRange(headersChunks.BuildTextChunkSequenceRelations());
         }
 
         if (chunks.TryGetValue(ChunkType.Title, out var textChunks))
         {
-            result.AddRange(textChunks.BuildSequenceRelations("HAS_NEXT_TOPIC"));
+            result.AddRange(textChunks.BuildTitlesSequenceRelations());
         }
 
         foreach (var value in chunks.Values)
@@ -48,7 +48,61 @@ public static class ChunksExtensions
         return result;
     }
 
-    private static List<RelationshipModel> BuildSequenceRelations(this List<ChunkModel> sequenceChunks, string relationshipType = "HAS_NEXT_CHUNK")
+    private static List<RelationshipModel> BuildTitlesSequenceRelations(this List<ChunkModel> sequenceChunks)
+    {
+        if (sequenceChunks.Count == 0)
+            return [];
+
+        var result = new List<RelationshipModel>();
+        var titlesPrevIndexes = new Dictionary<int, int>
+        {
+            [(int)sequenceChunks[0].Data["level"]] = sequenceChunks[0].Index
+        }; // Уровень -> последний индекс
+
+        for (int i = 1; i < sequenceChunks.Count; i++)
+        {
+            var prev = sequenceChunks[i - 1];
+            var current = sequenceChunks[i];
+
+            if (current.Index - prev.Index != 1)
+                continue;
+
+            var currentLevel = (int)current.Data["level"];
+            var prevLevel = (int)prev.Data["level"];
+
+            var relType = currentLevel > prevLevel
+                ? RelationshipType.HasFirstSubtopic
+                : RelationshipType.HasNextTopic;
+
+            if (currentLevel < prevLevel)
+            {
+                if (titlesPrevIndexes.TryGetValue(currentLevel, out int lastSameLevelIndex))
+                {
+                    result.Add(new RelationshipModel
+                    {
+                        FirstChunkIndex = lastSameLevelIndex,
+                        SecondChunkIndex = current.Index,
+                        RelationshipType = relType
+                    });
+                }
+            }
+            else
+            {
+                result.Add(new RelationshipModel
+                {
+                    FirstChunkIndex = prev.Index,
+                    SecondChunkIndex = current.Index,
+                    RelationshipType = relType
+                });
+            }
+
+            titlesPrevIndexes[currentLevel] = current.Index;
+        }
+
+        return result;
+    }
+
+    private static List<RelationshipModel> BuildTextChunkSequenceRelations(this List<ChunkModel> sequenceChunks)
     {
         if (sequenceChunks.Count == 0)
         {
@@ -65,7 +119,7 @@ public static class ChunksExtensions
                 {
                     FirstChunkIndex = sequenceChunks[i - 1].Index,
                     SecondChunkIndex = sequenceChunks[i].Index,
-                    RelationshipType = relationshipType,
+                    RelationshipType = RelationshipType.HasNextChunk,
                 });
             }
         }

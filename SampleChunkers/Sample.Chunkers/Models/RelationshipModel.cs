@@ -1,4 +1,6 @@
-﻿namespace Sample.Chunkers.Models;
+﻿using Sample.Chunkers.Enums;
+
+namespace Sample.Chunkers.Models;
 
 public class RelationshipModel
 {
@@ -6,5 +8,5 @@ public class RelationshipModel
 
     public int SecondChunkIndex { get; set; }
 
-    public string RelationshipType { get; set; }
+    public RelationshipType RelationshipType { get; set; }
 }
