@@ -10,7 +10,7 @@ internal static partial class ChunkTypesRegexHelper
     [GeneratedRegex(@"`([^`\n]{1}[^`]{1,})\n{1}`", RegexOptions.Multiline)]
     internal static partial Regex GetUnusualCodeBlockRegex();
 
-    [GeneratedRegex(@">.*(?:\n^>.*)*", RegexOptions.Multiline)]
+    [GeneratedRegex(@"^>.*(?:\n^>.*)*", RegexOptions.Multiline)]
     internal static partial Regex GetMarkdownInfoBlockRegex();
 
     [GeneratedRegex(@"<(\/?)table[^>]*>", RegexOptions.Multiline)]

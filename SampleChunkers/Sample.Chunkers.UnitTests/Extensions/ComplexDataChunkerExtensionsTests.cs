@@ -3,7 +3,6 @@ using Sample.Chunkers.Enums;
 using Sample.Chunkers.Extensions;
 using Sample.Chunkers.Models;
 using Sample.Chunkers.UnitTests.TestData;
-using System.Text.Json;
 
 namespace Sample.Chunkers.UnitTests.Extensions;
 
@@ -206,12 +205,61 @@ public class Test
             <img src=""nested.jpg"" alt=""Nested image"">
         </td>
     </tr>
-</table>";
+</table>
+
+```
+[ WITH <common_table_expression> [,...n] ]
+MERGE
+    [ TOP ( expression ) [ PERCENT ] ]
+    [ INTO ] <target_table> [ WITH ( <merge_hint> ) ] [ [ AS ] table_alias ]
+    USING <table_source> [ [ AS ] table_alias ]
+    ON <merge_search_condition>
+    [ WHEN MATCHED [ AND <clause_search_condition> ]
+        THEN <merge_matched> ] [ ...n ]
+    [ WHEN NOT MATCHED [ BY TARGET ] [ AND <clause_search_condition> ]
+        THEN <merge_not_matched> ]
+    [ WHEN NOT MATCHED BY SOURCE [ AND <clause_search_condition> ]
+        THEN <merge_matched> ] [ ...n ]
+    [ <output_clause> ]
+    [ OPTION ( <query_hint> [ ,...n ] ) ]
+;
+
+<target_table> ::=
+{
+    [ database_name . schema_name . | schema_name . ] [ [ AS ] target_table ]
+    | @variable [ [ AS ] target_table ]
+    | common_table_expression_name [ [ AS ] target_table ]
+}
+
+<merge_hint>::=
+{
+    { [ <table_hint_limited> [ ,...n ] ]
+    [ [ , ] { INDEX ( index_val [ ,...n ] ) | INDEX = index_val }]
+    }
+}
+
+<merge_search_condition> ::=
+    <search_condition>
+
+<merge_matched>::=
+    { UPDATE SET <set_clause> | DELETE }
+
+<merge_not_matched>::=
+{
+    INSERT [ ( column_list ) ]
+        { VALUES ( values_list )
+        | DEFAULT VALUES }
+}
+
+<clause_search_condition> ::=
+    <search_condition>
+```";
 
         var expectedCodeBlocks = new[]
         {
             new ChunkModel
             {
+                Index = 1,
                 ChunkType = ChunkType.CodeBlock,
                 RelatedChunksIndexes = [],
                 RawContent = @"```html
@@ -229,11 +277,116 @@ public class Test
                     ["language"] = "html",
                 },
             },
+            new ChunkModel
+            {
+                Index = 2,
+                ChunkType = ChunkType.CodeBlock,
+                RelatedChunksIndexes = [],
+                RawContent = @"```
+[ WITH <common_table_expression> [,...n] ]
+MERGE
+    [ TOP ( expression ) [ PERCENT ] ]
+    [ INTO ] <target_table> [ WITH ( <merge_hint> ) ] [ [ AS ] table_alias ]
+    USING <table_source> [ [ AS ] table_alias ]
+    ON <merge_search_condition>
+    [ WHEN MATCHED [ AND <clause_search_condition> ]
+        THEN <merge_matched> ] [ ...n ]
+    [ WHEN NOT MATCHED [ BY TARGET ] [ AND <clause_search_condition> ]
+        THEN <merge_not_matched> ]
+    [ WHEN NOT MATCHED BY SOURCE [ AND <clause_search_condition> ]
+        THEN <merge_matched> ] [ ...n ]
+    [ <output_clause> ]
+    [ OPTION ( <query_hint> [ ,...n ] ) ]
+;
+
+<target_table> ::=
+{
+    [ database_name . schema_name . | schema_name . ] [ [ AS ] target_table ]
+    | @variable [ [ AS ] target_table ]
+    | common_table_expression_name [ [ AS ] target_table ]
+}
+
+<merge_hint>::=
+{
+    { [ <table_hint_limited> [ ,...n ] ]
+    [ [ , ] { INDEX ( index_val [ ,...n ] ) | INDEX = index_val }]
+    }
+}
+
+<merge_search_condition> ::=
+    <search_condition>
+
+<merge_matched>::=
+    { UPDATE SET <set_clause> | DELETE }
+
+<merge_not_matched>::=
+{
+    INSERT [ ( column_list ) ]
+        { VALUES ( values_list )
+        | DEFAULT VALUES }
+}
+
+<clause_search_condition> ::=
+    <search_condition>
+```",
+                Data = new Dictionary<string, object>()
+                {
+                    ["content"] = @"```
+[ WITH <common_table_expression> [,...n] ]
+MERGE
+    [ TOP ( expression ) [ PERCENT ] ]
+    [ INTO ] <target_table> [ WITH ( <merge_hint> ) ] [ [ AS ] table_alias ]
+    USING <table_source> [ [ AS ] table_alias ]
+    ON <merge_search_condition>
+    [ WHEN MATCHED [ AND <clause_search_condition> ]
+        THEN <merge_matched> ] [ ...n ]
+    [ WHEN NOT MATCHED [ BY TARGET ] [ AND <clause_search_condition> ]
+        THEN <merge_not_matched> ]
+    [ WHEN NOT MATCHED BY SOURCE [ AND <clause_search_condition> ]
+        THEN <merge_matched> ] [ ...n ]
+    [ <output_clause> ]
+    [ OPTION ( <query_hint> [ ,...n ] ) ]
+;
+
+<target_table> ::=
+{
+    [ database_name . schema_name . | schema_name . ] [ [ AS ] target_table ]
+    | @variable [ [ AS ] target_table ]
+    | common_table_expression_name [ [ AS ] target_table ]
+}
+
+<merge_hint>::=
+{
+    { [ <table_hint_limited> [ ,...n ] ]
+    [ [ , ] { INDEX ( index_val [ ,...n ] ) | INDEX = index_val }]
+    }
+}
+
+<merge_search_condition> ::=
+    <search_condition>
+
+<merge_matched>::=
+    { UPDATE SET <set_clause> | DELETE }
+
+<merge_not_matched>::=
+{
+    INSERT [ ( column_list ) ]
+        { VALUES ( values_list )
+        | DEFAULT VALUES }
+}
+
+<clause_search_condition> ::=
+    <search_condition>
+```",
+                    ["language"] = "unknown",
+                },
+            },
         };
         var expectedTables = new[]
         {
             new ChunkModel
             {
+                Index = 3,
                 ChunkType = ChunkType.Table,
                 RelatedChunksIndexes = [],
                 Data = new Dictionary<string, object>()
@@ -261,7 +414,7 @@ public class Test
         {
             new ChunkModel
             {
-                Index = 3,
+                Index = 4,
                 ChunkType = ChunkType.AdditionalLink,
                 RelatedChunksIndexes = [],
                 RawContent = @"[link](https://example.com)",
@@ -307,7 +460,7 @@ public class Test
 
         // Assert
         var chunksList = chunks.SelectMany(x => x.Value).ToArray();
-        chunksList.Should().HaveCount(5); // 2 headers, 1 code block, 1 table, 1 link
+        chunksList.Should().HaveCount(6); // 2 headers, 2 code block, 1 table, 1 link
 
         var headers = chunks[ChunkType.Title];
         headers.Should().BeEquivalentTo(expectedHeaders, options => options
@@ -323,109 +476,6 @@ public class Test
 
         var links = chunks[ChunkType.AdditionalLink];
         links.Should().BeEquivalentTo(expectedLinks);
-    }
-
-    [Test]
-    public void ReplaceChunksWithLabels_WithMixedContent_ShouldReplaceAllChunks()
-    {
-        // Arrange
-        var text = @"# Main Title
-
-## Subtitle
-
-Here is a paragraph with some text.
-
-```csharp
-public class Test
-{
-    public void Method() { }
-}
-```
-
-<table class=""custom-table"">
-    <thead>
-        <tr>
-            <th>Header 1</th>
-            <th>Header 2</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-        </tr>
-    </tbody>
-</table>
-
-![Image Alt](https://example.com/image.jpg)
-
-### Another Subtitle
-
-More text here.";
-
-        var codeBlocksIndexes = new[] { 1 };
-        var tablesIndexes = new[] { 2 };
-        var imagesIndexes = new[] { 3 };
-        var headerIndexes = new[] { 4, 5, 6 };
-
-        var expectedLabels = codeBlocksIndexes.Select(x => string.Format(ChunksConsts.CodeBlockTemplate, x))
-            .Concat(tablesIndexes.Select(x => string.Format(ChunksConsts.TableTemplate, x)))
-            .Concat(imagesIndexes.Select(x => string.Format(ChunksConsts.ImageLinkTemplate, x)))
-            .Concat(headerIndexes.Select(x => string.Format(ChunksConsts.HeaderTemplate, x)))
-            .ToArray();
-
-        var expectedResult = @$"{expectedLabels[3]}{expectedLabels[4]}Here is a paragraph with some text.
-
-{expectedLabels[0]}{expectedLabels[1]}{expectedLabels[2]}{expectedLabels[5]}More text here.";
-
-        // Act
-        var chunks = text.RetrieveChunksFromText(withTables: true, withInfoBlocks: true, withCodeBlocks: true, withImages: true, withLinks: true);
-        var processedText = text.ReplaceChunksWithLabels(chunks);
-
-        // Assert
-        processedText.Should().BeEquivalentTo(expectedResult);
-    }
-
-    [Test]
-    public void ReplaceChunksWithLabels_WithNestedContent_ShouldReplaceCorrectly()
-    {
-        // Arrange
-        var text = @"# Title with `inline code`
-
-## Subtitle with [link](https://example.com)
-
-```html
-<table>
-    <tr><td>Nested table</td></tr>
-</table>
-```
-
-<table>
-    <tr>
-        <td>
-            <h1>Nested header</h1>
-            <img src=""nested.jpg"" alt=""Nested image"">
-        </td>
-    </tr>
-</table>";
-
-        var codeBlocksIndexes = new[] { 1 };
-        var tablesIndexes = new[] { 2 };
-        var headerIndexes = new[] { 4, 5 };
-
-        var expectedLabels = codeBlocksIndexes.Select(x => string.Format(ChunksConsts.CodeBlockTemplate, x))
-            .Concat(tablesIndexes.Select(x => string.Format(ChunksConsts.TableTemplate, x)))
-            .Concat(headerIndexes.Select(x => string.Format(ChunksConsts.HeaderTemplate, x)))
-            .ToArray();
-
-        var expectedResult = @$"{expectedLabels[2]}{expectedLabels[3]}{expectedLabels[0]}{expectedLabels[1]}";
-
-        // Act
-        var chunks = text.RetrieveChunksFromText(withTables: true, withInfoBlocks: true, withCodeBlocks: true, withImages: true, withLinks: true);
-        var processedText = text.ReplaceChunksWithLabels(chunks);
-
-        // Assert
-        processedText.Should().BeEquivalentTo(expectedResult);
     }
 
     [Test]

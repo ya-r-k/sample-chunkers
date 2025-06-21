@@ -8,17 +8,6 @@ namespace Sample.Chunkers.Extensions;
 
 public static class ComplexDataChunkerExtensions
 {
-    private static readonly ChunkType[] chunkTypes = 
-    [
-        ChunkType.InfoBlock,
-        ChunkType.CodeBlock,
-        ChunkType.MathBlock,
-        ChunkType.Table,
-        ChunkType.ImageLink,
-        ChunkType.AdditionalLink,
-        ChunkType.Title,
-    ];
-
     private static readonly Dictionary<string, ChunkType> labelsChunkTypesPairs = new()
     {
         ["Title"] = ChunkType.Title,
@@ -28,17 +17,6 @@ public static class ComplexDataChunkerExtensions
         ["Info-Block"] = ChunkType.InfoBlock,
         ["Image-Link"] = ChunkType.ImageLink,
         ["External-Link"] = ChunkType.AdditionalLink,
-    };
-
-    private static readonly Dictionary<ChunkType, string> labelsTemplatesChunkTypesPairs = new()
-    {
-        [ChunkType.Title] = ChunksConsts.HeaderTemplate,
-        [ChunkType.Table] = ChunksConsts.TableTemplate,
-        [ChunkType.MathBlock] = ChunksConsts.MathBlockTemplate,
-        [ChunkType.CodeBlock] = ChunksConsts.CodeBlockTemplate,
-        [ChunkType.ImageLink] = ChunksConsts.ImageLinkTemplate,
-        [ChunkType.AdditionalLink] = ChunksConsts.ExternalLinkTemplate,
-        [ChunkType.InfoBlock] = ChunksConsts.InfoBlockTemplate,
     };
 
     public static Dictionary<ChunkType, List<ChunkModel>> ExtractSemanticChunksDeeply(this string[] texts, 
@@ -84,9 +62,11 @@ public static class ComplexDataChunkerExtensions
         bool withLinks = true, 
         int lastUsedIndex = 0)
     {
-        var dataChunks = text.RetrieveChunksFromText(withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks, lastUsedIndex);
-        var processedText = text.ReplaceChunksWithLabels(dataChunks)
-                                .PreprocessNaturalTextForChunking();
+        var textBuilder = new StringBuilder(text);
+
+        var dataChunks = textBuilder.RetrieveChunksFromText(withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks, lastUsedIndex);
+        var processedText = textBuilder.SquashLabelsIntoWords()
+                                       .PreprocessNaturalTextForChunking();
 
         var index = 0;
         foreach (var pair in dataChunks)
@@ -105,13 +85,19 @@ public static class ComplexDataChunkerExtensions
     public static Dictionary<ChunkType, List<ChunkModel>> RetrieveChunksFromText(this string text, bool withTables, bool withInfoBlocks, bool withCodeBlocks, bool withImages, bool withLinks, int lastUsedIndex = 0)
     {
         var currentText = new StringBuilder(text);
+
+        return currentText.RetrieveChunksFromText(withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks, lastUsedIndex);
+    }
+
+    private static Dictionary<ChunkType, List<ChunkModel>> RetrieveChunksFromText(this StringBuilder text, bool withTables, bool withInfoBlocks, bool withCodeBlocks, bool withImages, bool withLinks, int lastUsedIndex = 0)
+    {
         var result = new Dictionary<ChunkType, List<ChunkModel>>();
         var index = lastUsedIndex;
 
         if (withCodeBlocks)
         {
-            var items = currentText.ExtractMarkdownCodeBlocks(index);
-            items.AddRange(currentText.ExtractMarkdownUnusualCodeBlocks(index + items.Count));
+            var items = text.ExtractMarkdownCodeBlocks(index);
+            items.AddRange(text.ExtractMarkdownUnusualCodeBlocks(index + items.Count));
 
             result.Add(ChunkType.CodeBlock, items);
             index += items.Count;
@@ -119,7 +105,7 @@ public static class ComplexDataChunkerExtensions
 
         if (withTables)
         {
-            var items = currentText.ExtractHtmlTables(index);
+            var items = text.ExtractHtmlTables(index);
 
             result.Add(ChunkType.Table, items);
             index += items.Count;
@@ -127,7 +113,7 @@ public static class ComplexDataChunkerExtensions
 
         if (withInfoBlocks)
         {
-            var items = currentText.ExtractMarkdownInfoBlocks(index);
+            var items = text.ExtractMarkdownInfoBlocks(index);
 
             result.Add(ChunkType.InfoBlock, items);
             index += items.Count;
@@ -135,7 +121,7 @@ public static class ComplexDataChunkerExtensions
 
         if (withImages)
         {
-            var items = currentText.ExtractMarkdownImageLinks(index);
+            var items = text.ExtractMarkdownImageLinks(index);
 
             result.Add(ChunkType.ImageLink, items);
             index += items.Count;
@@ -143,64 +129,15 @@ public static class ComplexDataChunkerExtensions
 
         if (withLinks)
         {
-            var items = ExtractMarkdownLinks(currentText, index);
+            var items = ExtractMarkdownLinks(text, index);
 
             result.Add(ChunkType.AdditionalLink, items);
             index += items.Count;
         }
 
-        result.Add(ChunkType.Title, currentText.ExtractMarkdownHeaders(index));
+        result.Add(ChunkType.Title, text.ExtractMarkdownHeaders(index));
 
         return result;
-    }
-
-    public static Dictionary<ChunkType, List<ChunkModel>>[] RetrieveChunksFromTexts(this string[] texts, bool withTables, bool withInfoBlocks, bool withCodeBlocks, bool withImages, bool withLinks)
-    {
-        return [.. texts.Select(text => text.RetrieveChunksFromText(withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks))];
-    }
-
-    public static string ReplaceChunksWithLabels(this string text, Dictionary<ChunkType, List<ChunkModel>> chunks)
-    {
-        if (chunks.Count == 0)
-        {
-            return text;
-        }
-
-        var processedText = new StringBuilder(text);
-
-        foreach (var type in chunkTypes)
-        {
-            if (!chunks.TryGetValue(type, out var currentChunks) ||
-                currentChunks.Count == 0 ||
-                !labelsTemplatesChunkTypesPairs.TryGetValue(type, out var labelTemplate))
-                continue;
-
-            if (type == ChunkType.AdditionalLink)
-            {
-                foreach (var chunk in currentChunks)
-                {
-                    if (chunk.Data.TryGetValue("alterText", out var altText))
-                    {
-                        var replacement = altText + string.Format(labelTemplate, chunk.Index);
-                        processedText.Replace(chunk.RawContent, replacement);
-                    }
-                }
-            }
-            else
-            {
-                foreach (var chunk in currentChunks)
-                {
-                    processedText.Replace(chunk.RawContent, string.Format(labelTemplate, chunk.Index));
-                }
-            }
-        }
-
-        return SquashLabelsIntoWords(processedText);
-    }
-
-    public static string[] ReplaceChunksWithLabels(this string[] texts, Dictionary<ChunkType, List<ChunkModel>>[] chunks)
-    {
-        return [.. texts.Select((text, index) => text.ReplaceChunksWithLabels(chunks[index]))];
     }
 
     private static List<ChunkModel> ExtractSemanticChunks(this string text, int lastUsedIndex, int chunkWordsCount, SemanticsType semanticsType, double overlapPercentage = 0.0)
@@ -277,7 +214,7 @@ public static class ComplexDataChunkerExtensions
 
         foreach (Match match in matches)
         {
-            var codeBlockContent = match.Value;
+            var codeBlockContent = match.Value.Trim();
 
             var language = match.Groups[1].Value; // Название языка (если указано)
             language = string.IsNullOrEmpty(language) ? "unknown" : language.ToLower();
@@ -295,7 +232,7 @@ public static class ComplexDataChunkerExtensions
                 RelatedChunksIndexes = [],
             });
 
-            text.Replace(match.Value, string.Empty);
+            text.Replace(codeBlockContent, string.Format(ChunksConsts.CodeBlockTemplate, lastUsedIndex));
         }
 
         return [.. result];
@@ -309,7 +246,7 @@ public static class ComplexDataChunkerExtensions
 
         foreach (Match match in matches)
         {
-            var codeBlockContent = match.Value;
+            var codeBlockContent = match.Value.Trim();
 
             result.Add(new ChunkModel
             {
@@ -324,7 +261,7 @@ public static class ComplexDataChunkerExtensions
                 RelatedChunksIndexes = [],
             });
 
-            text.Replace(match.Value, string.Empty);
+            text.Replace(codeBlockContent, string.Format(ChunksConsts.CodeBlockTemplate, lastUsedIndex));
         }
 
         return [.. result];
@@ -371,7 +308,7 @@ public static class ComplexDataChunkerExtensions
                         },
                         RelatedChunksIndexes = []
                     });
-                    text.Replace(tableBlockContent, string.Empty);
+                    text.Replace(tableBlockContent, string.Format(ChunksConsts.TableTemplate, lastUsedIndex));
 
                     startIndex = -1;
                 }
@@ -430,7 +367,7 @@ public static class ComplexDataChunkerExtensions
                 RelatedChunksIndexes = relatedIndexes,
             });
 
-            text.Replace(match.Value, string.Empty);
+            text.Replace(match.Value, string.Format(ChunksConsts.HeaderTemplate, lastUsedIndex));
         }
 
         return [.. result];
