@@ -2,7 +2,7 @@
 
 namespace Sample.Chunkers.Models;
 
-public class RelationshipModel
+public record RelationshipModel
 {
     public int FirstChunkIndex { get; set; }
 

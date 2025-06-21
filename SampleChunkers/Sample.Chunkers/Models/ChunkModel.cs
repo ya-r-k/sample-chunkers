@@ -2,7 +2,7 @@
 
 namespace Sample.Chunkers.Models;
 
-public class ChunkModel
+public record ChunkModel
 {
     public int Index { get; set; }
 

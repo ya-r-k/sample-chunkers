@@ -249,7 +249,7 @@ public static class ComplexDataChunkerExtensions
 
         foreach (Match match in matches)
         {
-            var infoBlockContent = match.Value;
+            var infoBlockContent = match.Value.Trim();
 
             result.Add(new ChunkModel
             {

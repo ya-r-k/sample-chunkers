@@ -5,6 +5,120 @@ namespace Sample.Chunkers.UnitTests.TestData;
 
 internal static class RelationsTestData
 {
+    // https://www.geeksforgeeks.org/functions-in-discrete-mathematics/
+    internal static readonly List<RelationshipModel> ArticleWithMathInfoBlocks =
+    [
+        // topics graph relations
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[0].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[1].Index,
+            RelationshipType = RelationshipType.HasFirstSubtopic,
+        }, // 34 - 35
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[1].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[2].Index,
+            RelationshipType = RelationshipType.HasFirstSubtopic,
+        }, // 35 - 36
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[2].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[3].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 36 - 37
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[3].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[4].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 37 - 38
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[1].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[5].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 35 - 39
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[5].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[6].Index,
+            RelationshipType = RelationshipType.HasFirstSubtopic,
+        }, // 39 - 40
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[6].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[7].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 40 - 41
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[7].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[8].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 41 - 42
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[8].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[9].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 42 - 43
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[9].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[10].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 43 - 44
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[10].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[11].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 44 - 45
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[11].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[12].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 45 - 46
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[12].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[13].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 46 - 47
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[5].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[14].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 39 - 48
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[14].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[15].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 48 - 49
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[15].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[16].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 49 - 50
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[16].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[17].Index,
+            RelationshipType = RelationshipType.HasNextTopic,
+        }, // 50 - 51
+        new RelationshipModel
+        {
+            FirstChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[17].Index,
+            SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[18].Index,
+            RelationshipType = RelationshipType.HasFirstSubtopic,
+        }, // 51 - 52
+    ];
+
     internal static readonly List<RelationshipModel> DevToRealWorldArticleChunksRelations =
     [
         // text chunks sequence

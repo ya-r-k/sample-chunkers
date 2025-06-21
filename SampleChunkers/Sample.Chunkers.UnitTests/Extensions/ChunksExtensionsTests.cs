@@ -9,6 +9,24 @@ namespace Sample.Chunkers.UnitTests.Extensions;
 public class ChunksExtensionsTests
 {
     [Test]
+    public void BuildRelationsGraph_WithRealWorldTextWithInfoBlocks_ShouldReturnCorrectHeadersRelations()
+    {
+        // Arrange
+        var text = ArticlesTestData.ArticleWithMathInfoBlocks;
+        var expectedTopicsRelations = RelationsTestData.ArticleWithMathInfoBlocks;
+
+        // Act
+        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var relationships = chunks.BuildRelationsGraph();
+
+        // Assert
+        var chunkList = chunks.SelectMany(x => x.Value).ToArray();
+        chunkList.Should().NotBeEmpty();
+
+        relationships.Intersect(expectedTopicsRelations).Should().BeEquivalentTo(expectedTopicsRelations);
+    }
+
+    [Test]
     public void BuildRelationsGraph_WithRealWorldText_ShouldReturnCorrectChunksRelations()
     {
         // Arrange
@@ -17,10 +35,10 @@ public class ChunksExtensionsTests
 
         // Act
         var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
-        var relationsips = chunks.BuildRelationsGraph();
+        var relationships = chunks.BuildRelationsGraph();
 
         // Assert
-        relationsips.Should().BeEquivalentTo(expectedResult);
+        relationships.Should().BeEquivalentTo(expectedResult);
     }
 
     [Test]

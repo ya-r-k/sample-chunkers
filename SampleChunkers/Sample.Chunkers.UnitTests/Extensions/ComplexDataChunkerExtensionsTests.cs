@@ -460,6 +460,8 @@ More text here.";
     {
         // Arrange
         var text = ArticlesTestData.ArticleWithMathInfoBlocks;
+        var expectedInfoBlocks = InfoBlocksTestData.ArticleWithMathInfoBlocks;
+        var expectedHeaders = HeadersTestData.ArticleWithMathInfoBlocksHeaders;
 
         // Act
         var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
@@ -467,6 +469,20 @@ More text here.";
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
         chunkList.Should().NotBeEmpty();
+
+        using var writer = new StreamWriter("chunks.json");
+        writer.WriteLine(JsonSerializer.Serialize(chunks, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            AllowTrailingCommas = true,
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        }));
+
+        var infoBlocks = chunks[ChunkType.InfoBlock];
+        infoBlocks.Should().BeEquivalentTo(expectedInfoBlocks);
+
+        var headers = chunks[ChunkType.Title];
+        headers.Should().BeEquivalentTo(expectedHeaders);
     }
 
     [Test]
@@ -586,13 +602,6 @@ More text here.";
 
         // Act
         var chunks = texts.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
-
-        using var writer = new StreamWriter("chunks.json");
-        writer.WriteLine(JsonSerializer.Serialize(chunks, new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            AllowTrailingCommas = true,
-        }));
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
