@@ -111,7 +111,7 @@ public static class ComplexDataChunkerExtensions
         if (withCodeBlocks)
         {
             var items = currentText.ExtractMarkdownCodeBlocks(index);
-            items.AddRange(currentText.ExtractMarkdownUnusualCodeBlocks(index));
+            items.AddRange(currentText.ExtractMarkdownUnusualCodeBlocks(index + items.Count));
 
             result.Add(ChunkType.CodeBlock, items);
             index += items.Count;

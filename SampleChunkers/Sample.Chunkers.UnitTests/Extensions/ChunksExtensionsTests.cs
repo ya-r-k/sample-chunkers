@@ -20,9 +20,6 @@ public class ChunksExtensionsTests
         var relationships = chunks.BuildRelationsGraph();
 
         // Assert
-        var chunkList = chunks.SelectMany(x => x.Value).ToArray();
-        chunkList.Should().NotBeEmpty();
-
         relationships.Intersect(expectedTopicsRelations).Should().BeEquivalentTo(expectedTopicsRelations);
     }
 

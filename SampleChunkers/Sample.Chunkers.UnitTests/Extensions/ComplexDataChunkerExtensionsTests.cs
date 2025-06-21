@@ -470,19 +470,47 @@ More text here.";
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
         chunkList.Should().NotBeEmpty();
 
-        using var writer = new StreamWriter("chunks.json");
-        writer.WriteLine(JsonSerializer.Serialize(chunks, new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            AllowTrailingCommas = true,
-            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-        }));
-
         var infoBlocks = chunks[ChunkType.InfoBlock];
         infoBlocks.Should().BeEquivalentTo(expectedInfoBlocks);
 
         var headers = chunks[ChunkType.Title];
         headers.Should().BeEquivalentTo(expectedHeaders);
+    }
+
+    [Test]
+    public void ExtractSemanticChunksDeeply_WithRealWorldTextWithUnusualCodeBlocks_ShouldReturnCorrectChunks()
+    {
+        // Arrange
+        var text = ArticlesTestData.ArticleWithUnusualCodeBlocks;
+        var expectedCodeBlocks = CodeBlocksTestData.ArticleWithUnusualCodeBlocks;
+
+        // Act
+        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+
+        // Assert
+        var chunkList = chunks.SelectMany(x => x.Value).ToArray();
+        chunkList.Should().NotBeEmpty();
+
+        var codeBlocks = chunks[ChunkType.CodeBlock];
+        codeBlocks.Should().BeEquivalentTo(expectedCodeBlocks);
+    }
+
+    [Test]
+    public void ExtractSemanticChunksDeeply_WithRealWorldTextWithComplexNestedTables_ShouldReturnCorrectChunks()
+    {
+        // Arrange
+        var text = ArticlesTestData.WikipediaArticleWithComplexNestedTables;
+        var expectedTables = TablesTestData.WikipediaArticleWithComplexNestedTables;
+
+        // Act
+        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+
+        // Assert
+        var chunkList = chunks.SelectMany(x => x.Value).ToArray();
+        chunkList.Should().NotBeEmpty();
+
+        var tables = chunks[ChunkType.Table];
+        tables.Should().BeEquivalentTo(expectedTables);
     }
 
     [Test]
