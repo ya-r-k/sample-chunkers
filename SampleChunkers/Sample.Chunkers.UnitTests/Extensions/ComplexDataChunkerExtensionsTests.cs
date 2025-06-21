@@ -440,13 +440,6 @@ More text here.";
         // Act
         var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
 
-        using var writer = new StreamWriter("chunks.json");
-        writer.WriteLine(JsonSerializer.Serialize(chunks, new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            AllowTrailingCommas = true,
-        }));
-
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
         chunkList.Should().NotBeEmpty();
@@ -593,6 +586,13 @@ More text here.";
 
         // Act
         var chunks = texts.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+
+        using var writer = new StreamWriter("chunks.json");
+        writer.WriteLine(JsonSerializer.Serialize(chunks, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            AllowTrailingCommas = true,
+        }));
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();

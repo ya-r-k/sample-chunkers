@@ -21,9 +21,6 @@ public class ChunksExtensionsTests
 
         // Assert
         relationsips.Should().BeEquivalentTo(expectedResult);
-
-        using var writer = new StreamWriter("wikipedia_article_with_multiple_Tables.md");
-        writer.WriteLine(ArticlesTestData.WikipediaArticleWithComplexNestedTables.ToString());
     }
 
     [Test]

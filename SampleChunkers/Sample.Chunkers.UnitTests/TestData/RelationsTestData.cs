@@ -68,6 +68,18 @@ internal static class RelationsTestData
         // text chunk with index = 9 (4-th)
         // text chunk with index = 10 (5-th)
         // text chunk with index = 11 (6-th)
+        new RelationshipModel
+        {
+            FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[5].Index,
+            SecondChunkIndex = CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[1].Index,
+            RelationshipType = RelationshipType.RelatedCodeBlock,
+        },
+        new RelationshipModel
+        {
+            FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[5].Index,
+            SecondChunkIndex = CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[2].Index,
+            RelationshipType = RelationshipType.RelatedCodeBlock,
+        },
         // text chunk with index = 12 (7-th)
         new RelationshipModel
         {
@@ -88,6 +100,12 @@ internal static class RelationsTestData
             RelationshipType = RelationshipType.RelatedCodeBlock,
         },
         // text chunk with index = 13 (8-th)
+        new RelationshipModel
+        {
+            FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[7].Index,
+            SecondChunkIndex = CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[3].Index,
+            RelationshipType = RelationshipType.RelatedCodeBlock,
+        },
         new RelationshipModel
         {
             FirstChunkIndex = TextChunkTestData.DevToRealWorldArticleTextChunks[7].Index,
