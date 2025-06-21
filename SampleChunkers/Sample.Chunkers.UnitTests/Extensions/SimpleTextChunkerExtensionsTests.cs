@@ -189,7 +189,7 @@ This is about what elite developers do mentally and emotionally — and how to i
         {
             "When you write code, you're not just typing logic.\nYou're creating rituals. Repeating patterns.\nModern-day incantations that manipulate machines.\n\nAnd every master developer eventually learns:\n\nProgramming is about mindset, rituals, and transformation - not just knowledge.\n\n",
             "And every master developer eventually learns:\n\nProgramming is about mindset, rituals, and transformation - not just knowledge.\n\n",
-            "In this article, you'll learn how to turn your programming into a craft, build mental rituals, and transform debugging, learning, and building into something far more powerful.\n\n",
+            "In this article, you'll learn how to turn your programming into a craft, build mental rituals, and transform debugging, learning, and building into something far more powerful.\n\nThere are thousands of articles on:\n\n",
             "There are thousands of articles on:\n\n- Best IDEs\n- Fastest frameworks\n- Which language to learn in 2025\n\nThis isn't that.\n\n",
             "This is about what elite developers do mentally and emotionally - and how to install those behaviors into your workflow, no matter what tools you use.",
         };

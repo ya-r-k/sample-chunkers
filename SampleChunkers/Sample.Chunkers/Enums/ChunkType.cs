@@ -6,7 +6,8 @@ public enum ChunkType
     Table = 1,
     CodeBlock = 2,
     MathBlock = 3,
-    ImageLink = 4,
-    Title = 5,
-    ExternalLink = 6,
+    InfoBlock = 4,
+    ImageLink = 5,
+    Title = 6,
+    AdditionalLink = 7,
 }

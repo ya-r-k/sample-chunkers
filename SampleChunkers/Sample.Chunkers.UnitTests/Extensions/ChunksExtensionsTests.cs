@@ -3,8 +3,6 @@ using Sample.Chunkers.Enums;
 using Sample.Chunkers.Extensions;
 using Sample.Chunkers.Models;
 using Sample.Chunkers.UnitTests.TestData;
-using System.Text.Encodings.Web;
-using System.Text.Json;
 
 namespace Sample.Chunkers.UnitTests.Extensions;
 
@@ -23,6 +21,9 @@ public class ChunksExtensionsTests
 
         // Assert
         relationsips.Should().BeEquivalentTo(expectedResult);
+
+        using var writer = new StreamWriter("wikipedia_article_with_multiple_Tables.md");
+        writer.WriteLine(ArticlesTestData.WikipediaArticleWithComplexNestedTables.ToString());
     }
 
     [Test]

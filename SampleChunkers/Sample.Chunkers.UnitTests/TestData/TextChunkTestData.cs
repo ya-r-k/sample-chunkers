@@ -73,12 +73,19 @@ internal static class TextChunkTestData
         {
             Index = 11,
             ChunkType = ChunkType.Text,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new()
+            {
+                [ChunkType.CodeBlock] =
+                [
+                    CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[1].Index,
+                    CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[2].Index,
+                ],
+            },
             Data = new Dictionary<string, object>
             {
-                ["content"] = "Java stack size can be configured using the JVM argument ‘-Xss’, for example ‘java -Xss1M MyProgram‘ where 1M is the size of the call back for MyProgram (Goodrich, Tamassia, & Goldwasser, 2023). It is best practice to use a stack or tail recursion, if possible, in this scenario. “A recursion is a tail recursion if any recursive call that is made from one context is the very last operation in that context, with the return value of the recursive call (if any) immediately returned by the enclosing recursion” (Goodrich, Tamassia, & Goldwasser, 2023, 5.5 Eliminating tail recursion). Note that while some programming languages optimize tail-recursive functions, Java does not. Thus, in Java, an optimized tail-recursive function needs to be implemented implicitly.\n\n",
+                ["content"] = "Java stack size can be configured using the JVM argument \u2018-Xss\u2019, for example \u2018java -Xss1M MyProgram\u2018 where 1M is the size of the call back for MyProgram (Goodrich, Tamassia, \u0026 Goldwasser, 2023). It is best practice to use a stack or tail recursion, if possible, in this scenario. \u201CA recursion is a tail recursion if any recursive call that is made from one context is the very last operation in that context, with the return value of the recursive call (if any) immediately returned by the enclosing recursion\u201D (Goodrich, Tamassia, \u0026 Goldwasser, 2023, 5.5 Eliminating tail recursion). Note that while some programming languages optimize tail-recursive functions, Java does not. Thus, in Java, an optimized tail-recursive function needs to be implemented implicitly.\n\nBelow are examples of implementing a depth-first search (DFS) traversal of a tree, using recursion with a possibility of \u2018StackOverflowError \u2019and a stack (Dequee) eliminating the possibility of a \u2018StackOverflowError \u2019:\n\nUsing recursion possibility of \u2018StackOverflowError\u2019:\n\nEnter fullscreen mode\n\nExit fullscreen mode\n\nUsing the stack approach eliminating the possibility of a \u2018StackOverflowError\u2019:\n\nEnter fullscreen mode\n\nExit fullscreen mode\n\nOutput:\n\n",
             },
-            RawContent = "Java stack size can be configured using the JVM argument ‘-Xss’, for example ‘java -Xss1M MyProgram‘ where 1M is the size of the call back for MyProgram (Goodrich, Tamassia, & Goldwasser, 2023). It is best practice to use a stack or tail recursion, if possible, in this scenario. “A recursion is a tail recursion if any recursive call that is made from one context is the very last operation in that context, with the return value of the recursive call (if any) immediately returned by the enclosing recursion” (Goodrich, Tamassia, & Goldwasser, 2023, 5.5 Eliminating tail recursion). Note that while some programming languages optimize tail-recursive functions, Java does not. Thus, in Java, an optimized tail-recursive function needs to be implemented implicitly.\n\n",
+            RawContent = "Java stack size can be configured using the JVM argument \u2018-Xss\u2019, for example \u2018java -Xss1M MyProgram\u2018 where 1M is the size of the call back for MyProgram (Goodrich, Tamassia, \u0026 Goldwasser, 2023). It is best practice to use a stack or tail recursion, if possible, in this scenario. \u201CA recursion is a tail recursion if any recursive call that is made from one context is the very last operation in that context, with the return value of the recursive call (if any) immediately returned by the enclosing recursion\u201D (Goodrich, Tamassia, \u0026 Goldwasser, 2023, 5.5 Eliminating tail recursion). Note that while some programming languages optimize tail-recursive functions, Java does not. Thus, in Java, an optimized tail-recursive function needs to be implemented implicitly.\n\nBelow are examples of implementing a depth-first search (DFS) traversal of a tree, using recursion with a possibility of \u2018StackOverflowError \u2019and a stack (Dequee) eliminating the possibility of a \u2018StackOverflowError \u2019:\n\nUsing recursion possibility of \u2018StackOverflowError\u2019:\n\nEnter fullscreen mode\n\nExit fullscreen mode\n\nUsing the stack approach eliminating the possibility of a \u2018StackOverflowError\u2019:\n\nEnter fullscreen mode\n\nExit fullscreen mode\n\nOutput:\n\n",
         },
         new ChunkModel
         {
@@ -105,13 +112,17 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.Text,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ExternalLink] = [LinksTestData.DevToRealWorldArticleLinks[0].Index],
+                [ChunkType.CodeBlock] =
+                [
+                    CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[3].Index,
+                ],
+                [ChunkType.AdditionalLink] = [LinksTestData.DevToRealWorldArticleLinks[0].Index],
             },
             Data = new Dictionary<string, object>
             {
-                ["content"] = "While recursion simplifies complex problems and code readability, excessive recursive calls can lead to stack overflow errors, particularly in deeply nested structures such as trees, making iterative approaches using explicit stacks preferable in certain cases.\n\n* * *\n\n**References:**\n\nArslan, Ş. (2023, February 25). *A Comprehensive tree traversal guide in Javascript - General and binary tree traversals.* Shinar Arslan Blog. https://www.sahinarslan.tech/posts/a-comprehensive-tree-traversal-guide-in-javascript-general-and-binary-tree-traversals\n\nGeeksforGeeks (2024, August 18). *Introduction to recursion*. GeeksforGeeks. https://www.geeksforgeeks.org/introduction-to-recursion-2/Links to an external site\n\nGoodrich T, M., Tamassia, R., & Goldwasser H. M. (2023, June). Chapter 5: Algorithms recursion. *Data structures and algorithms*. zyBook ISBN: 979–8–203–40813–6.\n\n* * *\n\nOriginally published at Alex.omegapy - Mediumon September 22, 2024.",
+                ["content"] = "Enter fullscreen mode\n\nExit fullscreen mode\n\nTo summarize, recursion is a technique in which a function calls itself to solve smaller instances of the same problem, it is often used in problems like tree traversal, graph algorithms, and divide-and-conquer strategies. While recursion simplifies complex problems and code readability, excessive recursive calls can lead to stack overflow errors, particularly in deeply nested structures such as trees, making iterative approaches using explicit stacks preferable in certain cases.\n\n* * *\n\n**References:**\n\nArslan, \u015E. (2023, February 25). *A Comprehensive tree traversal guide in Javascript - General and binary tree traversals.* Shinar Arslan Blog. https://www.sahinarslan.tech/posts/a-comprehensive-tree-traversal-guide-in-javascript-general-and-binary-tree-traversals\n\nGeeksforGeeks (2024, August 18). *Introduction to recursion*. GeeksforGeeks. https://www.geeksforgeeks.org/introduction-to-recursion-2/Links to an external site\n\nGoodrich T, M., Tamassia, R., \u0026 Goldwasser H. M. (2023, June). Chapter 5: Algorithms recursion. *Data structures and algorithms*. zyBook ISBN: 979\u20138\u2013203\u201340813\u20136.\n\n* * *\n\nOriginally published at Alex.omegapy - Mediumon September 22, 2024.",
             },
-            RawContent = "While recursion simplifies complex problems and code readability, excessive recursive calls can lead to stack overflow errors, particularly in deeply nested structures such as trees, making iterative approaches using explicit stacks preferable in certain cases.\n\n* * *\n\n**References:**\n\nArslan, Ş. (2023, February 25). *A Comprehensive tree traversal guide in Javascript - General and binary tree traversals.* Shinar Arslan Blog. https://www.sahinarslan.tech/posts/a-comprehensive-tree-traversal-guide-in-javascript-general-and-binary-tree-traversals\n\nGeeksforGeeks (2024, August 18). *Introduction to recursion*. GeeksforGeeks. https://www.geeksforgeeks.org/introduction-to-recursion-2/Links to an external site\n\nGoodrich T, M., Tamassia, R., & Goldwasser H. M. (2023, June). Chapter 5: Algorithms recursion. *Data structures and algorithms*. zyBook ISBN: 979–8–203–40813–6.\n\n* * *\n\nOriginally published at Alex.omegapy - Mediumon September 22, 2024.",
+            RawContent = "Enter fullscreen mode\n\nExit fullscreen mode\n\nTo summarize, recursion is a technique in which a function calls itself to solve smaller instances of the same problem, it is often used in problems like tree traversal, graph algorithms, and divide-and-conquer strategies. While recursion simplifies complex problems and code readability, excessive recursive calls can lead to stack overflow errors, particularly in deeply nested structures such as trees, making iterative approaches using explicit stacks preferable in certain cases.\n\n* * *\n\n**References:**\n\nArslan, \u015E. (2023, February 25). *A Comprehensive tree traversal guide in Javascript - General and binary tree traversals.* Shinar Arslan Blog. https://www.sahinarslan.tech/posts/a-comprehensive-tree-traversal-guide-in-javascript-general-and-binary-tree-traversals\n\nGeeksforGeeks (2024, August 18). *Introduction to recursion*. GeeksforGeeks. https://www.geeksforgeeks.org/introduction-to-recursion-2/Links to an external site\n\nGoodrich T, M., Tamassia, R., \u0026 Goldwasser H. M. (2023, June). Chapter 5: Algorithms recursion. *Data structures and algorithms*. zyBook ISBN: 979\u20138\u2013203\u201340813\u20136.\n\n* * *\n\nOriginally published at Alex.omegapy - Mediumon September 22, 2024.",
         },
     ];
 
@@ -129,7 +140,7 @@ internal static class TextChunkTestData
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[0].Index,
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[1].Index,
                 ],
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[0].Index,
                 ],
@@ -194,7 +205,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.Text,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[1].Index,
                 ],
@@ -211,7 +222,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.Text,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[1].Index,
                 ],
@@ -271,7 +282,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.Text,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[2].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[3].Index,
@@ -289,7 +300,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.Text,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[2].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[3].Index,
@@ -316,7 +327,7 @@ internal static class TextChunkTestData
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[3].Index
                 ],
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[4].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[5].Index,
@@ -342,7 +353,7 @@ internal static class TextChunkTestData
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[3].Index
                 ],
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[5].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[6].Index,
@@ -361,7 +372,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.Text,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[6].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[7].Index,
@@ -383,7 +394,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.Text,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[8].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[9].Index,
@@ -411,7 +422,7 @@ internal static class TextChunkTestData
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[0].Index,
                 ],
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[8].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[9].Index,
@@ -463,7 +474,7 @@ internal static class TextChunkTestData
                 [
                     ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[0].Index,
                 ],
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[0].Index,
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[1].Index,
@@ -502,7 +513,7 @@ internal static class TextChunkTestData
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[3].Index,
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[4].Index,
                 ],
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[1].Index,
                 ],
@@ -571,7 +582,7 @@ internal static class TextChunkTestData
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[6].Index,
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[7].Index,
                 ],
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[2].Index,
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[3].Index,
@@ -612,7 +623,7 @@ internal static class TextChunkTestData
                     ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[0].Index,
                     ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[1].Index,
                 ],
-                [ChunkType.ExternalLink] =
+                [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[2].Index,
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[3].Index,

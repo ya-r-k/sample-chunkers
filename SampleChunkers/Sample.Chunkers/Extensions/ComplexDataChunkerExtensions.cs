@@ -1,8 +1,8 @@
 ﻿using Sample.Chunkers.Enums;
+using Sample.Chunkers.Helpers;
 using Sample.Chunkers.Models;
 using System.Text;
 using System.Text.RegularExpressions;
-using Sample.Chunkers.Helpers;
 
 namespace Sample.Chunkers.Extensions;
 
@@ -10,11 +10,12 @@ public static class ComplexDataChunkerExtensions
 {
     private static readonly ChunkType[] chunkTypes = 
     [
+        ChunkType.InfoBlock,
         ChunkType.CodeBlock,
         ChunkType.MathBlock,
         ChunkType.Table,
         ChunkType.ImageLink,
-        ChunkType.ExternalLink,
+        ChunkType.AdditionalLink,
         ChunkType.Title,
     ];
 
@@ -24,8 +25,9 @@ public static class ComplexDataChunkerExtensions
         ["Table"] = ChunkType.Table,
         ["Math-Block"] = ChunkType.MathBlock,
         ["Code-Block"] = ChunkType.CodeBlock,
+        ["Info-Block"] = ChunkType.InfoBlock,
         ["Image-Link"] = ChunkType.ImageLink,
-        ["External-Link"] = ChunkType.ExternalLink,
+        ["External-Link"] = ChunkType.AdditionalLink,
     };
 
     private static readonly Dictionary<ChunkType, string> labelsTemplatesChunkTypesPairs = new()
@@ -35,17 +37,26 @@ public static class ComplexDataChunkerExtensions
         [ChunkType.MathBlock] = ChunksConsts.MathBlockTemplate,
         [ChunkType.CodeBlock] = ChunksConsts.CodeBlockTemplate,
         [ChunkType.ImageLink] = ChunksConsts.ImageLinkTemplate,
-        [ChunkType.ExternalLink] = ChunksConsts.ExternalLinkTemplate,
+        [ChunkType.AdditionalLink] = ChunksConsts.ExternalLinkTemplate,
+        [ChunkType.InfoBlock] = ChunksConsts.InfoBlockTemplate,
     };
 
-    public static Dictionary<ChunkType, List<ChunkModel>> ExtractSemanticChunksDeeply(this string[] texts, int chunkWordsCount, SemanticsType semanticsType, double overlapPercentage = 0.0, bool withTables = true, bool withCodeBlocks = true, bool withImages = true, bool withLinks = true)
+    public static Dictionary<ChunkType, List<ChunkModel>> ExtractSemanticChunksDeeply(this string[] texts, 
+        int chunkWordsCount, 
+        SemanticsType semanticsType, 
+        double overlapPercentage = 0.0, 
+        bool withTables = true,
+        bool withInfoBlocks = true,
+        bool withCodeBlocks = true, 
+        bool withImages = true, 
+        bool withLinks = true)
     {
         var result = new Dictionary<ChunkType, List<ChunkModel>>();
 
         foreach (var text in texts)
         {
             var lastUsedIndex = result.Keys.Count > 0 ? result.SelectMany(x => x.Value).Select(x => x.Index).Max() : 0;
-            var chunks = text.ExtractSemanticChunksDeeply(chunkWordsCount, semanticsType, overlapPercentage, withTables, withCodeBlocks, withImages, withLinks, lastUsedIndex);
+            var chunks = text.ExtractSemanticChunksDeeply(chunkWordsCount, semanticsType, overlapPercentage, withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks, lastUsedIndex);
 
             if (lastUsedIndex == 0)
             {
@@ -66,13 +77,14 @@ public static class ComplexDataChunkerExtensions
         int chunkWordsCount, 
         SemanticsType semanticsType, 
         double overlapPercentage = 0.0, 
-        bool withTables = true, 
+        bool withTables = true,
+        bool withInfoBlocks = true,
         bool withCodeBlocks = true, 
         bool withImages = true, 
         bool withLinks = true, 
         int lastUsedIndex = 0)
     {
-        var dataChunks = text.RetrieveChunksFromText(withTables, withCodeBlocks, withImages, withLinks, lastUsedIndex);
+        var dataChunks = text.RetrieveChunksFromText(withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks, lastUsedIndex);
         var processedText = text.ReplaceChunksWithLabels(dataChunks)
                                 .PreprocessNaturalTextForChunking();
 
@@ -90,7 +102,7 @@ public static class ComplexDataChunkerExtensions
         return dataChunks;
     }
 
-    public static Dictionary<ChunkType, List<ChunkModel>> RetrieveChunksFromText(this string text, bool withTables, bool withCodeBlocks, bool withImages, bool withLinks, int lastUsedIndex = 0)
+    public static Dictionary<ChunkType, List<ChunkModel>> RetrieveChunksFromText(this string text, bool withTables, bool withInfoBlocks, bool withCodeBlocks, bool withImages, bool withLinks, int lastUsedIndex = 0)
     {
         var currentText = new StringBuilder(text);
         var result = new Dictionary<ChunkType, List<ChunkModel>>();
@@ -99,6 +111,7 @@ public static class ComplexDataChunkerExtensions
         if (withCodeBlocks)
         {
             var items = currentText.ExtractMarkdownCodeBlocks(index);
+            items.AddRange(currentText.ExtractMarkdownUnusualCodeBlocks(index));
 
             result.Add(ChunkType.CodeBlock, items);
             index += items.Count;
@@ -109,6 +122,14 @@ public static class ComplexDataChunkerExtensions
             var items = currentText.ExtractHtmlTables(index);
 
             result.Add(ChunkType.Table, items);
+            index += items.Count;
+        }
+
+        if (withInfoBlocks)
+        {
+            var items = currentText.ExtractMarkdownInfoBlocks(index);
+
+            result.Add(ChunkType.InfoBlock, items);
             index += items.Count;
         }
 
@@ -124,7 +145,7 @@ public static class ComplexDataChunkerExtensions
         {
             var items = ExtractMarkdownLinks(currentText, index);
 
-            result.Add(ChunkType.ExternalLink, items);
+            result.Add(ChunkType.AdditionalLink, items);
             index += items.Count;
         }
 
@@ -133,9 +154,9 @@ public static class ComplexDataChunkerExtensions
         return result;
     }
 
-    public static Dictionary<ChunkType, List<ChunkModel>>[] RetrieveChunksFromTexts(this string[] texts, bool withTables, bool withCodeBlocks, bool withImages, bool withLinks)
+    public static Dictionary<ChunkType, List<ChunkModel>>[] RetrieveChunksFromTexts(this string[] texts, bool withTables, bool withInfoBlocks, bool withCodeBlocks, bool withImages, bool withLinks)
     {
-        return [.. texts.Select(text => text.RetrieveChunksFromText(withTables, withCodeBlocks, withImages, withLinks))];
+        return [.. texts.Select(text => text.RetrieveChunksFromText(withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks))];
     }
 
     public static string ReplaceChunksWithLabels(this string text, Dictionary<ChunkType, List<ChunkModel>> chunks)
@@ -154,7 +175,7 @@ public static class ComplexDataChunkerExtensions
                 !labelsTemplatesChunkTypesPairs.TryGetValue(type, out var labelTemplate))
                 continue;
 
-            if (type == ChunkType.ExternalLink)
+            if (type == ChunkType.AdditionalLink)
             {
                 foreach (var chunk in currentChunks)
                 {
@@ -220,25 +241,85 @@ public static class ComplexDataChunkerExtensions
         return text.ToString();
     }
 
-    private static List<ChunkModel> ExtractMarkdownCodeBlocks(this StringBuilder text, int lastUsedIndex = 0)
+    private static List<ChunkModel> ExtractMarkdownInfoBlocks(this StringBuilder text, int lastUsedIndex = 0)
     {
         var result = new List<ChunkModel>();
-        var matches = ChunkTypesRegexHelper.GetCodeBlockRegex().Matches(text.ToString());
+        var matches = ChunkTypesRegexHelper.GetMarkdownInfoBlockRegex()
+                                           .Matches(text.ToString());
 
         foreach (Match match in matches)
         {
+            var infoBlockContent = match.Value;
+
+            result.Add(new ChunkModel
+            {
+                Index = ++lastUsedIndex,
+                RawContent = infoBlockContent,
+                ChunkType = ChunkType.InfoBlock,
+                Data = new Dictionary<string, object>()
+                {
+                    ["content"] = infoBlockContent,
+                },
+                RelatedChunksIndexes = [],
+            });
+
+            text.Replace(match.Value, string.Empty);
+        }
+
+        return [.. result];
+    }
+
+    private static List<ChunkModel> ExtractMarkdownCodeBlocks(this StringBuilder text, int lastUsedIndex = 0)
+    {
+        var result = new List<ChunkModel>();
+        var matches = ChunkTypesRegexHelper.GetCodeBlockRegex()
+                                           .Matches(text.ToString());
+
+        foreach (Match match in matches)
+        {
+            var codeBlockContent = match.Value;
+
             var language = match.Groups[1].Value; // Название языка (если указано)
             language = string.IsNullOrEmpty(language) ? "unknown" : language.ToLower();
 
             result.Add(new ChunkModel
             {
                 Index = ++lastUsedIndex,
-                RawContent = match.Value,
+                RawContent = codeBlockContent,
                 ChunkType = ChunkType.CodeBlock,
                 Data = new Dictionary<string, object>()
                 {
                     ["language"] = language,
-                    ["content"] = match.Value,
+                    ["content"] = codeBlockContent,
+                },
+                RelatedChunksIndexes = [],
+            });
+
+            text.Replace(match.Value, string.Empty);
+        }
+
+        return [.. result];
+    }
+
+    private static List<ChunkModel> ExtractMarkdownUnusualCodeBlocks(this StringBuilder text, int lastUsedIndex = 0)
+    {
+        var result = new List<ChunkModel>();
+        var matches = ChunkTypesRegexHelper.GetUnusualCodeBlockRegex()
+                                           .Matches(text.ToString());
+
+        foreach (Match match in matches)
+        {
+            var codeBlockContent = match.Value;
+
+            result.Add(new ChunkModel
+            {
+                Index = ++lastUsedIndex,
+                RawContent = codeBlockContent,
+                ChunkType = ChunkType.CodeBlock,
+                Data = new Dictionary<string, object>()
+                {
+                    ["language"] = "unknown",
+                    ["content"] = codeBlockContent,
                 },
                 RelatedChunksIndexes = [],
             });
@@ -251,24 +332,50 @@ public static class ComplexDataChunkerExtensions
 
     private static List<ChunkModel> ExtractHtmlTables(this StringBuilder text, int lastUsedIndex = 0)
     {
+        var rawText = text.ToString();
         var result = new List<ChunkModel>();
-        var matches = ChunkTypesRegexHelper.GetHtmlTableRegex().Matches(text.ToString());
-        
-        foreach (Match match in matches)
+        var tagsMatches = ChunkTypesRegexHelper.GetHtmlTableTagsRegex().Matches(rawText);
+        var depth = 0;
+        var startIndex = -1;
+
+        foreach (Match tagMatch in tagsMatches)
         {
-            var currentChunk = new ChunkModel
+            var isClosing = tagMatch.Groups[1].Value.Length != 0;
+
+            if (!isClosing)
             {
-                Index = ++lastUsedIndex,
-                RawContent = match.Value,
-                ChunkType = ChunkType.Table,
-                Data = new Dictionary<string, object>
+                if (depth == 0)
                 {
-                    ["content"] = match.Value,
-                },
-                RelatedChunksIndexes = []
-            };
-            result.Add(currentChunk);
-            text.Replace(currentChunk.RawContent, string.Empty);
+                    startIndex = tagMatch.Index;
+                }
+
+                depth++;
+            }
+            else
+            {
+                depth--;
+
+                if (depth == 0 && startIndex >= 0)
+                {
+                    var endIndex = tagMatch.Index + tagMatch.Length;
+                    var tableBlockContent = rawText[startIndex..endIndex];
+                    
+                    result.Add(new ChunkModel
+                    {
+                        Index = ++lastUsedIndex,
+                        RawContent = tableBlockContent,
+                        ChunkType = ChunkType.Table,
+                        Data = new Dictionary<string, object>
+                        {
+                            ["content"] = tableBlockContent,
+                        },
+                        RelatedChunksIndexes = []
+                    });
+                    text.Replace(tableBlockContent, string.Empty);
+
+                    startIndex = -1;
+                }
+            }
         }
 
         return [.. result];
@@ -343,7 +450,7 @@ public static class ComplexDataChunkerExtensions
             {
                 Index = ++lastUsedIndex,
                 RawContent = match.Value,
-                ChunkType = ChunkType.ExternalLink,
+                ChunkType = ChunkType.AdditionalLink,
                 Data = new Dictionary<string, object>
                 {
                     ["url1"] = match.Groups[2].Value,

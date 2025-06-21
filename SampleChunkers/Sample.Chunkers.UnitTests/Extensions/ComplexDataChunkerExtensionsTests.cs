@@ -3,6 +3,7 @@ using Sample.Chunkers.Enums;
 using Sample.Chunkers.Extensions;
 using Sample.Chunkers.Models;
 using Sample.Chunkers.UnitTests.TestData;
+using System.Text.Json;
 
 namespace Sample.Chunkers.UnitTests.Extensions;
 
@@ -161,7 +162,7 @@ public class Test
         };
         
         // Act
-        var chunks = text.RetrieveChunksFromText(withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = text.RetrieveChunksFromText(withTables: true, withInfoBlocks: true, withCodeBlocks: true, withImages: true, withLinks: true);
 
         // Assert
         var chunksList = chunks.SelectMany(x => x.Value).ToArray();
@@ -261,7 +262,7 @@ public class Test
             new ChunkModel
             {
                 Index = 3,
-                ChunkType = ChunkType.ExternalLink,
+                ChunkType = ChunkType.AdditionalLink,
                 RelatedChunksIndexes = [],
                 RawContent = @"[link](https://example.com)",
                 Data = new Dictionary<string, object>()
@@ -302,7 +303,7 @@ public class Test
 
 
         // Act
-        var chunks = text.RetrieveChunksFromText(withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = text.RetrieveChunksFromText(withTables: true, withInfoBlocks: true, withCodeBlocks: true, withImages: true, withLinks: true);
 
         // Assert
         var chunksList = chunks.SelectMany(x => x.Value).ToArray();
@@ -320,7 +321,7 @@ public class Test
         tables.Should().BeEquivalentTo(expectedTables, options => options
             .Excluding(x => x.Index));
 
-        var links = chunks[ChunkType.ExternalLink];
+        var links = chunks[ChunkType.AdditionalLink];
         links.Should().BeEquivalentTo(expectedLinks);
     }
 
@@ -378,7 +379,7 @@ More text here.";
 {expectedLabels[0]}{expectedLabels[1]}{expectedLabels[2]}{expectedLabels[5]}More text here.";
 
         // Act
-        var chunks = text.RetrieveChunksFromText(withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = text.RetrieveChunksFromText(withTables: true, withInfoBlocks: true, withCodeBlocks: true, withImages: true, withLinks: true);
         var processedText = text.ReplaceChunksWithLabels(chunks);
 
         // Assert
@@ -420,7 +421,7 @@ More text here.";
         var expectedResult = @$"{expectedLabels[2]}{expectedLabels[3]}{expectedLabels[0]}{expectedLabels[1]}";
 
         // Act
-        var chunks = text.RetrieveChunksFromText(withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = text.RetrieveChunksFromText(withTables: true, withInfoBlocks: true, withCodeBlocks: true, withImages: true, withLinks: true);
         var processedText = text.ReplaceChunksWithLabels(chunks);
 
         // Assert
@@ -439,6 +440,13 @@ More text here.";
         // Act
         var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
 
+        using var writer = new StreamWriter("chunks.json");
+        writer.WriteLine(JsonSerializer.Serialize(chunks, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            AllowTrailingCommas = true,
+        }));
+
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
         chunkList.Should().NotBeEmpty();
@@ -450,8 +458,22 @@ More text here.";
         textsChunks.Should().BeEquivalentTo(expectedTexts, options => options
             .Excluding(x => x.Index));
 
-        var links = chunks[ChunkType.ExternalLink];
+        var links = chunks[ChunkType.AdditionalLink];
         links.Should().BeEquivalentTo(expectedLinks);
+    }
+
+    [Test]
+    public void ExtractSemanticChunksDeeply_WithRealWorldTextWithInfoBlocks_ShouldReturnCorrectChunks()
+    {
+        // Arrange
+        var text = ArticlesTestData.ArticleWithMathInfoBlocks;
+
+        // Act
+        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+
+        // Assert
+        var chunkList = chunks.SelectMany(x => x.Value).ToArray();
+        chunkList.Should().NotBeEmpty();
     }
 
     [Test]
@@ -582,7 +604,7 @@ More text here.";
         var tables = chunks[ChunkType.Table];
         tables.Should().BeEquivalentTo(expectedTables);
 
-        var links = chunks[ChunkType.ExternalLink];
+        var links = chunks[ChunkType.AdditionalLink];
         links.Should().BeEquivalentTo(expectedLinks);
 
         var imageLinks = chunks[ChunkType.ImageLink];

@@ -10,6 +10,8 @@ internal static class ChunksConsts
 
     internal const string CodeBlockTemplate = "[RELATEDCHUNK]Code-Block-{0}[/RELATEDCHUNK]";
 
+    internal const string InfoBlockTemplate = "[RELATEDCHUNK]Info-Block-{0}[/RELATEDCHUNK]";
+
     internal const string MathBlockTemplate = "[RELATEDCHUNK]Math-Block-{0}[/RELATEDCHUNK]";
 
     internal const string HeaderTemplate = "[RELATEDCHUNK]Title-{0}[/RELATEDCHUNK]";

@@ -7,10 +7,16 @@ internal static partial class ChunkTypesRegexHelper
     [GeneratedRegex(@"```\s*(\w*)\s*\n([\s\S]*?)```", RegexOptions.Multiline)]
     internal static partial Regex GetCodeBlockRegex();
 
-    [GeneratedRegex(@"<table[^>]*>[\s\S]*?</table>", RegexOptions.Multiline)]
-    internal static partial Regex GetHtmlTableRegex();
+    [GeneratedRegex(@"`([^`\n]{1}[^`]{1,})\n{1}`", RegexOptions.Multiline)]
+    internal static partial Regex GetUnusualCodeBlockRegex();
 
-    [GeneratedRegex(@"\[([^\]]*|\[RELATEDCHUNK][^\]]*\[/RELATEDCHUNK][^\]]*)\]\(([^)]+)\)", RegexOptions.Singleline)]
+    [GeneratedRegex(@">.*(?:\n^>.*)*", RegexOptions.Multiline)]
+    internal static partial Regex GetMarkdownInfoBlockRegex();
+
+    [GeneratedRegex(@"<(\/?)table[^>]*>", RegexOptions.Multiline)]
+    internal static partial Regex GetHtmlTableTagsRegex();
+
+    [GeneratedRegex(@"\[([^\]]*|[^\]]*\[RELATEDCHUNK][^\]]*\[\/RELATEDCHUNK][^\]]*)\]\(([^)]+)\)", RegexOptions.Singleline)]
     internal static partial Regex GetExternalLinkRegex();
 
     [GeneratedRegex(@"(#+)\s*(.+)", RegexOptions.Multiline)]

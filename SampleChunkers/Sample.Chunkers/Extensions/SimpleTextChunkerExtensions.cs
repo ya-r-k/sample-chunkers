@@ -15,7 +15,7 @@ public static class SimpleTextChunkerExtensions
     {
         var indexes = new List<int>();
         int wordIndex = 0;
-        var sentences = Regex.Split(text, @"(?<=[.!?])\s+");
+        var sentences = Regex.Split(text, @"(?<=[:]\n|\.|!|\?)\s+");
 
         foreach (var sentence in sentences)
         {
@@ -74,10 +74,10 @@ public static class SimpleTextChunkerExtensions
             _ => throw new InvalidOperationException(),
         };
 
-        return GetChunks(words, semanticsIndexes, chunkWordsCount, overlapPercentage);
+        return GetChunks(words, semanticsIndexes, chunkWordsCount, text, overlapPercentage);
     }
 
-    private static string[] GetChunks(this Span<string> words, int[] semanticsIndexes, int chunkWordsCount, double overlapPercentage = 0.0)
+    private static string[] GetChunks(this Span<string> words, int[] semanticsIndexes, int chunkWordsCount, string text, double overlapPercentage = 0.0)
     {
         var chunks = new List<string>();
         var currentStartIndex = 0;
@@ -118,7 +118,7 @@ public static class SimpleTextChunkerExtensions
 
         foreach (var index in semanticsIndexes)
         {
-            if (index <= currentStartIndex || index > veryEndIndex) continue;
+            if (index <= currentStartIndex) continue;
 
             int distance = Math.Abs(index - target);
             if (distance < bestDistance)

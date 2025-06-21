@@ -11,7 +11,7 @@ public static class ChunksExtensions
         [ChunkType.CodeBlock] = RelationshipType.RelatedCodeBlock,
         [ChunkType.ImageLink] = RelationshipType.RelatedImage,
         [ChunkType.Table] = RelationshipType.RelatedTable,
-        [ChunkType.ExternalLink] = RelationshipType.AdditionalLink,
+        [ChunkType.AdditionalLink] = RelationshipType.AdditionalLink,
     };
 
     private static readonly ChunkType[] RelatedChunkTypeSequence =
@@ -20,7 +20,7 @@ public static class ChunksExtensions
         ChunkType.CodeBlock,
         ChunkType.ImageLink,
         ChunkType.Table,
-        ChunkType.ExternalLink,
+        ChunkType.AdditionalLink,
     ];
 
     public static List<RelationshipModel> BuildRelationsGraph(this Dictionary<ChunkType, List<ChunkModel>> chunks)
