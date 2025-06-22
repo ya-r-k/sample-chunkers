@@ -11,7 +11,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 34,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "# Functions in Discrete Mathematics",
             Data = new Dictionary<string, object>
@@ -23,7 +23,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 35,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## What is Function?",
             Data = new Dictionary<string, object>
@@ -35,7 +35,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 36,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### Pre-Image and Image of a Function",
             Data = new Dictionary<string, object>
@@ -47,7 +47,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 37,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### Domain of a Function",
             Data = new Dictionary<string, object>
@@ -59,7 +59,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 38,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### Codomain (Range) of a Function",
             Data = new Dictionary<string, object>
@@ -71,7 +71,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 39,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## Types of Function",
             Data = new Dictionary<string, object>
@@ -83,7 +83,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 40,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### One-One Function ( or Injective Function):",
             Data = new Dictionary<string, object>
@@ -95,7 +95,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 41,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### Many-One Function",
             Data = new Dictionary<string, object>
@@ -107,7 +107,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 42,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### Onto Function( or Surjective Function)",
             Data = new Dictionary<string, object>
@@ -119,7 +119,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 43,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### Into Function",
             Data = new Dictionary<string, object>
@@ -131,7 +131,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 44,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### One-One Correspondent Function (or Bijective Function or One-One Onto Function)",
             Data = new Dictionary<string, object>
@@ -143,7 +143,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 45,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### One-One Into Function",
             Data = new Dictionary<string, object>
@@ -155,7 +155,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 46,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### Many-One Onto Function",
             Data = new Dictionary<string, object>
@@ -167,7 +167,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 47,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### Many-One Into Function",
             Data = new Dictionary<string, object>
@@ -179,7 +179,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 48,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## Inverse of a Function",
             Data = new Dictionary<string, object>
@@ -191,7 +191,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 49,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## Composition of Functions",
             Data = new Dictionary<string, object>
@@ -203,7 +203,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 50,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## Summary: Functions in Discrete Mathematics",
             Data = new Dictionary<string, object>
@@ -215,7 +215,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 51,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## Sample Questions on Functions in Discrete Mathematics",
             Data = new Dictionary<string, object>
@@ -227,7 +227,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 52,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### Related Articles:",
             Data = new Dictionary<string, object>
@@ -244,7 +244,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 25,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "# Data Modeling: A Comprehensive Guide for Analysts",
             Data = new Dictionary<string, object>
@@ -256,7 +256,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 26,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## **What is Data Modeling?**",
             Data = new Dictionary<string, object>
@@ -268,7 +268,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 27,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### **What is Data Model?**",
             Data = new Dictionary<string, object>
@@ -280,7 +280,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 28,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## Types of Data Models",
             Data = new Dictionary<string, object>
@@ -292,7 +292,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 29,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## Data Modeling Process",
             Data = new Dictionary<string, object>
@@ -304,7 +304,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 30,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## Types of Data Modeling",
             Data = new Dictionary<string, object>
@@ -316,7 +316,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 31,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## Benefits of Data Modeling",
             Data = new Dictionary<string, object>
@@ -328,7 +328,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 32,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## Conclusion",
             Data = new Dictionary<string, object>
@@ -345,7 +345,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 38,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "# Basic Operators in Relational Algebra",
             Data = new Dictionary<string, object>
@@ -357,7 +357,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 39,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## ***1. Selection operator (*****σ*****)***",
             Data = new Dictionary<string, object>
@@ -369,7 +369,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 40,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## ***2. Projection Operator (*****∏*****)***",
             Data = new Dictionary<string, object>
@@ -381,7 +381,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 41,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## ***3. Cross Product(X)***",
             Data = new Dictionary<string, object>
@@ -393,7 +393,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 42,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## ***4. Union (U)***",
             Data = new Dictionary<string, object>
@@ -405,7 +405,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 43,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## ***5. Minus (-) or Set Difference***",
             Data = new Dictionary<string, object>
@@ -417,7 +417,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 44,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## ***6. Rename(*****ρ*****)***",
             Data = new Dictionary<string, object>
@@ -429,7 +429,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 45,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "### Extended Relational Algebra Operators",
             Data = new Dictionary<string, object>
@@ -441,7 +441,7 @@ internal static class HeadersTestData
         new ChunkModel
         {
             Index = 46,
-            ChunkType = ChunkType.Title,
+            ChunkType = ChunkType.Topic,
             RelatedChunksIndexes = [],
             RawContent = "## Conclusion",
             Data = new Dictionary<string, object>

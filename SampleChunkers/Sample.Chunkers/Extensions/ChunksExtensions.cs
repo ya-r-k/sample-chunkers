@@ -7,7 +7,7 @@ public static class ChunksExtensions
 {
     private static readonly Dictionary<ChunkType, RelationshipType> RelatedChunkRelationshipType = new()
     {
-        [ChunkType.Title] = RelationshipType.StartsWith,
+        [ChunkType.Topic] = RelationshipType.StartsWith,
         [ChunkType.CodeBlock] = RelationshipType.RelatedCodeBlock,
         [ChunkType.InfoBlock] = RelationshipType.RelatedInfoBlock,
         [ChunkType.ImageLink] = RelationshipType.RelatedImage,
@@ -15,15 +15,52 @@ public static class ChunksExtensions
         [ChunkType.AdditionalLink] = RelationshipType.AdditionalLink,
     };
 
+    private static readonly ChunkType[] ChunkTypesWithUrls =
+    [
+        ChunkType.ImageLink,
+        ChunkType.AdditionalLink,
+    ];
+
     private static readonly ChunkType[] RelatedChunkTypeSequence =
     [
-        ChunkType.Title,
+        ChunkType.Topic,
         ChunkType.CodeBlock,
         ChunkType.InfoBlock,
         ChunkType.ImageLink,
         ChunkType.Table,
         ChunkType.AdditionalLink,
     ];
+
+    public static Dictionary<int, int> FindRepeatedChunksWithUrls<T>(this Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> chunks)
+        where T : unmanaged
+    {
+        var result = new Dictionary<int, int>();
+        var urlMap = chunks.SelectMany(x => x.Value)
+                           .Where(x => ChunkTypesWithUrls.Contains(x.Key))
+                           .SelectMany(x => x.Value)
+                           .Select(x => new {
+                               Url = x.Data.TryGetValue("url1", out var u) && u is string s ? s : null,
+                               ChunkIndex = x.Index,
+                           })
+                           .Where(x => !string.IsNullOrEmpty(x.Url))
+                           .GroupBy(x => x.Url!)
+                           .ToDictionary(g => g.Key, g => g.Select(x => x.ChunkIndex).ToArray());
+
+        foreach (var urlItem in urlMap)
+        {
+            if (urlItem.Value.Length > 1)
+            {
+                var uniqueItemIndex = urlItem.Value[0];
+
+                for (var i = 1; i < urlItem.Value.Length; i++)
+                {
+                    result[urlItem.Value[i]] = uniqueItemIndex;
+                }
+            }
+        }
+
+        return result;
+    }
 
     public static Dictionary<T, RelationshipModel[]> BuildRelationsGraph<T>(this Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> chunks)
         where T : unmanaged
@@ -42,12 +79,12 @@ public static class ChunksExtensions
     {
         var result = new List<RelationshipModel>();
 
-        if (chunks.TryGetValue(ChunkType.Text, out var headersChunks))
+        if (chunks.TryGetValue(ChunkType.TextChunk, out var headersChunks))
         {
             result.AddRange(headersChunks.BuildTextChunkSequenceRelations());
         }
 
-        if (chunks.TryGetValue(ChunkType.Title, out var textChunks))
+        if (chunks.TryGetValue(ChunkType.Topic, out var textChunks))
         {
             result.AddRange(textChunks.BuildTitlesSequenceRelations());
         }
@@ -153,7 +190,7 @@ public static class ChunksExtensions
 
         foreach (var chunkType in RelatedChunkTypeSequence)
         {
-            var isCurrentChunkFirst = chunkType != ChunkType.Title;
+            var isCurrentChunkFirst = chunkType != ChunkType.Topic;
 
             if (firstChunk.RelatedChunksIndexes.TryGetValue(chunkType, out var indexes))
             {

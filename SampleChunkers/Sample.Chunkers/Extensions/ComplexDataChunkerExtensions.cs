@@ -10,7 +10,7 @@ public static class ComplexDataChunkerExtensions
 {
     private static readonly Dictionary<string, ChunkType> labelsChunkTypesPairs = new()
     {
-        ["Title"] = ChunkType.Title,
+        ["Title"] = ChunkType.Topic,
         ["Table"] = ChunkType.Table,
         ["Math-Block"] = ChunkType.MathBlock,
         ["Code-Block"] = ChunkType.CodeBlock,
@@ -71,7 +71,7 @@ public static class ComplexDataChunkerExtensions
             }
         }
 
-        dataChunks[ChunkType.Text] = processedText.ExtractSemanticChunks(index, chunkWordsCount, semanticsType, overlapPercentage);
+        dataChunks[ChunkType.TextChunk] = processedText.ExtractSemanticChunks(index, chunkWordsCount, semanticsType, overlapPercentage);
 
         return dataChunks;
     }
@@ -129,7 +129,7 @@ public static class ComplexDataChunkerExtensions
             index += items.Count;
         }
 
-        result.Add(ChunkType.Title, text.ExtractMarkdownHeaders(index));
+        result.Add(ChunkType.Topic, text.ExtractMarkdownHeaders(index));
 
         return result;
     }
@@ -147,7 +147,7 @@ public static class ComplexDataChunkerExtensions
             result.Add(new ChunkModel
             {
                 Index = ++lastUsedIndex,
-                ChunkType = ChunkType.Text,
+                ChunkType = ChunkType.TextChunk,
                 RawContent = rawChunkData.ToString(),
                 Data = new Dictionary<string, object>
                 {
@@ -352,7 +352,7 @@ public static class ComplexDataChunkerExtensions
             {
                 Index = ++lastUsedIndex,
                 RawContent = match.Value.TrimEnd(),
-                ChunkType = ChunkType.Title,
+                ChunkType = ChunkType.Topic,
                 Data = new Dictionary<string, object>
                 {
                     ["name"] = titleText.ToString(),

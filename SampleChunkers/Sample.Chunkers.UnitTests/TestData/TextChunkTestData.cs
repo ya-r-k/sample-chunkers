@@ -11,7 +11,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 6,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = [],
             Data = new Dictionary<string, object>
             {
@@ -22,7 +22,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 7,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.CodeBlock] = [CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[0].Index],
@@ -36,7 +36,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 8,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.CodeBlock] = [CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[0].Index],
@@ -50,7 +50,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 9,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = [],
             Data = new Dictionary<string, object>
             {
@@ -61,7 +61,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 10,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = [],
             Data = new Dictionary<string, object>
             {
@@ -72,7 +72,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 11,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.CodeBlock] =
@@ -90,7 +90,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 12,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.CodeBlock] = 
@@ -109,7 +109,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 13,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.CodeBlock] =
@@ -132,7 +132,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 33,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.ImageLink] =
@@ -144,7 +144,7 @@ internal static class TextChunkTestData
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[0].Index,
                 ],
-                [ChunkType.Title] = 
+                [ChunkType.Topic] = 
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[0].Index,
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[1].Index
@@ -159,14 +159,14 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 34,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.ImageLink] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[2].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[2].Index,
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[3].Index
@@ -181,14 +181,14 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 35,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.ImageLink] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[2].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[3].Index
                 ],
@@ -202,7 +202,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 36,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.AdditionalLink] =
@@ -219,14 +219,14 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 37,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[1].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[4].Index,
                 ],
@@ -240,10 +240,10 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 38,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[4].Index
                 ],
@@ -257,7 +257,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 39,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = [],
             Data = new Dictionary<string, object>
             {
@@ -268,7 +268,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 40,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = [],
             Data = new Dictionary<string, object>
             {
@@ -279,7 +279,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 41,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.AdditionalLink] =
@@ -297,7 +297,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 42,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.AdditionalLink] =
@@ -306,7 +306,7 @@ internal static class TextChunkTestData
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[3].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[4].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[5].Index,
                 ],
@@ -320,7 +320,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 43,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.ImageLink] =
@@ -332,7 +332,7 @@ internal static class TextChunkTestData
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[4].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[5].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[5].Index,
                 ],
@@ -346,7 +346,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 44,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.ImageLink] =
@@ -369,7 +369,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 45,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.AdditionalLink] =
@@ -377,7 +377,7 @@ internal static class TextChunkTestData
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[6].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[7].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[6].Index,
                 ],
@@ -391,7 +391,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 46,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.AdditionalLink] =
@@ -400,7 +400,7 @@ internal static class TextChunkTestData
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[9].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[10].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[6].Index,
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[7].Index,
@@ -415,7 +415,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 47,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.ImageLink] =
@@ -436,7 +436,7 @@ internal static class TextChunkTestData
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[17].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[18].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[7].Index,
                 ],
@@ -455,7 +455,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 47,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.CodeBlock] =
@@ -479,7 +479,7 @@ internal static class TextChunkTestData
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[0].Index,
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[1].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[0].Index,
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[1].Index,
@@ -495,7 +495,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 48,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.CodeBlock] =
@@ -517,7 +517,7 @@ internal static class TextChunkTestData
                 [
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[1].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[1].Index,
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[2].Index,
@@ -533,7 +533,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 49,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.CodeBlock] =
@@ -548,7 +548,7 @@ internal static class TextChunkTestData
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[5].Index,
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[6].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[3].Index,
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[4].Index,
@@ -564,7 +564,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 50,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.CodeBlock] =
@@ -587,7 +587,7 @@ internal static class TextChunkTestData
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[2].Index,
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[3].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[5].Index,
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[6].Index,
@@ -603,7 +603,7 @@ internal static class TextChunkTestData
         new ChunkModel
         {
             Index = 51,
-            ChunkType = ChunkType.Text,
+            ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
                 [ChunkType.CodeBlock] =
@@ -637,7 +637,7 @@ internal static class TextChunkTestData
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[11].Index,
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[12].Index,
                 ],
-                [ChunkType.Title] =
+                [ChunkType.Topic] =
                 [
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[6].Index,
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[7].Index,

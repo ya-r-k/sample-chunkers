@@ -2,12 +2,12 @@
 
 public enum ChunkType
 {
-    Text = 0,
+    TextChunk = 0,
     Table = 1,
     CodeBlock = 2,
     MathBlock = 3,
     InfoBlock = 4,
     ImageLink = 5,
-    Title = 6,
+    Topic = 6,
     AdditionalLink = 7,
 }

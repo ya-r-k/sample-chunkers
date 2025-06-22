@@ -105,4 +105,85 @@ public class ChunksExtensionsTests
         // Assert
         relationsips.Should().BeEquivalentTo(expectedResult);
     }
+
+    [Test]
+    public void FindRepeatedChunksWithUrls_WithRealWorldTextsCollection_ShouldReturnRepeatedAndUniqueIndexesPairs()
+    {
+        // Arrange
+        var texts = new Dictionary<int, string>
+        {
+            // https://dev.to/alex_ricciardi/recursion-in-programming-techniques-benefits-and-limitations-java-3o4p
+            [0] = ArticlesTestData.DevToRealWorldArticleText,
+            // https://www.geeksforgeeks.org/data-modeling-a-comprehensive-guide-for-analysts/
+            [1] = ArticlesTestData.GeeksForGeeksTextAboutDataModeling,
+            // https://www.geeksforgeeks.org/basic-operators-in-relational-algebra-2/
+            [2] = ArticlesTestData.GeeksForGeeksTextAboutRelationalAlgebra,
+        };
+
+        var secondShiftValue = CodeBlocksTestData.DevToRealWorldArticleCodeBlocks.Length +
+                               LinksTestData.DevToRealWorldArticleLinks.Length +
+                               TextChunkTestData.DevToRealWorldArticleTextChunks.Length;
+        var thirdShiftValue = secondShiftValue +
+                              ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks.Length +
+                              LinksTestData.GeeksForGeeksAboutDataModelingLinks.Length +
+                              HeadersTestData.GeeksForGeeksAboutDataModelingHeaders.Length +
+                              TextChunkTestData.GeeksForGeeksAboutDataModelingTextChunks.Length;
+        var indexShiftValues = new[]
+        {
+            0,
+            secondShiftValue,
+            thirdShiftValue,
+        };
+
+        var expectedImageLinks = new Dictionary<int, ChunkModel[]>
+        {
+            [1] = ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks,
+            [2] = ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks,
+        }.SelectMany(x => x.Value.Select(y => new ChunkModel
+        {
+            Index = y.Index + indexShiftValues[x.Key],
+            ChunkType = y.ChunkType,
+            RawContent = y.RawContent,
+            RelatedChunksIndexes = y.RelatedChunksIndexes,
+            Data = y.Data,
+        })).ToArray();
+        var expectedLinks = new Dictionary<int, ChunkModel[]>
+        {
+            [0] = LinksTestData.DevToRealWorldArticleLinks,
+            [1] = LinksTestData.GeeksForGeeksAboutDataModelingLinks,
+            [2] = LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks,
+        }.SelectMany(x => x.Value.Select(y => new ChunkModel
+        {
+            Index = y.Index + indexShiftValues[x.Key],
+            ChunkType = y.ChunkType,
+            RawContent = y.RawContent,
+            RelatedChunksIndexes = y.RelatedChunksIndexes.Select(y => new
+            {
+                y.Key,
+                Value = y.Value.Select(y => y + indexShiftValues[x.Key]).ToList(),
+            }).ToDictionary(x => x.Key, x => x.Value),
+            Data = y.Data,
+        })).ToArray();
+
+        var expectedPairs = new Dictionary<int, int>
+        {
+            [expectedImageLinks[4].Index] = expectedImageLinks[0].Index,
+            [expectedImageLinks[5].Index] = expectedImageLinks[0].Index,
+            [expectedImageLinks[7].Index] = expectedImageLinks[0].Index,
+            [expectedLinks[17].Index] = expectedLinks[1].Index,
+            [expectedLinks[20].Index] = expectedLinks[1].Index,
+            [expectedLinks[30].Index] = expectedLinks[1].Index,
+            [expectedLinks[27].Index] = expectedLinks[12].Index,
+            [expectedLinks[14].Index] = expectedLinks[13].Index,
+            [expectedLinks[16].Index] = expectedLinks[15].Index,
+            [expectedLinks[29].Index] = expectedLinks[28].Index,
+        };
+
+        // Act
+        var chunks = texts.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var pairs = chunks.FindRepeatedChunksWithUrls();
+
+        // Assert
+        pairs.Should().BeEquivalentTo(expectedPairs);
+    }
 }
