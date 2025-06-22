@@ -326,7 +326,7 @@ public static class ComplexDataChunkerExtensions
                 ChunkType = ChunkType.ImageLink,
                 Data = new Dictionary<string, object>
                 {
-                    ["url1"] = match.Groups[2].Value,
+                    ["url"] = match.Groups[2].Value,
                     ["alterText"] = match.Groups[1].Value,
                 },
                 RelatedChunksIndexes = []
@@ -384,7 +384,7 @@ public static class ComplexDataChunkerExtensions
                 ChunkType = ChunkType.AdditionalLink,
                 Data = new Dictionary<string, object>
                 {
-                    ["url1"] = match.Groups[2].Value,
+                    ["url"] = match.Groups[2].Value,
                     ["alterText"] = textDescription,
                 },
                 RelatedChunksIndexes = []

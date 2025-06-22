@@ -39,7 +39,7 @@ public static class ChunksExtensions
                            .Where(x => ChunkTypesWithUrls.Contains(x.Key))
                            .SelectMany(x => x.Value)
                            .Select(x => new {
-                               Url = x.Data.TryGetValue("url1", out var u) && u is string s ? s : null,
+                               Url = x.Data.TryGetValue("url", out var u) && u is string s ? s : null,
                                ChunkIndex = x.Index,
                            })
                            .Where(x => !string.IsNullOrEmpty(x.Url))
