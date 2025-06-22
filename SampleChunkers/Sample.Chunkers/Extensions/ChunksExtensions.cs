@@ -9,6 +9,7 @@ public static class ChunksExtensions
     {
         [ChunkType.Title] = RelationshipType.StartsWith,
         [ChunkType.CodeBlock] = RelationshipType.RelatedCodeBlock,
+        [ChunkType.InfoBlock] = RelationshipType.RelatedInfoBlock,
         [ChunkType.ImageLink] = RelationshipType.RelatedImage,
         [ChunkType.Table] = RelationshipType.RelatedTable,
         [ChunkType.AdditionalLink] = RelationshipType.AdditionalLink,
@@ -18,12 +19,26 @@ public static class ChunksExtensions
     [
         ChunkType.Title,
         ChunkType.CodeBlock,
+        ChunkType.InfoBlock,
         ChunkType.ImageLink,
         ChunkType.Table,
         ChunkType.AdditionalLink,
     ];
 
-    public static List<RelationshipModel> BuildRelationsGraph(this Dictionary<ChunkType, List<ChunkModel>> chunks)
+    public static Dictionary<T, RelationshipModel[]> BuildRelationsGraph<T>(this Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> chunks)
+        where T : unmanaged
+    {
+        var result = new Dictionary<T, RelationshipModel[]>();
+
+        foreach (var item in chunks)
+        {
+            result[item.Key] = [.. item.Value.BuildRelationsGraph()];
+        }
+
+        return result;
+    }
+
+    public static RelationshipModel[] BuildRelationsGraph(this Dictionary<ChunkType, List<ChunkModel>> chunks)
     {
         var result = new List<RelationshipModel>();
 
@@ -45,7 +60,7 @@ public static class ChunksExtensions
             }
         }
 
-        return result;
+        return [.. result];
     }
 
     private static List<RelationshipModel> BuildTitlesSequenceRelations(this List<ChunkModel> sequenceChunks)

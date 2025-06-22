@@ -117,6 +117,60 @@ internal static class RelationsTestData
             SecondChunkIndex = HeadersTestData.ArticleWithMathInfoBlocksHeaders[18].Index,
             RelationshipType = RelationshipType.HasFirstSubtopic,
         }, // 51 - 52
+        // text chunk with index = 53 (1-th)
+        // text chunk with index = 54 (2-th)
+        // text chunk with index = 55 (3-th)
+        // text chunk with index = 56 (4-th)
+        // text chunk with index = 57 (5-th)
+        // text chunk with index = 58 (6-th)
+        // text chunk with index = 59 (7-th)
+        // text chunk with index = 60 (8-th)
+        // text chunk with index = 61 (9-th)
+        new RelationshipModel
+        {
+            FirstChunkIndex = 61,
+            SecondChunkIndex = InfoBlocksTestData.ArticleWithMathInfoBlocks[0].Index,
+            RelationshipType = RelationshipType.RelatedInfoBlock,
+        },
+        new RelationshipModel
+        {
+            FirstChunkIndex = 61,
+            SecondChunkIndex = InfoBlocksTestData.ArticleWithMathInfoBlocks[1].Index,
+            RelationshipType = RelationshipType.RelatedInfoBlock,
+        },
+        // text chunk with index = 62 (10-th)
+        // text chunk with index = 63 (11-th)
+        new RelationshipModel
+        {
+            FirstChunkIndex = 63,
+            SecondChunkIndex = InfoBlocksTestData.ArticleWithMathInfoBlocks[2].Index,
+            RelationshipType = RelationshipType.RelatedInfoBlock,
+        },
+        // text chunk with index = 64 (12-th)
+        new RelationshipModel
+        {
+            FirstChunkIndex = 64,
+            SecondChunkIndex = InfoBlocksTestData.ArticleWithMathInfoBlocks[3].Index,
+            RelationshipType = RelationshipType.RelatedInfoBlock,
+        },
+        new RelationshipModel
+        {
+            FirstChunkIndex = 64,
+            SecondChunkIndex = InfoBlocksTestData.ArticleWithMathInfoBlocks[4].Index,
+            RelationshipType = RelationshipType.RelatedInfoBlock,
+        },
+        new RelationshipModel
+        {
+            FirstChunkIndex = 64,
+            SecondChunkIndex = InfoBlocksTestData.ArticleWithMathInfoBlocks[5].Index,
+            RelationshipType = RelationshipType.RelatedInfoBlock,
+        },
+        new RelationshipModel
+        {
+            FirstChunkIndex = 64,
+            SecondChunkIndex = InfoBlocksTestData.ArticleWithMathInfoBlocks[6].Index,
+            RelationshipType = RelationshipType.RelatedInfoBlock,
+        },
     ];
 
     internal static readonly List<RelationshipModel> DevToRealWorldArticleChunksRelations =

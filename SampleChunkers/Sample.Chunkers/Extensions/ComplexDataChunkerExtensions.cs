@@ -19,7 +19,7 @@ public static class ComplexDataChunkerExtensions
         ["External-Link"] = ChunkType.AdditionalLink,
     };
 
-    public static Dictionary<ChunkType, List<ChunkModel>> ExtractSemanticChunksDeeply(this string[] texts, 
+    public static Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> ExtractSemanticChunksDeeply<T>(this Dictionary<T, string> texts, 
         int chunkWordsCount, 
         SemanticsType semanticsType, 
         double overlapPercentage = 0.0, 
@@ -28,24 +28,18 @@ public static class ComplexDataChunkerExtensions
         bool withCodeBlocks = true, 
         bool withImages = true, 
         bool withLinks = true)
+        where T : unmanaged
     {
-        var result = new Dictionary<ChunkType, List<ChunkModel>>();
+        var result = new Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>>();
+
+        var lastUsedIndex = 0;
 
         foreach (var text in texts)
         {
-            var lastUsedIndex = result.Keys.Count > 0 ? result.SelectMany(x => x.Value).Select(x => x.Index).Max() : 0;
-            var chunks = text.ExtractSemanticChunksDeeply(chunkWordsCount, semanticsType, overlapPercentage, withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks, lastUsedIndex);
+            var chunks = text.Value.ExtractSemanticChunksDeeply(chunkWordsCount, semanticsType, overlapPercentage, withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks, lastUsedIndex);
+            lastUsedIndex += chunks.SelectMany(x => x.Value).Count();
 
-            if (lastUsedIndex == 0)
-            {
-                result = chunks;
-                continue;
-            }
-
-            foreach (var item in chunks)
-            {
-                result[item.Key].AddRange(item.Value);
-            }
+            result[text.Key] = chunks;
         }
 
         return result;
@@ -200,7 +194,7 @@ public static class ComplexDataChunkerExtensions
                 RelatedChunksIndexes = [],
             });
 
-            text.Replace(match.Value, string.Empty);
+            text.Replace(match.Value, string.Format(ChunksConsts.InfoBlockTemplate, lastUsedIndex));
         }
 
         return [.. result];

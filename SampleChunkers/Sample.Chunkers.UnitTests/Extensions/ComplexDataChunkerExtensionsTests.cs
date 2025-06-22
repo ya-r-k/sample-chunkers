@@ -567,14 +567,14 @@ MERGE
     public void ExtractSemanticChunksDeeply_WithRealWorldTextsCollection_ShouldReturnCorrectChunks()
     {
         // Arrange
-        var texts = new[]
+        var texts = new Dictionary<int, string>
         {
             // https://dev.to/alex_ricciardi/recursion-in-programming-techniques-benefits-and-limitations-java-3o4p
-            ArticlesTestData.DevToRealWorldArticleText,
+            [0] = ArticlesTestData.DevToRealWorldArticleText,
             // https://www.geeksforgeeks.org/data-modeling-a-comprehensive-guide-for-analysts/
-            ArticlesTestData.GeeksForGeeksTextAboutDataModeling,
+            [1] = ArticlesTestData.GeeksForGeeksTextAboutDataModeling,
             // https://www.geeksforgeeks.org/basic-operators-in-relational-algebra-2/
-            ArticlesTestData.GeeksForGeeksTextAboutRelationalAlgebra,
+            [2] = ArticlesTestData.GeeksForGeeksTextAboutRelationalAlgebra,
         };
 
         var secondShiftValue = CodeBlocksTestData.DevToRealWorldArticleCodeBlocks.Length +
@@ -685,22 +685,28 @@ MERGE
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
         chunkList.Should().NotBeEmpty();
 
-        var codeBlocks = chunks[ChunkType.CodeBlock];
+        var codeBlocks = chunks.Values.SelectMany(x => x[ChunkType.CodeBlock])
+                                      .ToArray();
         codeBlocks.Should().BeEquivalentTo(expectedCodeBlocks);
 
-        var tables = chunks[ChunkType.Table];
+        var tables = chunks.Values.SelectMany(x => x[ChunkType.Table])
+                                  .ToArray();
         tables.Should().BeEquivalentTo(expectedTables);
 
-        var links = chunks[ChunkType.AdditionalLink];
+        var links = chunks.Values.SelectMany(x => x[ChunkType.AdditionalLink])
+                                 .ToArray();
         links.Should().BeEquivalentTo(expectedLinks);
 
-        var imageLinks = chunks[ChunkType.ImageLink];
+        var imageLinks = chunks.Values.SelectMany(x => x[ChunkType.ImageLink])
+                                      .ToArray();
         imageLinks.Should().BeEquivalentTo(imageLinks);
 
-        var headers = chunks[ChunkType.Title];
+        var headers = chunks.Values.SelectMany(x => x[ChunkType.Title])
+                                   .ToArray();
         headers.Should().BeEquivalentTo(expectedHeaders);
 
-        var textsChunks = chunks[ChunkType.Text];
+        var textsChunks = chunks.Values.SelectMany(x => x[ChunkType.Text])
+                                       .ToArray();
         textsChunks.Should().BeEquivalentTo(expectedTextsChunks);
     }
 }
