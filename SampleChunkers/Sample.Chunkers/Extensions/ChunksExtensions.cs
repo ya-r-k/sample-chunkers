@@ -62,17 +62,17 @@ public static class ChunksExtensions
         return result;
     }
 
-    public static Dictionary<T, RelationshipModel[]> BuildRelationsGraph<T>(this Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> chunks)
+    public static RelationshipModel[] BuildRelationsGraph<T>(this Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> chunks)
         where T : unmanaged
     {
-        var result = new Dictionary<T, RelationshipModel[]>();
+        var result = new List<RelationshipModel>();
 
         foreach (var item in chunks)
         {
-            result[item.Key] = [.. item.Value.BuildRelationsGraph()];
+            result.AddRange(item.Value.BuildRelationsGraph());
         }
 
-        return result;
+        return [.. result];
     }
 
     public static RelationshipModel[] BuildRelationsGraph(this Dictionary<ChunkType, List<ChunkModel>> chunks)

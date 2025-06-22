@@ -8,6 +8,8 @@ namespace Sample.Chunkers.UnitTests.Extensions;
 
 public class ComplexDataChunkerExtensionsTests
 {
+    // TODO: Need to add tests which chunks text without codeblocks, tables, links and other related chunks only plain text
+
     [Test]
     public void RetrieveChunksFromText_WithMixedContent_ShouldExtractAllChunks()
     {

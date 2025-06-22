@@ -62,7 +62,7 @@ public static class ComplexDataChunkerExtensions
         var processedText = textBuilder.SquashLabelsIntoWords()
                                        .PreprocessNaturalTextForChunking();
 
-        var index = 0;
+        var index = lastUsedIndex;
         foreach (var pair in dataChunks)
         {
             foreach (var chunk in pair.Value)

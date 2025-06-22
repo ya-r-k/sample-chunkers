@@ -96,7 +96,7 @@ public class ChunksExtensionsTests
                 SecondChunkIndex = y.SecondChunkIndex + indexShiftValues[x.Key],
                 RelationshipType = y.RelationshipType,
             }).ToList()
-        }).ToDictionary(x => x.Key, x => x.Value);
+        }).SelectMany(x => x.Value).ToArray();
 
         // Act
         var chunks = texts.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
