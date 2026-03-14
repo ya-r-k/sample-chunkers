@@ -1,0 +1,17 @@
+**/.vs
+**/bin
+**/obj
+**/packages
+**/build
+**/dist
+**/out
+**/target
+**/tmp
+**/logs
+**/cache
+**/temp
+**/test-results
+**/test-reports
+**/test-coverage
+**/artifacts
+**/coverage
