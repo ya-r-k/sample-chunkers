@@ -100,12 +100,12 @@
 
 ### Implementation for User Story 3
 
-- [ ] T027 Define IKeywordExtractor (or IKeywordExtractionBackend) with timeout in options in RagDataTools.KeywordExtraction/ or RagDataTools.Connectors (contract keyword-extraction-api.md)
-- [ ] T028 [P] [US3] Implement one backend (e.g. Ollama) with timeout via CancellationToken in RagDataTools.KeywordExtraction/
-- [ ] T029 [US3] Implement ExtractAsync(chunks, options) returning chunks with keywords in Data; enforce timeout (FR-007a)
-- [ ] T030 [US3] Register keyword extractor (optional) in RagDataTools.Di
-- [ ] T031 [P] [US3] Edge-case test: timeout enforced (no indefinite hang) in RagDataTools.UnitTests/KeywordExtraction/
-- [ ] T032 [P] [US3] Edge-case test: backend unavailable or minimal text returns clear result (error or empty keywords) in RagDataTools.UnitTests/KeywordExtraction/
+- [x] T027 Define IKeywordExtractor (or IKeywordExtractionBackend) with timeout in options in RagDataTools.KeywordExtraction/ or RagDataTools.Connectors (contract keyword-extraction-api.md)
+- [x] T028 [P] [US3] Implement one backend (e.g. Ollama) with timeout via CancellationToken in RagDataTools.KeywordExtraction/
+- [x] T029 [US3] Implement ExtractAsync(chunks, options) returning chunks with keywords in Data; enforce timeout (FR-007a)
+- [x] T030 [US3] Register keyword extractor (optional) in RagDataTools.Di
+- [x] T031 [P] [US3] Edge-case test: timeout enforced (no indefinite hang) in RagDataTools.UnitTests/KeywordExtraction/
+- [x] T032 [P] [US3] Edge-case test: backend unavailable or minimal text returns clear result (error or empty keywords) in RagDataTools.UnitTests/KeywordExtraction/
 
 **Checkpoint**: User Story 3 independently testable — keyword extraction with timeout and edge-case behavior.
 
@@ -115,12 +115,12 @@
 
 **Purpose**: Baseline doc, benchmarks for new hot paths, extractor order documentation, quickstart validation.
 
-- [ ] T033 Ensure specs/PERFORMANCE.md documents baseline and is referenced by spec (FR-010, SC-006)
-- [ ] T034 [P] Add IngestBenchmarks.cs for conversion + chunking hot path in RagDataTools.Benchmarks/ (FR-010)
-- [ ] T035 Document extractor order (CodeBlock → UnusualBlock → HtmlTable → InfoBlock → ImageLink → ExternalLink → Heading) in RagDataTools.Chunkers code or docs per plan
-- [ ] T036 Run quickstart.md validation (all code paths runnable)
-- [ ] T037 Document in specs/PERFORMANCE.md how baseline satisfies constitution IV (comparison with comparable libraries including Python analogues): e.g. describe benchmark workload so it is comparable to Python chunking libs, or state "Python comparison: out of scope for v1; baseline documented for future comparison"
-- [ ] T038 Add XML documentation comments to all new public APIs introduced by US1-US3 in RagDataTools.Connectors/, RagDataTools.Ingest/, and RagDataTools.KeywordExtraction/ (public methods, interfaces, and key models)
+- [x] T033 Ensure specs/PERFORMANCE.md documents baseline and is referenced by spec (FR-010, SC-006)
+- [x] T034 [P] Add IngestBenchmarks.cs for conversion + chunking hot path in RagDataTools.Benchmarks/ (FR-010)
+- [x] T035 Document extractor order (CodeBlock → UnusualBlock → HtmlTable → InfoBlock → ImageLink → ExternalLink → Heading) in RagDataTools.Chunkers code or docs per plan
+- [x] T036 Run quickstart.md validation (all code paths runnable)
+- [x] T037 Document in specs/PERFORMANCE.md how baseline satisfies constitution IV (comparison with comparable libraries including Python analogues): e.g. describe benchmark workload so it is comparable to Python chunking libs, or state "Python comparison: out of scope for v1; baseline documented for future comparison"
+- [x] T038 Add XML documentation comments to all new public APIs introduced by US1-US3 in RagDataTools.Connectors/, RagDataTools.Ingest/, and RagDataTools.KeywordExtraction/ (public methods, interfaces, and key models)
 
 ---
 

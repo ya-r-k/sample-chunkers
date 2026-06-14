@@ -14,6 +14,8 @@ Performance is measured with:
 - BenchmarkDotNet
 - the `RagDataTools.Benchmarks` project
 - `dotnet run --project RagDataTools.Benchmarks --configuration Release`
+- current baseline chunking operations: `ExtractSemanticChunksFromText`, `ExtractSemanticChunksDeeply`, and `BuildRelationsGraph`
+- the ingest hot path benchmarked in `IngestBenchmarks.cs` for conversion plus chunking
 
 ### Test data
 
@@ -173,6 +175,7 @@ They also cover different content types:
 The comparison section is part of the documented benchmark baseline, not an optional narrative note.
 When we compare chunking performance against other libraries, the workload MUST be the same input and chunking configuration where possible, so the result is a like-for-like comparison rather than a general feature comparison.
 Where practical, the comparison should include named chunking libraries used in RAG workflows, such as LangChain text splitters or LlamaIndex node parsers.
+For v1, a documented comparison methodology is sufficient if direct benchmark runs against Python libraries are not available yet.
 
 ### Why .NET can be faster
 

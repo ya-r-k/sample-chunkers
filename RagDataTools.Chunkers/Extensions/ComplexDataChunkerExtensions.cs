@@ -39,6 +39,7 @@ public static class ComplexDataChunkerExtensions
 
     static ComplexDataChunkerExtensions()
     {
+        // Deterministic extractor order: CodeBlock → UnusualBlock → HtmlTable → InfoBlock → ImageLink → ExternalLink → Heading.
         ChunksExtractorsChain = ChunkTypesExtractorsPairs["CodeBlock"];
 
         ChunksExtractorsChain.SetNext(ChunkTypesExtractorsPairs["UnusualBlock"])
