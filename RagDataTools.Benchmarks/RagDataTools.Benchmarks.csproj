@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RagDataTools.Chunkers\RagDataTools.Chunkers.csproj" />
+    <ProjectReference Include="..\RagDataTools.Ingest\RagDataTools.Ingest.csproj" />
   </ItemGroup>
 
 </Project>

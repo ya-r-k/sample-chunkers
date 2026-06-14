@@ -1,228 +1,68 @@
-# Sample.Chunkers
+# RagDataTools
 
-Библиотека для разбиения текстовых документов на семантические чанки (chunks) с поддержкой Markdown и HTML форматов. Библиотека предназначена для извлечения структурированных данных из текстов и построения графов связей между чанками для использования в системах Knowledge Graph и векторного поиска.
+RagDataTools is a .NET 10 class-library suite for RAG data preparation: it chunks text, extracts structured Markdown/HTML content, builds relationships between chunks, and provides persistence abstractions for storage backends.
 
-## 📋 Содержание
+## What it does
 
-- [Основные возможности](#основные-возможности)
-- [Быстрый старт](#быстрый-старт)
-- [Установка](#установка)
-- [Архитектура](#архитектура)
-- [API документация](#api-документация)
-- [Примеры использования](#примеры-использования)
-- [Технические требования](#технические-требования)
-- [Документация](#документация)
+- Semantic text chunking by sentence or paragraph boundaries.
+- Deep extraction of Markdown/HTML structures such as headings, code blocks, tables, links, and images.
+- Chunk relationship graph building and duplicate URL detection.
+- Repository abstractions for persistence, with a Neo4j connector and a Qdrant placeholder.
+- NUnit-based unit tests and BenchmarkDotNet performance benchmarks.
 
-## 🚀 Основные возможности
+## Requirements
 
-- **Семантическое разбиение текста** на чанки по предложениям или параграфам с настраиваемым размером и перекрытием
-- **Извлечение структурированных элементов**:
-  - Заголовки (Markdown headers)
-  - Блоки кода (Markdown code blocks)
-  - HTML таблицы
-  - Информационные блоки (Markdown blockquotes)
-  - Изображения (Markdown image links)
-  - Внешние ссылки (Markdown links)
-- **Построение графа связей** между чанками различных типов
-- **Обработка коллекций документов** с автоматической нумерацией чанков
-- **Обнаружение дубликатов** чанков с одинаковыми URL
+- .NET SDK 10.0
+- Optional for connector work: a running Neo4j instance for `RagDataTools.Connectors.Neo4j`
 
-## 🏃 Быстрый старт
-
-````csharp
-using Sample.Chunkers.Extensions;
-using Sample.Chunkers.Enums;
-
-// Простое извлечение чанков из текста
-var text = @"# Заголовок
-
-Текст параграфа с некоторым содержимым.
-
-```csharp
-var code = ""example"";
-```";
-
-var chunks = text.ExtractSemanticChunksDeeply(
-    chunkWordsCount: 100,
-    semanticsType: SemanticsType.Sentence,
-    overlapPercentage: 0.5
-);
-
-// Построение графа связей
-var relationships = chunks.BuildRelationsGraph();
-
-// Обработка коллекции документов
-var documents = new Dictionary<int, string>
-{
-    [0] = "Первый документ...",
-    [1] = "Второй документ..."
-};
-
-var allChunks = documents.ExtractSemanticChunksDeeply(100, SemanticsType.Sentence);
-var allRelationships = allChunks.BuildRelationsGraph();
-````
-
-## 📦 Установка
-
-Библиотека использует .NET 9.0. Для использования добавьте проект в решение или установите как NuGet пакет.
-
-### Зависимости
-
-- **Markdig** (0.41.2) - для парсинга Markdown (если требуется расширенная функциональность)
-
-## 🏗️ Архитектура
-
-Библиотека организована следующим образом:
-
-```
-Sample.Chunkers/
-├── Enums/              # Перечисления типов чанков и связей
-├── Extensions/         # Методы расширения для работы с чанками
-├── Helpers/            # Вспомогательные классы (регулярные выражения)
-├── Models/             # Модели данных (ChunkModel, RelationshipModel)
-└── ChunksConsts.cs     # Константы шаблонов
-```
-
-Подробнее об архитектуре см. [ARCHITECTURE.md](docs/ARCHITECTURE.md).
-
-## 📚 API документация
-
-Подробная документация по API доступна в [API.md](docs/API.md).
-
-### Основные методы расширения
-
-- `ExtractSemanticChunksDeeply` - извлечение всех типов чанков из текста
-- `RetrieveChunksFromText` - извлечение только структурированных элементов
-- `ExtractSemanticChunksFromText` - извлечение текстовых чанков
-- `BuildRelationsGraph` - построение графа связей
-- `FindRepeatedChunksWithUrls` - поиск дубликатов по URL
-
-## 💡 Примеры использования
-
-### Пример 1: Базовое извлечение чанков
-
-```csharp
-var markdown = @"# Введение
-
-Вот текст с несколькими предложениями. Первое предложение. Второе предложение.
-
-## Подзаголовок
-
-Еще один параграф.";
-
-var chunks = markdown.ExtractSemanticChunksDeeply(
-    chunkWordsCount: 50,
-    semanticsType: SemanticsType.Sentence,
-    overlapPercentage: 0.3
-);
-
-// chunks содержит:
-// - chunks[ChunkType.Topic] - заголовки
-// - chunks[ChunkType.TextChunk] - текстовые чанки
-```
-
-### Пример 2: Обработка документов с кодом и таблицами
-
-````csharp
-var complexText = @"# Пример
-
-Вот код:
-
-```python
-def hello():
-    print('Hello')
-````
-
-И таблица:
-
-<table>
-    <tr><td>Ячейка</td></tr>
-</table>";
-
-var chunks = complexText.ExtractSemanticChunksDeeply(
-chunkWordsCount: 100,
-semanticsType: PrimitiveExtractors.ParagraphsExtractor,
-withCodeBlocks: true,
-withTables: true
-);
-
-// Доступ к различным типам чанков
-var codeBlocks = chunks[ChunkType.CodeBlock];
-var tables = chunks[ChunkType.Table];
-var textChunks = chunks[ChunkType.TextChunk];
-
-````
-
-### Пример 3: Построение графа связей
-
-```csharp
-var chunks = text.ExtractSemanticChunksDeeply(100, SemanticsType.Sentence);
-var relationships = chunks.BuildRelationsGraph();
-
-foreach (var relation in relationships)
-{
-    Console.WriteLine(
-        $"Чанк {relation.FirstChunkIndex} -> {relation.RelationshipType} -> Чанк {relation.SecondChunkIndex}"
-    );
-}
-````
-
-Больше примеров см. в [EXAMPLES.md](docs/EXAMPLES.md).
-
-## ⚙️ Технические требования
-
-- .NET 9.0 или выше
-- C# 12.0 (используются последние возможности языка)
-
-## 📖 Документация
-
-Полная документация проекта:
-
-- [Архитектура и компоненты](docs/ARCHITECTURE.md) - описание структуры проекта и назначения компонентов
-- [API Reference](docs/API.md) - полная документация по методам и классам
-- [Примеры использования](docs/EXAMPLES.md) - подробные примеры сценариев использования
-- [Анализ производительности](docs/PERFORMANCE.md) - результаты бенчмарков, сравнение с Python библиотеками и рекомендации по оптимизации
-- [Замечания и рекомендации](docs/CODE_REVIEW.md) - анализ кода, тестов и рекомендации по улучшению
-- [Хранение тестовых данных](docs/TEST_DATA.md) - описание подхода к тестовым данным и рекомендации
-
-## 🔧 Разработка
-
-### Запуск тестов
+## Getting started
 
 ```bash
-dotnet test
+dotnet restore RagDataTools.sln
+dotnet build RagDataTools.sln
+dotnet test RagDataTools.sln
 ```
 
-### Структура тестов
+For a quick usage example, see the chunking APIs in `RagDataTools.Chunkers` and the deeper overview in [`project.md`](project.md).
 
-Тесты расположены в проекте `Sample.Chunkers.UnitTests` и используют:
+## Run scripts / commands
 
-- **NUnit** - фреймворк тестирования
-- **FluentAssertions** - библиотека для более читаемых assertions
-- Тестовые данные хранятся в `TestData/` директории
+- Restore: `dotnet restore RagDataTools.sln`
+- Build: `dotnet build RagDataTools.sln`
+- Test: `dotnet test RagDataTools.sln`
+- Benchmarks: `dotnet run --project RagDataTools.Benchmarks/RagDataTools.Benchmarks.csproj -c Release`
 
-### Запуск бенчмарков
+## Optional: external services
 
-Для измерения производительности библиотеки используется BenchmarkDotNet:
+- `RagDataTools.Connectors.Neo4j` depends on `Neo4j.Driver` and expects a reachable Neo4j database for real persistence scenarios.
+- `RagDataTools.Connectors.Qdrant` is currently a placeholder and does not provide a working connector yet.
 
-```bash
-dotnet run --project SampleChunkers/Sample.Chunkers.Benchmarks --configuration Release
-```
+## Project layout
 
-**Результаты бенчмарков** (на AMD Ryzen 7 4800H, .NET 9.0):
+The repo is organized as a flat solution root with separate projects:
 
-- **ExtractSemanticChunksFromText** (100 слов): ~17 μs
-- **ExtractSemanticChunksFromText** (10K слов): ~2 ms
-- **ExtractSemanticChunksDeeply** (Complex Markdown 5K слов): ~1.7 ms
-- **RetrieveChunksFromText** (Complex Markdown): ~0.18 ms
-- **BuildRelationsGraph** (Complex): ~1.75 ms
+- `RagDataTools.Chunkers/` - chunking and relationship-building logic
+- `RagDataTools.Connectors/` - repository interfaces
+- `RagDataTools.Connectors.Neo4j/` - Neo4j connector implementation
+- `RagDataTools.Connectors.Qdrant/` - Qdrant placeholder
+- `RagDataTools.Di/` - DI placeholder
+- `RagDataTools.Unifiers/` - unifier placeholder
+- `RagDataTools.UnitTests/` - NUnit tests
+- `RagDataTools.Benchmarks/` - BenchmarkDotNet runner
+- `specs/` - architecture, API, performance, and feature-spec documents
 
-Подробнее см. [PERFORMANCE.md](docs/PERFORMANCE.md).
+## Documentation & help
 
-## 📄 Лицензия
+- [`project.md`](project.md) - detailed technical overview, risks, and recommendations
+- [`specs/ARCHITECTURE.md`](specs/ARCHITECTURE.md)
+- [`specs/API.md`](specs/API.md)
+- [`specs/PERFORMANCE.md`](specs/PERFORMANCE.md)
+- [`specs/EXAMPLES.md`](specs/EXAMPLES.md)
 
-[Указать лицензию]
+## Contributing
 
-## 🤝 Вклад
+Keep changes focused, update tests when behavior changes, and prefer small, reviewable pull requests. If you touch chunking, persistence, or benchmarks, update the relevant `specs/` docs and `project.md` as needed.
 
-[Указать процесс контрибуции]
+## License
+
+License terms are TBD. Add a `LICENSE` file when the project license is finalized.

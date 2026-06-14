@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using RagDataTools.Chunkers.Extensions;
 using RagDataTools.Chunkers.Infrastructure;
 using RagDataTools.Chunkers.Strategies.IndexesExtractors;
@@ -50,7 +50,7 @@ public class SentenceIndexesExtractorTests
 
         var expectedResult = new[]
         {
-            //0, 31, 82, 134, 208, 344, 398 // should be
+            // 0, 31, 82, 134, 208, 344, 398 // should be
             0, 31, 82, 134, 206, 340, 394 // now
         };
 

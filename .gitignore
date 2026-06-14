@@ -10,6 +10,13 @@
 # Visual Studio
 **/.vs
 
+# Spec Driven Development
+**/.specify/templates
+**/.specify/scripts/powershell
+
+# AI IDEs
+**/.cursor/commands/speckit.*.*
+
 # Bencharks artifacts
 **/BenchmarkDotNet.Artifacts
 
