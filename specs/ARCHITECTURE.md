@@ -90,37 +90,37 @@ Placeholder templates used when replacing structured elements in text.
 
 ```text
 Text -> ExtractSemanticChunksDeeply
-  в”њв”Ђв†’ RetrieveChunksFromText
-  в”‚   в”њв”Ђв†’ ExtractMarkdownCodeBlocks
-  в”‚   в”њв”Ђв†’ ExtractHtmlTables
-  в”‚   в”њв”Ђв†’ ExtractMarkdownInfoBlocks
-  в”‚   в”њв”Ђв†’ ExtractMarkdownImageLinks
-  в”‚   в”њв”Ђв†’ ExtractMarkdownLinks
-  в”‚   в””в”Ђв†’ ExtractMarkdownHeaders
-  в”њв”Ђв†’ SquashLabelsIntoWords
-  в”њв”Ђв†’ PreprocessNaturalTextForChunking
-  в””в”Ђв†’ ExtractSemanticChunks
-      в”њв”Ђв†’ GetWords
-      в”њв”Ђв†’ ExtractSentenceStartIndices / ExtractParagraphStartIndexes
-      в””в”Ђв†’ GetChunks
+  |- RetrieveChunksFromText
+  |   |- ExtractMarkdownCodeBlocks
+  |   |- ExtractHtmlTables
+  |   |- ExtractMarkdownInfoBlocks
+  |   |- ExtractMarkdownImageLinks
+  |   |- ExtractMarkdownLinks
+  |   `- ExtractMarkdownHeaders
+  |- SquashLabelsIntoWords
+  |- PreprocessNaturalTextForChunking
+  `- ExtractSemanticChunks
+      |- GetWords
+      |- ExtractSentenceStartIndices / ExtractParagraphStartIndexes
+      `- GetChunks
 ```
 
 ### Scenario 2: Relation graph building
 
 ```text
 Chunk collection -> BuildRelationsGraph
-  в”њв”Ђв†’ BuildTextChunkSequenceRelations
-  в”њв”Ђв†’ BuildTitlesSequenceRelations
-  в””в”Ђв†’ BuildRelationshipsForRelatedChunks
+  |- BuildTextChunkSequenceRelations
+  |- BuildTitlesSequenceRelations
+  `- BuildRelationshipsForRelatedChunks
 ```
 
 ### Scenario 3: Duplicate detection
 
 ```text
 Chunk collection -> FindRepeatedChunksWithUrls
-  в”њв”Ђв†’ Filter URL chunks
-  в”њв”Ђв†’ Group by URL
-  в””в”Ђв†’ Keep the first index for each URL
+  |- Filter URL chunks
+  |- Group by URL
+  `- Keep the first index for each URL
 ```
 
 ## Implementation notes
@@ -393,37 +393,37 @@ Placeholder templates used when replacing structured elements in text:
 
 ```text
 Text -> ExtractSemanticChunksDeeply
-  в”њв”Ђв†’ RetrieveChunksFromText
-  в”‚   в”њв”Ђв†’ ExtractMarkdownCodeBlocks
-  в”‚   в”њв”Ђв†’ ExtractHtmlTables
-  в”‚   в”њв”Ђв†’ ExtractMarkdownInfoBlocks
-  в”‚   в”њв”Ђв†’ ExtractMarkdownImageLinks
-  в”‚   в”њв”Ђв†’ ExtractMarkdownLinks
-  в”‚   в””в”Ђв†’ ExtractMarkdownHeaders
-  в”њв”Ђв†’ SquashLabelsIntoWords
-  в”њв”Ђв†’ PreprocessNaturalTextForChunking
-  в””в”Ђв†’ ExtractSemanticChunks
-      в”њв”Ђв†’ GetWords
-      в”њв”Ђв†’ ExtractSentenceStartIndices / ExtractParagraphStartIndexes
-      в””в”Ђв†’ GetChunks
+  |- RetrieveChunksFromText
+  |   |- ExtractMarkdownCodeBlocks
+  |   |- ExtractHtmlTables
+  |   |- ExtractMarkdownInfoBlocks
+  |   |- ExtractMarkdownImageLinks
+  |   |- ExtractMarkdownLinks
+  |   `- ExtractMarkdownHeaders
+  |- SquashLabelsIntoWords
+  |- PreprocessNaturalTextForChunking
+  `- ExtractSemanticChunks
+      |- GetWords
+      |- ExtractSentenceStartIndices / ExtractParagraphStartIndexes
+      `- GetChunks
 ```
 
 ### Scenario 2: Relation graph building
 
 ```text
 Chunk collection -> BuildRelationsGraph
-  в”њв”Ђв†’ BuildTextChunkSequenceRelations
-  в”њв”Ђв†’ BuildTitlesSequenceRelations
-  в””в”Ђв†’ BuildRelationshipsForRelatedChunks
+  |- BuildTextChunkSequenceRelations
+  |- BuildTitlesSequenceRelations
+  `- BuildRelationshipsForRelatedChunks
 ```
 
 ### Scenario 3: Duplicate detection
 
 ```text
 Chunk collection -> FindRepeatedChunksWithUrls
-  в”њв”Ђв†’ Filter URL chunks
-  в”њв”Ђв†’ Group by URL
-  в””в”Ђв†’ Keep the first index for each URL
+  |- Filter URL chunks
+  |- Group by URL
+  `- Keep the first index for each URL
 ```
 
 ## Implementation notes
