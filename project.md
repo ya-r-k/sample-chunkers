@@ -1,308 +1,184 @@
-# Codebase Analysis: RagDataTools
+# Project deep-dive: RagDataTools
 
-## 📁 Project Structure
+## Solution overview
 
-This is a **.NET class library solution** for RAG (Retrieval-Augmented Generation) data pipelines: semantic chunking of text, building chunk relationship graphs, and persisting chunks to vector/graph stores. It is **not** a web API—there are no HTTP endpoints, controllers, or ASP.NET Core host.
+RagDataTools is a .NET 10 class-library suite for preparing RAG input data: it chunks text into semantic units, extracts Markdown/HTML structure into typed chunks, builds relationship graphs between chunks, and defines persistence abstractions for downstream stores such as Neo4j. It is meant to be consumed by other applications or services rather than hosting its own UI or HTTP API.
 
-### Directory Tree (up to 3rd level)
+The current codebase is centered on `RagDataTools.Chunkers`, which owns the chunking pipeline and the public extension-method API. `RagDataTools.Connectors` defines repository contracts, `RagDataTools.Connectors.Neo4j` contains the only real storage implementation, `RagDataTools.Connectors.Qdrant` is still a stub, and `RagDataTools.UnitTests` plus `RagDataTools.Benchmarks` exercise the core parsing and relation-building logic.
 
-```
+## Project structure
+
+The repository does not physically use `src/` and `tests/` folders even though the solution groups projects that way. The real layout is flat at the repo root, with a separate `specs/` tree for design and planning docs.
+
+```text
 rag-data-tools/
-├── .cursor/                    # Cursor IDE / SpecKit commands (untracked)
-├── .github/
-│   └── workflows/              # CI/CD (no workflow files found)
-├── .specify/                   # SpecKit templates and scripts (untracked)
-├── docs/                       # Documentation (API, ARCHITECTURE, EXAMPLES, PERFORMANCE, TEST_DATA)
-├── RagDataTools.sln            # Solution file
-├── src/                        # Source projects (logical grouping in solution)
-│   ├── RagDataTools.Chunkers/           # Core chunking logic
-│   │   ├── Extensions/                  # Extension methods (main API surface)
-│   │   ├── Infrastructure/             # Regex providers, primitive extractors
-│   │   ├── Interfaces/                 # Regex/chunk-type providers
-│   │   ├── Models/                     # ChunkModel, RelationshipModel
-│   │   │   └── Enums/                  # ChunkType, RelationshipType
-│   │   └── Strategies/
-│   │       ├── IndexesExtractors/      # Sentence/paragraph/word boundary extractors
-│   │       └── MarkdownExtractors/     # Chain of Responsibility extractors
-│   ├── RagDataTools.Connectors/        # Abstractions for chunk storage
-│   │   ├── Extensions/                 # (empty placeholder)
-│   │   └── Interfaces/                 # IChunksRepository, IChunksRelationshipsRepository
-│   ├── RagDataTools.Connectors.Neo4j/ # Neo4j implementation
-│   │   └── Repositories/               # Neo4jChunksRepository
-│   ├── RagDataTools.Connectors.Qdrant/ # Qdrant connector (stub)
-│   │   └── Repositories/               # QdrantChunksRepository (empty class)
-│   ├── RagDataTools.Di/                # DI registration (placeholder only)
-│   └── RagDataTools.Unifiers/          # Unifiers (placeholder only)
-├── tests/
-│   ├── RagDataTools.UnitTests/         # NUnit tests for Chunkers
-│   │   └── Chunkers/
-│   │       ├── Extensions/             # Tests for extension methods
-│   │       ├── Strategies/IndexesExtractors/
-│   │       └── TestData/               # Inline test data classes
-│   └── RagDataTools.Benchmarks/        # BenchmarkDotNet console app
-├── BenchmarkDotNet.Artifacts/          # Benchmark output
-├── README.md
-└── project.md                          # This document
+├── RagDataTools.sln
+├── RagDataTools.Chunkers/
+│   ├── Extensions/
+│   ├── Infrastructure/
+│   ├── Interfaces/
+│   ├── Models/
+│   └── Strategies/
+├── RagDataTools.Connectors/
+│   └── Interfaces/
+├── RagDataTools.Connectors.Neo4j/
+│   └── Repositories/
+├── RagDataTools.Connectors.Qdrant/
+│   └── Repositories/
+├── RagDataTools.Di/
+├── RagDataTools.Unifiers/
+├── RagDataTools.UnitTests/
+│   └── Chunkers/
+├── RagDataTools.Benchmarks/
+└── specs/
 ```
 
-### Directory purposes
+This structure is broadly sound for a library suite because it separates chunking, abstractions, connectors, tests, and benchmarks. The main problem is that the solution and the docs imply a fuller `src/` / `tests/` / `docs/` organization than actually exists. That makes the repo look more mature than it is and increases the chance of stale documentation.
 
-| Directory | Purpose |
-|-----------|---------|
-| **RagDataTools.Chunkers** | Core library: split text into semantic chunks (sentences/paragraphs), extract Markdown/HTML elements (headings, code blocks, tables, links, images), and build a relationship graph between chunks. |
-| **RagDataTools.Connectors** | Abstraction layer: `IChunksRepository<TFlag, TId>` and `IChunksRelationshipsRepository<TData>` for storing chunks and relationships. Depends only on Chunkers models. |
-| **RagDataTools.Connectors.Neo4j** | Neo4j implementation of chunk storage using the official driver and APOC for node creation. |
-| **RagDataTools.Connectors.Qdrant** | Placeholder for a Qdrant vector-store connector; no NuGet reference or implementation yet. |
-| **RagDataTools.Di** | Intended for dependency injection registration; currently contains only an empty `Class1`. |
-| **RagDataTools.Unifiers** | Placeholder for future “unifier” logic; empty. |
-| **RagDataTools.UnitTests** | NUnit tests for Chunkers (extensions, index extractors), with FluentAssertions and coverlet. |
-| **RagDataTools.Benchmarks** | BenchmarkDotNet executable for chunking performance. |
-| **docs** | Russian-language docs: ARCHITECTURE, API, EXAMPLES, PERFORMANCE, TEST_DATA. |
+The placeholder projects are also part of the structure story: `RagDataTools.Di`, `RagDataTools.Unifiers`, and `RagDataTools.Connectors.Qdrant` exist, but they are effectively empty. That is acceptable during early design work, but it should be called out clearly until the projects gain real responsibility.
 
-### Code organization
+## Technology stack
 
-- **Layered / feature-oriented**: Chunkers = domain + application (extensions as API); Connectors = infrastructure (repositories). Clear separation between chunking logic and storage.
-- **Library-style API**: Public API is primarily **extension methods** on `string` and `ChunkModel[]` / `Dictionary<T, ChunkModel[]>` (e.g. `text.ExtractSemanticChunksDeeply(...)`, `chunks.BuildRelationsGraph()`).
-- **Strategy + Chain of Responsibility**: Extractors for sentence/paragraph/word boundaries (`IPrimitivesIndexesExtractor`) and for Markdown elements (`IMarkdownChunksExtractor` chain) keep parsing logic modular.
+- Runtime: .NET 10 (`net10.0`) across all projects.
+- Language features: nullable reference types and implicit usings are enabled everywhere; `LangVersion` is set to `latest` in the test and benchmark projects.
+- Markdown / parsing: `Markdig` is referenced in `RagDataTools.Chunkers` and also in `RagDataTools.Connectors.Neo4j`, but the current source shown here does not appear to use Markdig APIs directly yet.
+- Graph DB: `Neo4j.Driver` 6.0.0 is used by `RagDataTools.Connectors.Neo4j`.
+- Testing: NUnit 4.4.0, FluentAssertions 8.8.0, coverlet.collector 6.0.4, Microsoft.NET.Test.Sdk 18.0.1, NUnit.Analyzers 4.11.2, and NUnit3TestAdapter 6.1.0.
+- Benchmarking: BenchmarkDotNet 0.15.8 in `RagDataTools.Benchmarks`.
 
----
+There is no repo-wide `.editorconfig`, `Directory.Build.props`, `global.json`, or NuGet config. That is not fatal, but it does mean build and style conventions are mostly local to each project file.
 
-## 🛠 Technology Stack
+## Public APIs and persistence
 
-| Category | Technology | Version / notes |
-|----------|------------|------------------|
-| **Runtime** | .NET | net10.0 |
-| **Language** | C# | Implicit usings, nullable reference types, latest LangVersion where set |
-| **Chunking / Markdown** | Markdig | 0.44.0 (Chunkers, Neo4j connector) |
-| **Graph DB** | Neo4j.Driver | 6.0.0 (Connectors.Neo4j) |
-| **Vector DB** | Qdrant | Not referenced; connector project is a stub |
-| **Testing** | NUnit | 4.4.0 |
-| **Assertions** | FluentAssertions | 8.8.0 |
-| **Coverage** | coverlet.collector | 6.0.4 |
-| **Benchmarking** | BenchmarkDotNet | 0.15.8 |
-| **Web / API** | — | None (class libraries only) |
-| **DI** | — | No DI registration in codebase; RagDataTools.Di is empty |
-| **Auth** | — | N/A (no API) |
-| **API docs** | — | N/A (no HTTP API); docs in `docs/` (Markdown) |
-
----
-
-## 🏗 Architecture
-
-### Patterns in use
-
-1. **Extension-method API**  
-   Entry points are static extension methods (e.g. `ComplexDataChunkerExtensions.ExtractSemanticChunksDeeply`, `NaiveTextChunkerExtensions.ExtractSemanticChunksFromText`, `ChunksExtensions.BuildRelationsGraph`). Callers use `text.ExtractSemanticChunksDeeply(...)` and `chunks.BuildRelationsGraph()`.
-
-2. **Strategy for primitives**  
-   `IPrimitivesIndexesExtractor` defines `int[] ExtractIndexes(string text)` for word/sentence/paragraph boundaries. Implementations: `WordsIndexesExtractor`, `SentenceIndexesExtractor`, `ParagraphIndexesExtractor`, exposed via `PrimitivesExtractors.SentencesExtractor`, etc.
-
-3. **Chain of Responsibility for Markdown**  
-   `IMarkdownChunksExtractor` has `ExtractChunksFromText(StringBuilder, int)` and `SetNext(IMarkdownChunksExtractor)`. A chain is built in `ComplexDataChunkerExtensions` static constructor (CodeBlock → UnusualBlock → HtmlTable → InfoBlock → ImageLink → ExternalLink → Heading). Each extractor mutates the `StringBuilder` (replacing matches with labels) and passes it to the next.
-
-4. **Repository abstraction**  
-   `IChunksRepository<TFlag, TId>`: `AddAsync(TFlag[] flags, ChunkModel[] chunks)`, `GetIndexesIdsPairsByFlagAsync(TFlag)`, `RemoveFlagFromAllDataAsync(TFlag)`. `IChunksRelationshipsRepository<TData>`: `AddRelationshipsAsync(string flag, TData[] relationships)`. Neo4j implements the chunks repository with `string` flag/id; Qdrant repository is an empty class and does not implement the interface.
-
-5. **Generic repository with two type parameters**  
-   `TFlag` (e.g. label/category) and `TId` (store-generated id) allow different back ends to use their own types.
-
-### Dependency flow
-
-- **Chunkers**: No project references; only Markdig. Defines `ChunkModel`, `RelationshipModel`, enums.
-- **Connectors**: References Chunkers only; defines repository interfaces using Chunkers models.
-- **Connectors.Neo4j**: References Connectors + Chunkers; implements `IChunksRepository<string, string>`.
-- **Connectors.Qdrant**: No package references; empty repo class; does not reference Connectors interfaces in code.
-- **UnitTests**: References Chunkers; uses `InternalsVisibleTo` for testing.
-
-### Notable implementation detail (Neo4j)
-
-`Neo4jChunksRepository.AddAsync` uses APOC and string interpolation for labels:
+The real public surface is extension-method driven. The main entry points are in `RagDataTools.Chunkers.Extensions` and the simple extractor factories live in `RagDataTools.Chunkers.Infrastructure`.
 
 ```csharp
-string query = $@"UNWIND $nodesParams AS item
-                  CALL apoc.create.node(['{flags[0]}', '{flags[1]}', COALESCE(item.type, 'Unknown')], item.properties) 
-                  YIELD node
-                  RETURN node";
-await tx.RunAsync(query, new { nodesParams });
+public static string[] ExtractSemanticChunksFromText(
+    this string text,
+    int chunkWordsCount,
+    IPrimitivesIndexesExtractor indexesExtractor,
+    double overlapPercentage = 0.0)
+
+public static ChunkModel[] ExtractSemanticChunksDeeply(
+    this string text,
+    int chunkWordsCount,
+    IPrimitivesIndexesExtractor indexesExtractor,
+    double overlapPercentage = 0.0,
+    int lastUsedIndex = 0)
+
+public static RelationshipModel[] BuildRelationsGraph(this ChunkModel[] chunks)
+public static Dictionary<int, int> FindRepeatedChunksWithUrls<T>(this Dictionary<T, ChunkModel[]> chunks)
 ```
 
-- **Security**: Label interpolation with `flags[0]`/`flags[1]` is unsafe if flags are user-controlled (Cypher injection). Prefer parameterized labels or allowlisted values.
-- **Correctness**: `nodesParams` is currently assigned `chunks` (array of `ChunkModel`); Cypher expects `item.type` and `item.properties`. The mapping from `ChunkModel` to this shape is not implemented, so the repository is incomplete/WIP.
+`ChunkModel` carries the chunk index, `ChunkType`, raw content, a loosely typed `Data` dictionary, and `RelatedChunksIndexes`. `RelationshipModel` is the graph edge record. The models are convenient for consumers, but the `Dictionary<string, object>` payload is intentionally weakly typed and will need discipline from callers.
 
----
+The deep extraction flow is the heart of the library. `ComplexDataChunkerExtensions` builds a Markdown extractor chain, replaces structured content with placeholders, preprocesses the remaining text, chunks the text by sentence or paragraph boundaries, and then restores relationships back to the structured chunks. The extractor order is fixed: code blocks, unusual code blocks, HTML tables, info blocks, image links, external links, and headings.
 
-## 🔌 API Design & Endpoints
+The collection-oriented overload of `ExtractSemanticChunksDeeply` accepts `Dictionary<T, string>` with `where T : unmanaged`, so the caller controls document IDs while the library keeps chunk indexes unique across the collection.
 
-- **HTTP API**: None. This is a class library consumed by other applications.
-- **Public API**: Extension methods and models in `RagDataTools.Chunkers` (and repository interfaces in `RagDataTools.Connectors`).
+On the persistence side, `RagDataTools.Connectors` defines the contracts:
 
-### Main entry points (code examples)
+- `IChunksRepository<TFlag, TId>` with `AddAsync`, `GetIndexesIdsPairsByFlagAsync`, and `RemoveFlagFromAllDataAsync`
+- `IChunksRelationshipsRepository<TData>` with `AddRelationshipsAsync`
 
-**Semantic chunking (simple text):**
+`RagDataTools.Connectors.Neo4j.Neo4jChunksRepository` is the only implementation present. It is still incomplete and currently looks more like scaffolding than a finished persistence adapter. The implementation hardcodes the `neo4j` database name, interpolates labels directly into Cypher, and uses `ChunkModel` as if it had `type` and `properties` members. Its read path also expects a `temporary_index` property that nothing in the current code writes. In other words, the repository contract exists, but the mapping and query behavior are not production-ready yet.
 
-```csharp
-using RagDataTools.Chunkers.Extensions;
-using RagDataTools.Chunkers.Infrastructure;
+`RagDataTools.Connectors.Qdrant.QdrantChunksRepository` is an empty class and does not implement the connector interface yet.
 
-var text = "Your document text...";
-string[] chunks = text.ExtractSemanticChunksFromText(
-    chunkWordsCount: 100,
-    indexesExtractor: PrimitivesExtractors.SentencesExtractor,
-    overlapPercentage: 0.5
-);
-```
+## Patterns and architecture
 
-**Deep chunking (Markdown + structure + relations):**
+The codebase uses a few clear patterns that fit the problem well:
 
-```csharp
-ChunkModel[] chunks = text.ExtractSemanticChunksDeeply(
-    chunkWordsCount: 100,
-    indexesExtractor: PrimitivesExtractors.SentencesExtractor,
-    overlapPercentage: 0.5
-);
-RelationshipModel[] relations = chunks.BuildRelationsGraph();
-```
+- Extension-method API. This is the dominant public style and makes the library easy to consume from plain text and chunk collections.
+- Strategy. Sentence, paragraph, and word boundary extraction are split into separate index extractors behind `IPrimitivesIndexesExtractor`.
+- Chain of Responsibility. Markdown structure extraction is a staged pipeline of extractor classes that mutate a shared `StringBuilder` and pass the result forward.
+- Repository abstraction. Storage concerns are separated from chunking concerns through generic repository interfaces.
 
-**Repository usage (Neo4j):**
+Those patterns are appropriate for a library of this shape, but there are some weak spots.
 
-```csharp
-var repo = new Neo4jChunksRepository(driver);
-await repo.AddAsync(new[] { "Document", "Chunk" }, chunk1, chunk2);
-IDictionary<int, string> indexToId = await repo.GetIndexesIdsPairsByFlagAsync("Chunk");
-```
+The extension-method layer is good for discoverability, but the public API surface is slightly misleading because the docs describe methods that are not actually present anymore, such as a separate `RetrieveChunksFromText` entry point and a nested document/chunk-type return shape. The code itself currently exposes a smaller, flatter API.
 
----
+The Markdown extractor chain is a reasonable design choice, but it is quite stateful. Each extractor mutates the same `StringBuilder`, and chunk relationships are inferred from placeholder text. That works, but it makes correctness sensitive to replacement order, placeholder syntax, and regex behavior.
 
-## 📦 Data Layer and Persistence
+The repository abstraction is sound in concept, but the current Neo4j adapter shows the usual risk of over-abstracting before the first implementation is complete. The interface is cleaner than the implementation beneath it.
 
-- **Chunkers**: In-memory only; no persistence. Output is `ChunkModel[]` and `RelationshipModel[]`.
-- **Connectors**: Abstract persistence via `IChunksRepository` and `IChunksRelationshipsRepository`.
-- **Neo4j**: Uses Neo4j.Driver (async sessions, `ExecuteWriteAsync`/`ExecuteReadAsync`), database name `"neo4j"`. Nodes are created with APOC; labels come from `flags`; no EF Core, no migrations.
-- **Qdrant**: No implementation; no migrations or schema.
-- **Caching / transactions**: No caching or distributed transaction logic in the repo. Neo4j uses its own transaction scope inside `ExecuteWriteAsync`/`ExecuteReadAsync`.
+## Testing strategy
 
-**Migration strategy**: None in codebase. Neo4j schema (labels, properties, indexes) would be managed outside this repo (manual or Neo4j migrations/tooling).
+`RagDataTools.UnitTests` is a focused NUnit test project with FluentAssertions and coverlet enabled. It references `RagDataTools.Chunkers` and uses `InternalsVisibleTo` so the tests can validate internal behavior where needed.
 
----
+Coverage is strongest around the core chunking pipeline:
 
-## 📋 Logging and Observability
+- `SimpleTextChunkerExtensionsTests` covers preprocessing and semantic chunk splitting for sentence and paragraph modes, including overlap behavior.
+- `ComplexDataChunkerExtensionsTests` covers mixed Markdown content, nested content, collection processing, and the extraction of code blocks, tables, links, images, headings, and info blocks.
+- `ChunksExtensionsTests` covers relation graph construction and URL duplicate detection.
+- Separate tests cover word, sentence, and paragraph index extractors.
 
-- **Logging**: No logging framework (Serilog, NLog, etc.) referenced. No `ILogger` or structured logging.
-- **Health checks**: N/A (no host/API). A consuming app would register health checks for Neo4j/Qdrant if needed.
-- **Correlation IDs**: Not present.
+The test data strategy is fixture-heavy and realistic. The `TestData` classes hold large in-code samples from real articles and expected chunk/relationship outputs. That gives good signal for behavior regressions, but it also makes the tests long and somewhat brittle when extractor behavior changes in small ways.
 
----
+The integration gaps are obvious: there are no tests for Neo4j persistence, no Qdrant tests, no DI registration tests, and no CI gate visible in the repository. The benchmark and connector layers therefore remain mostly unverified from an integration perspective.
 
-## ✅ Code Quality
+## Performance and benchmarks
 
-- **.editorconfig**: Not found in the repo.
-- **Linters**: No StyleCop or other analyzer packages in `.csproj` files.
-- **Naming**: Consistent PascalCase for public types/methods; Russian comments and docstrings in Chunkers; README/docs in Russian.
-- **Type safety**: Strong C# typing; nullable enabled; `required` and `record` used on models (`ChunkModel`, `RelationshipModel`).
-- **Tests**: NUnit 4, FluentAssertions, coverlet; tests under `RagDataTools.UnitTests/Chunkers` (Extensions, Strategies/IndexesExtractors), with shared test data in `TestData/`. No DI or API tests (no API).
-- **API documentation**: No XML comments on Connectors/Neo4j; Chunkers has XML remarks and examples. Human-readable docs in `docs/` (API.md, ARCHITECTURE.md, etc.).
+`RagDataTools.Benchmarks` is a BenchmarkDotNet console app that exercises the hot paths in the chunking layer. `Program.cs` uses `BenchmarkSwitcher.FromAssembly(...).Run(args, new DebugInProcessConfig())`, so it is convenient for local runs but not ideal for representative benchmark discipline.
 
-**Improvements**: Add `.editorconfig` and optional analyzers (e.g. StyleCop or Roslynator); complete Neo4j parameterization and ChunkModel→Cypher mapping; add integration tests for Neo4j (and later Qdrant).
+The benchmark class covers:
 
----
+- preprocessing
+- word, sentence, and paragraph index extraction
+- semantic chunking for plain text and Markdown
+- relation graph building
+- repeated URL detection
 
-## 🔧 Key Components
+The benchmark data is generated in memory at several sizes, including small, medium, large, very large, and complex Markdown corpora. That is a good fit for a parser-heavy library because it exposes allocation and regex costs without depending on external files.
 
-### 1. ComplexDataChunkerExtensions (Chunkers)
+The project docs report broadly healthy results for the current baseline, with chunking in the microsecond-to-low-millisecond range for the sample workloads. The main hot spots are the expected ones: repeated regex passes, `StringBuilder.Replace`, and LINQ-heavy duplicate detection.
 
-- **Role**: Main entry for “deep” chunking: extract structured Markdown/HTML elements, replace with placeholders, then extract text chunks and link them via `RelatedChunksIndexes`.
-- **Pattern**: Static class with a prebuilt chain of `IMarkdownChunksExtractor` and regex providers; returns `ChunkModel[]`.
-- **Dependencies**: Markdig (indirect via extractors), `ChunkTypesRegexProvider`, all Markdown extractors.
+One benchmark smell is the runtime mismatch: the benchmark project targets `net10.0`, but the job attribute is pinned to `RuntimeMoniker.Net90`. That does not break the code, but it makes the benchmark config look stale relative to the rest of the solution.
 
-```csharp
-// Simplified call flow
-var dataChunks = ChunksExtractorsChain.ExtractChunksFromText(textBuilder, lastUsedIndex);
-var processedText = textBuilder.SquashLabelsIntoWords().PreprocessNaturalTextForChunking();
-dataChunks.AddRange(processedText.ExtractSemanticChunks(...));
-return [.. dataChunks];
-```
+## Documentation and discoverability
 
-### 2. NaiveTextChunkerExtensions (Chunkers)
+Documentation is present, but it is not well synchronized with the code.
 
-- **Role**: Simple text chunking: preprocess text, then chunk by sentence or paragraph boundaries with optional overlap.
-- **Input**: `string`, `chunkWordsCount`, `IPrimitivesIndexesExtractor`, `overlapPercentage`.
-- **Output**: `string[]` of chunk texts.
+The biggest mismatch is that `README.md` still speaks in the old `Sample.Chunkers` naming, says the library uses .NET 9.0, and links to a `docs/` folder that does not exist in the repository. The real long-form docs are in `specs/`, which are a mix of architecture notes, performance notes, and future feature specifications.
 
-```csharp
-var preprocessedText = PreprocessNaturalTextForChunking(text);
-var wordsIndexes = wordsIndexesExtractor.ExtractIndexes(preprocessedText);
-var semanticsIndexes = indexesExtractor.ExtractIndexes(preprocessedText);
-return GetChunks(wordsIndexes, semanticsIndexes, chunkWordsCount, preprocessedText, overlapPercentage);
-```
+`project.md` should therefore be treated as the current deep-dive source of truth, while `README.md` is closer to stale onboarding material. Several spec documents also describe planned ingest and keyword-extraction features that are not implemented yet, so they should be read as roadmap material rather than current behavior.
 
-### 3. ChunksExtensions (Chunkers)
+## Code quality and maintainability
 
-- **Role**: Build relationship graph from chunks and find duplicate URL-based chunks.
-- **Key methods**: `BuildRelationsGraph()` (single doc or `Dictionary<T, ChunkModel[]>`), `FindRepeatedChunksWithUrls()`.
-- **Output**: `RelationshipModel[]` or `Dictionary<int, int>` (duplicate index → canonical index).
+The code is reasonably modern C# for a library: nullable is on, implicit usings are on, and the public API is typed. The tests also use analyzers and coverage tooling, which is a good sign.
 
-### 4. Neo4jChunksRepository (Connectors.Neo4j)
+The main maintainability concern is that the models are mutable records with loosely typed metadata. That keeps the API flexible, but it pushes a lot of correctness onto convention instead of type safety.
 
-- **Role**: Persist chunks to Neo4j as nodes with configurable labels (`TFlag` = `string`), return index→id mapping.
-- **Dependencies**: Neo4j.Driver `IDriver` (injected via primary constructor).
-- **Gap**: `AddAsync` does not map `ChunkModel` to `item.type` / `item.properties` and uses unsafe label interpolation.
+Contributor complexity is moderate. The public API is easy to understand, but the internals are regex-heavy, order-dependent, and sensitive to placeholder replacement details. A junior developer can follow the tests and extension methods, but the Markdown extraction chain and Neo4j adapter need more care.
 
-### 5. Markdown extractors chain (Chunkers)
+## Strengths
 
-- **Role**: Sequential extraction of code blocks, unusual blocks, HTML tables, info blocks, image links, external links, headings. Each step replaces matched text with labels so text chunker can later resolve `RelatedChunksIndexes`.
-- **Pattern**: `MarkdownChunksExtractor` base class + `SetNext` chain; each concrete extractor (e.g. `MarkdownCodeBlockExtractor`) implements `ExtractChunksFromText` and calls `ExecuteNextExtractor`.
+- Clear separation between chunking logic, connector abstractions, connector implementations, tests, and benchmarks.
+- Strong focus on typed domain objects for chunks and relationships.
+- Realistic, high-signal tests that exercise the full extraction pipeline with representative content.
+- Benchmark coverage for the main hot paths.
+- Extension-method API is ergonomic for downstream consumers.
+- Nullable and implicit usings are consistently enabled.
 
----
+## Weak points & risks
 
-## 🔒 Security and Validation
+- `RagDataTools.Connectors.Neo4j` is incomplete: the current query mapping does not match `ChunkModel`, `temporary_index` is not written anywhere, and label interpolation is unsafe if inputs are not trusted.
+- `RagDataTools.Connectors.Qdrant`, `RagDataTools.Di`, and `RagDataTools.Unifiers` are effectively placeholders, which makes the solution look broader than its actual implementation.
+- Public docs are stale and mismatched with the codebase naming, folder layout, and even some API shapes.
+- The deep extraction pipeline is order-sensitive and string-replacement driven, so small regex changes can have wide ripple effects.
+- `ChunkModel.Data` is a weakly typed dictionary, which is flexible but easy to misuse.
+- There are no connector integration tests and no visible CI workflow in the repository.
+- The benchmark job config is not aligned with the current target framework.
+- `Markdig` is referenced, but the current code shown here does not use it directly, which suggests either dead dependency weight or unfinished parser integration.
 
-- **Authentication/Authorization**: N/A (library).
-- **Input validation**: No FluentValidation or DataAnnotations; methods assume valid input (e.g. non-null text). Neo4j repository uses string-interpolated labels (injection risk if flags are user-controlled).
-- **CORS / HTTPS**: N/A (no web layer).
-- **Sensitive data**: No built-in handling; callers must avoid logging or storing secrets in chunk content.
+## Recommendations
 
-**Recommendation**: Parameterize or allowlist Neo4j labels and complete the ChunkModel→Cypher mapping without passing raw user input into the query string.
+1. Finish or simplify the Neo4j adapter first. Map `ChunkModel` to an explicit persistence payload, stop interpolating labels directly into Cypher, and make the `temporary_index` story real or remove it.
+2. Either implement the placeholder projects or mark them explicitly as WIP. Empty projects make the solution harder to trust.
+3. Bring `README.md` and the spec docs back in sync with the current API, project names, and actual folder layout.
+4. Add connector integration tests, starting with Neo4j behavior and failure paths, so persistence is covered by something more than the interface shape.
+5. Add a repo-level `.editorconfig` and build-time analyzers so formatting and naming rules are consistent across projects.
+6. Align the benchmark job/runtime settings with `net10.0`, then keep the current benchmark baseline in sync with performance docs.
+7. Tighten the public metadata model over time. Even partial typed wrappers for `Data` would reduce risk without removing flexibility.
+8. Decide whether `Markdig` is a real dependency in the current codepath. If it is, use it explicitly; if not, remove the unused reference.
 
----
-
-## ⚡ Performance and Infrastructure
-
-- **Build**: Standard SDK-style `.csproj`; `dotnet build` / `dotnet test` / `dotnet run --project RagDataTools.Benchmarks`.
-- **Benchmarks**: `RagDataTools.Benchmarks` uses BenchmarkDotNet (DebugInProcessConfig in Program.cs); `ChunkersBenchmarks` covers `ExtractSemanticChunksFromText`, `ExtractSemanticChunksDeeply`, `BuildRelationsGraph`, `FindRepeatedChunksWithUrls` with small/medium/large/very large and Markdown payloads. Runtime set to Net90 in attributes (solution is net10.0).
-- **CI/CD**: `.github/workflows` folder exists; no YAML workflow files found.
-- **Docker**: No Dockerfile or containerization in the repo.
-- **Development**: README describes `dotnet test` and `dotnet run --project ... Benchmarks`; no setup scripts in repo root.
-
----
-
-## 📋 Summary & Recommendations
-
-### Summary
-
-- **RagDataTools** is a **.NET 10 class library suite** for RAG data preparation: semantic chunking (sentences/paragraphs, Markdown/HTML), relationship graph construction, and repository abstractions for Neo4j (and a Qdrant stub). The design is clear: Chunkers own domain and parsing; Connectors define storage interfaces; Neo4j is the only implemented backend. Patterns (Strategy, Chain of Responsibility, generic repositories) are used consistently. Test and benchmark projects are in place; docs are in Russian. Complexity is **middle-level** (strategy + chain, async repositories, generic APIs).
-
-### Strengths
-
-- Clear separation between chunking and persistence.
-- Rich chunk and relationship model (ChunkType, RelationshipType) and extension-based API.
-- NUnit + FluentAssertions + coverlet and BenchmarkDotNet integrated.
-- Documentation (ARCHITECTURE, API, EXAMPLES, PERFORMANCE) present.
-
-### Improvements
-
-1. **Neo4j**: Fix `AddAsync`: map `ChunkModel` to Cypher parameters (`item.type`, `item.properties`); remove or parameterize label interpolation to avoid injection.
-2. **Qdrant**: Add NuGet reference, implement `IChunksRepository` (and optionally `IChunksRelationshipsRepository`) in `QdrantChunksRepository`.
-3. **DI**: Implement registration in RagDataTools.Di (e.g. register Neo4j driver and `IChunksRepository<string, string>`).
-4. **Quality**: Introduce `.editorconfig` and optionally Roslyn analyzers; add XML docs on Connectors and Neo4j.
-5. **CI**: Add at least one GitHub Actions workflow (build + test).
-6. **Benchmarks**: Align `[SimpleJob(RuntimeMoniker.Net90)]` with solution target (net10.0) or document the choice.
-
-### Non-standard / interesting
-
-- **Extension methods as main API** instead of service classes improves discoverability for string and chunk collections.
-- **Chain of Responsibility over a mutable `StringBuilder`** allows multiple Markdown extractors to run in sequence and leave labels for later resolution of `RelatedChunksIndexes`.
-- **Generic `IChunksRepository<TFlag, TId>`** supports different back ends (e.g. string labels for Neo4j, other key types elsewhere) without changing the Chunkers layer.
-
----
-
-*Analysis length: ~3,200 words. Codebase state as of analysis date.*
