@@ -15,7 +15,7 @@
 
 - [x] CHK001 Are benchmark requirements defined for **chunking plain text** (e.g. ExtractSemanticChunksFromText) with explicit workload scope (e.g. word count, sentence vs paragraph)? [Completeness, Spec §FR-010, constitution]
 - [x] CHK002 Are benchmark requirements defined for **chunking unstructured or semi-structured data** (e.g. Markdown with tables, code blocks, headings, images — ExtractSemanticChunksDeeply) so that non-plain-text workloads are in scope? [Completeness, Spec §FR-010, Gap]
-- [ ] CHK003 Is the requirement to **compare with other libraries** (e.g. Python chunking libraries) for the same workload documented in the spec or governance so that “benchmarks for libraries to chunk” is testable? [Completeness, constitution §IV]
+- [x] CHK003 Is the requirement to **compare with other libraries** (e.g. Python chunking libraries) for the same workload documented in the spec or governance so that “benchmarks for libraries to chunk” is testable? [Completeness, constitution §IV]
 - [x] CHK004 Are **workload definitions** (input size, format: plain text vs Markdown with N tables/code blocks, etc.) specified or referenced so that benchmarks are reproducible? [Completeness, Gap, Spec §FR-010]
 - [x] CHK005 Are benchmarks for **BuildRelationsGraph** (relationship graph from chunks) in scope and required to be maintained or documented? [Completeness, constitution, Spec §FR-010]
 
@@ -29,7 +29,7 @@
 ## Requirement Consistency
 
 - [x] CHK010 Do benchmark requirements (FR-010, SC-006, constitution) align on **chunking** as the primary benchmarked domain, with conversion/persistence as optional additional benchmarks? [Consistency, Spec §FR-010]
-- [ ] CHK011 Is the requirement to outperform **comparable libraries** (constitution) reflected in the spec or linked docs (e.g. comparison workloads, Python analogues) so that acceptance is consistent? [Consistency, constitution §IV, Spec §FR-010]
+- [x] CHK011 Is the requirement to outperform **comparable libraries** (constitution) reflected in the spec or linked docs (e.g. comparison workloads, Python analogues) so that acceptance is consistent? [Consistency, constitution §IV, Spec §FR-010]
 
 ## Acceptance Criteria Quality
 
@@ -39,7 +39,7 @@
 ## Scenario Coverage
 
 - [x] CHK014 Are benchmark requirements specified for **multiple workload types**: e.g. plain text only, Markdown with structure (headings/tables/code), and optionally large input? [Coverage, Spec §FR-010]
-- [ ] CHK015 Is the scenario “benchmark this library vs another library (e.g. Python) on the same chunking workload” in scope, and are requirements for workload parity or comparison method documented? [Coverage, constitution §IV, Gap]
+- [x] CHK015 Is the scenario “benchmark this library vs another library (e.g. Python) on the same chunking workload” in scope, and are requirements for workload parity or comparison method documented? [Coverage, constitution §IV, Gap]
 
 ## Edge Case Coverage
 

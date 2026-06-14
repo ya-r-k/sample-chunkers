@@ -18,7 +18,7 @@
 - [x] CHK003 Is **overlap** between consecutive chunks (percentage, semantics, and effect on boundary placement) specified in the spec or linked docs so that “overlap” is a testable requirement? [Completeness, Gap]
 - [x] CHK004 Are requirements for **semantic boundary types** (e.g. sentence, paragraph only vs list/code-block boundaries) documented so that chunking respects intended boundaries and edge cases are bounded? [Completeness, Spec §FR-009, Gap]
 - [x] CHK005 Is the **order or priority of chunk extractors** (e.g. code block → table → heading) required to be documented or stable so that overlapping patterns have defined behavior? [Completeness, plan.md, Gap]
-- [ ] CHK006 Are **encoding and script requirements** for chunking (e.g. Unicode normalization, non-Latin scripts, grapheme clusters) specified so that “special characters or non-Latin scripts” (Edge Cases) is unambiguous? [Completeness, Spec §Edge Cases, Gap]
+- [x] CHK006 Are **encoding and script requirements** for chunking (e.g. Unicode normalization, non-Latin scripts, grapheme clusters) specified so that “special characters or non-Latin scripts” (Edge Cases) is unambiguous? [Completeness, Spec §Edge Cases, Gap]
 - [x] CHK007 Are requirements for **chunk count or size bounds** (e.g. max chunks per document, min/max chunk size in chosen units) stated or explicitly out of scope? [Completeness, Gap]
 
 ## Requirement Completeness (Best Practices from Other Libraries)
@@ -26,7 +26,7 @@
 - [x] CHK008 Are requirements for **token-based chunk sizing** (e.g. 400–512 tokens as in common Python RAG guidance) or explicit **word/token equivalence** documented, or is word-only sizing intentionally chosen and justified? [Completeness, Best Practice, Gap]
 - [x] CHK009 Is **overlap** quantified and justified (e.g. 10–20% overlap to reduce boundary loss) in requirements or linked research so that it matches common best practices where applicable? [Completeness, Best Practice, Gap]
 - [x] CHK010 Are requirements for **recursive or hierarchical boundary splitting** (e.g. try paragraph then sentence then word) documented or explicitly out of scope compared to single-level boundaries? [Completeness, Best Practice, Gap]
-- [ ] CHK011 Is **comparison or alignment with named chunking libraries** (e.g. LangChain text splitters, LlamaIndex node parsers) required in governance or spec so that “best practices from other libraries” is verifiable? [Completeness, constitution §IV, Gap]
+- [x] CHK011 Is **comparison or alignment with named chunking libraries** (e.g. LangChain text splitters, LlamaIndex node parsers) required in governance or spec so that “best practices from other libraries” is verifiable? [Completeness, constitution §IV, Gap]
 - [x] CHK012 Are **semantic-boundary preservation** requirements (e.g. do not split mid-sentence/mid-paragraph) explicitly stated so that they match common “semantic chunking” expectations? [Completeness, Spec §FR-009, Best Practice]
 
 ## Requirement Clarity (Weaknesses & Bottlenecks)
@@ -39,7 +39,7 @@
 ## Requirement Clarity (Best Practices)
 
 - [x] CHK017 Is “semantic unit” (sentence vs paragraph) for chunk boundaries **enumerated and chosen per use case** in requirements or linked docs so that it aligns with common recursive/semantic splitting practices? [Clarity, Best Practice, Gap]
-- [ ] CHK018 Are **chunk quality criteria** (e.g. “self-contained,” “single coherent question”) referenced or out of scope so that requirements are consistent with best-practice descriptions of ideal chunk size? [Clarity, Best Practice, Gap]
+- [x] CHK018 Are **chunk quality criteria** (e.g. “self-contained,” “single coherent question”) referenced or out of scope so that requirements are consistent with best-practice descriptions of ideal chunk size? [Clarity, Best Practice, Gap]
 
 ## Requirement Consistency
 

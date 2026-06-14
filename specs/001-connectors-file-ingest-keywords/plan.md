@@ -94,6 +94,9 @@ RagDataTools.Benchmarks/
 - **Semantic boundaries**. Boundaries are sentence or paragraph (configurable via existing indexes extractors); overlap 0–1 configurable; extractor order documented below.
 - **Extractor order** (deterministic, documented): CodeBlock → UnusualBlock → HtmlTable → InfoBlock → ImageLink → ExternalLink → Heading (current chain in ComplexDataChunkerExtensions). Document in code comments and, if needed, in docs so overlapping patterns have defined behaviour.
 - **Baseline and regression**. No regression vs existing BenchmarkDotNet baseline (ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, BuildRelationsGraph); baseline in specs/PERFORMANCE.md. New chunking API (after refactor) must preserve or improve these benchmarks.
+- **Unicode and scripts**. Chunking must be Unicode-aware and deterministic for non-Latin scripts and combining characters; any normalization rules must be documented. Special-character handling is part of the edge-case test scope.
+- **Best-practice comparison**. Where practical, benchmark comparisons should use the same workloads against comparable chunking libraries (for example, LangChain text splitters or LlamaIndex node parsers) and record the comparison method in specs/PERFORMANCE.md.
+- **Chunk quality**. For v1, chunk quality is defined operationally by deterministic semantic-boundary preservation, stable overlap behavior, and no regression on the documented workloads; broader subjective criteria such as "self-contained" chunks are out of scope unless later added to the spec.
 
 ## Refactoring: from static extensions to testable design
 

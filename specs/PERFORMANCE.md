@@ -168,6 +168,12 @@ They also cover different content types:
 3. `nltk`
 4. `spaCy`
 
+### Comparison requirement
+
+The comparison section is part of the documented benchmark baseline, not an optional narrative note.
+When we compare chunking performance against other libraries, the workload MUST be the same input and chunking configuration where possible, so the result is a like-for-like comparison rather than a general feature comparison.
+Where practical, the comparison should include named chunking libraries used in RAG workflows, such as LangChain text splitters or LlamaIndex node parsers.
+
 ### Why .NET can be faster
 
 - compiled machine code

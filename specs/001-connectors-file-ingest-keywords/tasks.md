@@ -26,12 +26,12 @@
 
 **Purpose**: Project and solution structure, baseline documentation, and package references.
 
-- [ ] T001 Ensure solution contains RagDataTools.Connectors.Qdrant and create RagDataTools.Ingest project per plan.md (repo root solution)
-- [ ] T002 Add or update specs/PERFORMANCE.md with baseline reference for ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, BuildRelationsGraph (FR-010)
-- [ ] T003 [P] Add Qdrant client NuGet package to RagDataTools.Connectors.Qdrant
-- [ ] T004 [P] Add PDF conversion package (e.g. PdfPig) per research.md to RagDataTools.Ingest or conversion project
-- [ ] T005 [P] Add Word conversion package (e.g. Open XML SDK / DocX) per research.md
-- [ ] T006 [P] Add HTML parsing and Markdown conversion packages (e.g. HtmlAgilityPack or AngleSharp) per research.md
+- [x] T001 Ensure solution contains RagDataTools.Connectors.Qdrant and create RagDataTools.Ingest project per plan.md (repo root solution)
+- [x] T002 Add or update specs/PERFORMANCE.md with baseline reference for ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, BuildRelationsGraph (FR-010)
+- [x] T003 [P] Add Qdrant client NuGet package to RagDataTools.Connectors.Qdrant
+- [x] T004 [P] Add PDF conversion package (e.g. PdfPig) per research.md to RagDataTools.Ingest or conversion project
+- [x] T005 [P] Add Word conversion package (e.g. Open XML SDK / DocX) per research.md
+- [x] T006 [P] Add HTML parsing and Markdown conversion packages (e.g. HtmlAgilityPack or AngleSharp) per research.md
 
 ---
 
@@ -41,9 +41,9 @@
 
 **⚠️ CRITICAL**: No user story implementation can start until this phase is complete.
 
-- [ ] T007 Extend ChunkModel usage for page_number and keywords in Data per data-model.md in RagDataTools.Chunkers/Models/ChunkModel.cs (or document keys in XML/docs)
-- [ ] T008 Extend IChunksRepository (or add overload) with scope id and replace-by-scope in RagDataTools.Connectors/Interfaces/
-- [ ] T009 [P] Add FakeTextBuilder and expected-chunk helpers in RagDataTools.UnitTests/TestData/ per research.md §3 and plan TestData
+- [x] T007 Extend ChunkModel usage for page_number and keywords in Data per data-model.md in RagDataTools.Chunkers/Models/ChunkModel.cs (or document keys in XML/docs)
+- [x] T008 Extend IChunksRepository (or add overload) with scope id and replace-by-scope in RagDataTools.Connectors/Interfaces/
+- [x] T009 [P] Add FakeTextBuilder and expected-chunk helpers in RagDataTools.UnitTests/TestData/ per research.md §3 and plan TestData
 
 **Checkpoint**: Foundation ready — US1, US2, US3 implementation can begin.
 
@@ -57,12 +57,12 @@
 
 ### Implementation for User Story 1
 
-- [ ] T010 [P] [US1] Implement scope id and replace-by-scope in RagDataTools.Connectors.Neo4j/Repositories/Neo4jChunksRepository.cs; fix ChunkModel→Cypher mapping (parameterize, no string interpolation of labels)
-- [ ] T011 [P] [US1] Implement IChunksRepository in RagDataTools.Connectors.Qdrant/Repositories/ with scope id, order and heading metadata in payload
-- [ ] T012 [US1] Add SaveAsync(scopeId, chunks) extension or facade in RagDataTools.Connectors/ calling repository (contract persist-api.md)
-- [ ] T013 [US1] Register connectors and scope-based persist in RagDataTools.Di (if applicable)
-- [ ] T014 [P] [US1] Edge-case test: connector unavailable returns clear failure in RagDataTools.UnitTests/Connectors/
-- [ ] T015 [US1] Edge-case test: save chunks with order and heading hierarchy then verify in store (in-memory or test double) in RagDataTools.UnitTests/Connectors/
+- [x] T010 [P] [US1] Implement scope id and replace-by-scope in RagDataTools.Connectors.Neo4j/Repositories/Neo4jChunksRepository.cs; fix ChunkModel→Cypher mapping (parameterize, no string interpolation of labels)
+- [x] T011 [P] [US1] Implement IChunksRepository in RagDataTools.Connectors.Qdrant/Repositories/ with scope id, order and heading metadata in payload
+- [x] T012 [US1] Add SaveAsync(scopeId, chunks) extension or facade in RagDataTools.Connectors/ calling repository (contract persist-api.md)
+- [x] T013 [US1] Register connectors and scope-based persist in RagDataTools.Di (if applicable)
+- [x] T014 [P] [US1] Edge-case test: connector unavailable returns clear failure in RagDataTools.UnitTests/Connectors/
+- [x] T015 [US1] Edge-case test: save chunks with order and heading hierarchy then verify in store (in-memory or test double) in RagDataTools.UnitTests/Connectors/
 
 **Checkpoint**: User Story 1 independently testable — persist with scope id works; failures are clear.
 

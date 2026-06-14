@@ -26,6 +26,7 @@
 - **Token-based sizing**: Token-based chunk sizing (e.g. for alignment with embedding model limits) MAY be supported as an **optional or alternative mode**. Where supported, the library SHOULD allow comparison of results and performance between word-based and token-based chunking (e.g. same document, same target size in words vs tokens) so that callers can evaluate trade-offs. Chunking MUST NOT be only token-based; word-based sizing remains the primary and default.
 - **Semantic boundaries**: Chunk boundaries MUST respect semantic units (e.g. sentence or paragraph, configurable). Chunks MUST NOT split mid-sentence or mid-paragraph unless no boundary is available (e.g. degenerate input). Overlap between consecutive chunks (0–1, configurable) is supported; its effect on boundary placement MUST be documented.
 - **Extractor order**: When multiple structured elements (code blocks, tables, headings, etc.) are extracted from Markdown, the order or priority of extractors MUST be documented and stable so that overlapping patterns have deterministic behavior.
+- **Encoding and scripts**: Chunking MUST handle Unicode text deterministically, including non-Latin scripts and combining characters. The implementation SHOULD avoid corruption by using Unicode-aware word and sentence boundaries, and any normalization applied before chunking MUST be documented.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -138,3 +139,9 @@ As a developer, I can run keyword extraction on chunks (using a configurable lan
 - **SC-005**: Test suite is limited to edge-case scenarios and is easier to maintain (e.g. fewer tests than a full matrix, with clear coverage of boundaries and failure modes).
 - **SC-006**: Chunking benchmarks show no regression against the baseline documented in project docs (e.g. specs/PERFORMANCE.md); same or better results for the existing benchmarked operations.
 - **SC-007**: New public APIs are documented with XML comments and example-oriented API references.
+
+## Benchmarking and comparison guidance
+
+- The baseline and comparison workloads MUST be documented in `specs/PERFORMANCE.md`.
+- Comparison workloads SHOULD include the same input set when evaluating this library against comparable chunking libraries, including named Python libraries such as LangChain text splitters or LlamaIndex node parsers where practical.
+- Comparison results SHOULD be recorded on equivalent workloads rather than mismatched inputs so that throughput, memory, and output shape remain comparable across implementations.

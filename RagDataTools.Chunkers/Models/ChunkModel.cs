@@ -29,6 +29,7 @@ public record ChunkModel
     /// Для ImageLink/AdditionalLink: url, alterText.
     /// Для TextChunk: content.
     /// Для Table/InfoBlock: content.
+    /// Для ingest/persistence: page_number, keywords, scope_id, order, heading_level.
     /// </summary>
     public required Dictionary<string, object> Data { get; set; }
 
