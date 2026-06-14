@@ -15,7 +15,7 @@
 **/.specify/scripts/powershell
 
 # AI IDEs
-**/.cursor
+**/.cursor/commands/speckit.*.*
 
 # Bencharks artifacts
 **/BenchmarkDotNet.Artifacts
