@@ -7,14 +7,14 @@
 
 **Note**: This checklist validates the quality of the *requirements* (completeness, clarity, measurability), not the implementation.
 
-**Applied**: 2025-03-15 — plan.md Chunking strategy and Checklist application; baseline docs/PERFORMANCE.md; refactor preserves no-regression.
+**Applied**: 2025-03-15 — plan.md Chunking strategy and Checklist application; baseline specs/PERFORMANCE.md; refactor preserves no-regression.
 
 ---
 
 ## Requirement Completeness
 
 - [x] CHK001 Are performance requirements defined for all critical operations that affect chunking (e.g. ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, conversion to Markdown)? [Completeness, Spec §FR-010]
-- [x] CHK002 Is the “existing BenchmarkDotNet baseline” explicitly referenced or linked (e.g. docs/PERFORMANCE.md, benchmark names) so that “no regression” is verifiable? [Completeness, Spec §FR-010, §Clarifications]
+- [x] CHK002 Is the “existing BenchmarkDotNet baseline” explicitly referenced or linked (e.g. specs/PERFORMANCE.md, benchmark names) so that “no regression” is verifiable? [Completeness, Spec §FR-010, §Clarifications]
 - [x] CHK003 Are performance expectations for file conversion (PDF/Word/HTML → Markdown) specified, or is it explicitly scoped as best-effort with no formal target? [Gap, Spec §FR-003]
 - [x] CHK004 Are connector write (persistence) performance requirements or expectations documented for vector/graph stores? [Gap, Spec §FR-001, §FR-002]
 

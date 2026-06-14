@@ -12,7 +12,7 @@ Accept one document (PDF, Word, or HTML); validate format and size; convert to M
 - **Input**: One of: file path (string), or stream/bytes + format (Pdf | Word | Html). Optional: chunking options (e.g. chunkWordsCount, semanticsType, overlapPercentage) to pass to existing pipeline.
 - **Output**: `ChunkModel[]` (or equivalent) with optional `page_number` in each chunk’s Data when applicable. Empty array when document yields zero chunks (success).
 - **Errors**: Clear exception or result type when: unsupported format, size exceeds documented max, malformed content, I/O failure. No partial result on malformed.
-- **Documented limits**: Max size (or page cap) per format must be documented (e.g. in XML docs or docs/); behavior when exceeded is defined (e.g. throw or return error).
+- **Documented limits**: Max size (or page cap) per format must be documented (e.g. in XML docs or specs/); behavior when exceeded is defined (e.g. throw or return error).
 
 ## Dependencies
 

@@ -70,6 +70,6 @@ Use the test data building layer: fake input texts and expected output chunks. S
 
 ## Performance
 
-- Chunking: no regression vs baseline (docs/PERFORMANCE.md).
+- Chunking: no regression vs baseline (specs/PERFORMANCE.md).
 - New hot paths (conversion, connector write) have benchmarks where applicable.
 - Documented max size per format; enforce before conversion to avoid unbounded memory.

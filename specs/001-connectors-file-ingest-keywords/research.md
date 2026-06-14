@@ -52,7 +52,7 @@
 
 ## 4. Performance and C# patterns (no removal of existing logic)
 
-**Decision**: Preserve all existing Chunkers and Connectors code paths. New code follows: extension methods for new ingest/persist APIs; async where I/O (connectors, keyword extraction); `Span<T>`/`ReadOnlySpan<T>` and minimal allocations in hot paths where conversion produces text; reuse existing `ExtractSemanticChunksDeeply` and `BuildRelationsGraph` without duplicating chunking logic. BenchmarkDotNet for new hot paths (e.g. conversion + chunking); baseline remains existing Chunkers benchmarks; document in docs/PERFORMANCE.md.
+**Decision**: Preserve all existing Chunkers and Connectors code paths. New code follows: extension methods for new ingest/persist APIs; async where I/O (connectors, keyword extraction); `Span<T>`/`ReadOnlySpan<T>` and minimal allocations in hot paths where conversion produces text; reuse existing `ExtractSemanticChunksDeeply` and `BuildRelationsGraph` without duplicating chunking logic. BenchmarkDotNet for new hot paths (e.g. conversion + chunking); baseline remains existing Chunkers benchmarks; document in specs/PERFORMANCE.md.
 
 **Rationale**: User requirement: “performance best practices C# patterns and not to remove existing logic”; constitution: no regression vs baseline; benchmarks for hot paths.
 

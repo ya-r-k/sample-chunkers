@@ -5,7 +5,7 @@
 
 ## Summary
 
-Implement connectors that persist formed chunks to vector/graph stores (extend existing Neo4j; implement Qdrant); add document ingest from PDF, Word, and HTML with conversion to Markdown and chunking (preserving page numbers for PDF/Word); add keyword extraction from chunks via a configurable backend with configurable timeout. All changes preserve existing Chunkers logic and extension-method API. Single-document/single-scope per call; strict fail on malformed input; no retry in library. Include test data building (fake input texts and expected output chunks) and benchmarks for new hot paths; document baseline in docs/PERFORMANCE.md.
+Implement connectors that persist formed chunks to vector/graph stores (extend existing Neo4j; implement Qdrant); add document ingest from PDF, Word, and HTML with conversion to Markdown and chunking (preserving page numbers for PDF/Word); add keyword extraction from chunks via a configurable backend with configurable timeout. All changes preserve existing Chunkers logic and extension-method API. Single-document/single-scope per call; strict fail on malformed input; no retry in library. Include test data building (fake input texts and expected output chunks) and benchmarks for new hot paths; document baseline in specs/PERFORMANCE.md.
 
 ## Technical Context
 
@@ -15,9 +15,10 @@ Implement connectors that persist formed chunks to vector/graph stores (extend e
 **Testing**: NUnit 4, FluentAssertions, coverlet; edge-case-focused tests; test data: built-in fake texts and expected chunks for reproducible assertions  
 **Target Platform**: .NET 10.0 (cross-platform class library)  
 **Project Type**: Class library (RAG data tools); no web API  
-**Performance Goals**: No regression vs existing BenchmarkDotNet baseline (docs/PERFORMANCE.md); new conversion/connector paths benchmarked where hot; avoid unnecessary allocations and repeated regex work. Per constitution IV, docs/PERFORMANCE.md MUST address comparison with comparable libraries (including Python analogues)—e.g. document baseline workload for future comparison or state comparison methodology/out-of-scope for v1.  
+**Performance Goals**: No regression vs existing BenchmarkDotNet baseline (specs/PERFORMANCE.md); new conversion/connector paths benchmarked where hot; avoid unnecessary allocations and repeated regex work. Per constitution IV, specs/PERFORMANCE.md MUST address comparison with comparable libraries (including Python analogues)—e.g. document baseline workload for future comparison or state comparison methodology/out-of-scope for v1.
 **Constraints**: Single document/scope per call; no retry in library; strict fail on malformed input; configurable timeout for keyword extraction; documented max input size per format  
 **Scale/Scope**: One call = one document or one scope; batch out of scope
+**Documentation**: New public APIs introduced by this feature will have XML documentation comments and short example coverage in the API docs/contracts.
 
 ## Constitution Check
 
@@ -27,8 +28,8 @@ Implement connectors that persist formed chunks to vector/graph stores (extend e
 |-----------|--------|--------|
 | I. Class library for chunking | Pass | New code is library-only; no HTTP/host; existing Chunkers unchanged. |
 | II. Regex-based chunk identification | Pass | Existing chunking stays regex/pattern-based; conversion to Markdown feeds into same pipeline. |
-| III. Tests and benchmarks | Pass | Unit tests (edge-case-focused) and BenchmarkDotNet; test data building (fake texts, expected chunks); baseline in docs/PERFORMANCE.md. |
-| IV. Performance over peers | Pass | No regression vs baseline; new hot paths benchmarked; test data supports reproducible perf tests. docs/PERFORMANCE.md MUST document baseline and address comparison with Python analogues (see tasks.md T037). |
+| III. Tests and benchmarks | Pass | Unit tests (edge-case-focused) and BenchmarkDotNet; test data building (fake texts, expected chunks); baseline in specs/PERFORMANCE.md; XML-doc task tracked in T038. |
+| IV. Performance over peers | Pass | No regression vs baseline; new hot paths benchmarked; test data supports reproducible perf tests. specs/PERFORMANCE.md MUST document baseline and address comparison with Python analogues (see tasks.md T037). |
 | V. Layered design | Pass | Chunkers = domain/API; Connectors = infrastructure; new ingest/conversion in new or existing projects without removing existing logic. |
 
 ## Project Structure
@@ -92,7 +93,7 @@ RagDataTools.Benchmarks/
 - **Primary: word count**. Chunk size is controlled by **maximum words per text chunk** (existing behaviour). Token-based sizing is optional; when supported, enable **comparison** of word-based vs token-based chunking (same document, comparable target size) for evaluation and optional embedding alignment. See spec § Chunking strategy.
 - **Semantic boundaries**. Boundaries are sentence or paragraph (configurable via existing indexes extractors); overlap 0–1 configurable; extractor order documented below.
 - **Extractor order** (deterministic, documented): CodeBlock → UnusualBlock → HtmlTable → InfoBlock → ImageLink → ExternalLink → Heading (current chain in ComplexDataChunkerExtensions). Document in code comments and, if needed, in docs so overlapping patterns have defined behaviour.
-- **Baseline and regression**. No regression vs existing BenchmarkDotNet baseline (ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, BuildRelationsGraph); baseline in docs/PERFORMANCE.md. New chunking API (after refactor) must preserve or improve these benchmarks.
+- **Baseline and regression**. No regression vs existing BenchmarkDotNet baseline (ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, BuildRelationsGraph); baseline in specs/PERFORMANCE.md. New chunking API (after refactor) must preserve or improve these benchmarks.
 
 ## Refactoring: from static extensions to testable design
 
@@ -118,8 +119,8 @@ Checklists under `specs/001-connectors-file-ingest-keywords/checklists/` were ap
 |-----------|---------------------|
 | **requirements.md** | Already fully satisfied; no change. |
 | **chunking-logic.md** | Spec: word-based primary, token optional/comparison; overlap and semantic boundaries documented; extractor order documented in plan. Assumption: chunking word-based documented. Refactoring: plan includes move away from static extensions without breaking API or perf. |
-| **performance.md** | FR-010, SC-006, baseline in docs/PERFORMANCE.md; no-regression scope = ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, BuildRelationsGraph. Plan and refactor section align. |
-| **benchmarks-chunking.md** | Baseline and workload scope tied to existing benchmarked operations; plan references docs/PERFORMANCE.md. |
+| **performance.md** | FR-010, SC-006, baseline in specs/PERFORMANCE.md; no-regression scope = ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, BuildRelationsGraph. Plan and refactor section align. |
+| **benchmarks-chunking.md** | Baseline and workload scope tied to existing benchmarked operations; plan references specs/PERFORMANCE.md. |
 | **testing-chunks.md** | Edge-case test focus (FR-009); test data (fake texts, expected chunks) in plan; acceptance scenarios in spec. |
 | **chunk-graph-keywords.md** | FR-002 (order and heading hierarchy); Key Entities and data-model define chunk and relationships. |
 | **throughput-scale.md** | N documents = N calls (FR-013); per-document time from baseline; no batch guarantee. Spec and plan leave throughput/latency as “no regression” + baseline; explicit throughput targets deferred. |

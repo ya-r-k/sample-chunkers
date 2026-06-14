@@ -18,7 +18,7 @@
 - Repository root: `RagDataTools.*` projects (Chunkers, Connectors, Connectors.Neo4j, Connectors.Qdrant, Di, UnitTests, Benchmarks)
 - New: RagDataTools.Ingest, optional RagDataTools.KeywordExtraction
 - Tests: RagDataTools.UnitTests/Connectors/, Ingest/, KeywordExtraction/, TestData/
-- Docs: docs/PERFORMANCE.md at repo root
+- Docs: specs/PERFORMANCE.md at repo root
 
 ---
 
@@ -27,7 +27,7 @@
 **Purpose**: Project and solution structure, baseline documentation, and package references.
 
 - [ ] T001 Ensure solution contains RagDataTools.Connectors.Qdrant and create RagDataTools.Ingest project per plan.md (repo root solution)
-- [ ] T002 Add or update docs/PERFORMANCE.md with baseline reference for ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, BuildRelationsGraph (FR-010)
+- [ ] T002 Add or update specs/PERFORMANCE.md with baseline reference for ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, BuildRelationsGraph (FR-010)
 - [ ] T003 [P] Add Qdrant client NuGet package to RagDataTools.Connectors.Qdrant
 - [ ] T004 [P] Add PDF conversion package (e.g. PdfPig) per research.md to RagDataTools.Ingest or conversion project
 - [ ] T005 [P] Add Word conversion package (e.g. Open XML SDK / DocX) per research.md
@@ -115,11 +115,12 @@
 
 **Purpose**: Baseline doc, benchmarks for new hot paths, extractor order documentation, quickstart validation.
 
-- [ ] T033 Ensure docs/PERFORMANCE.md documents baseline and is referenced by spec (FR-010, SC-006)
+- [ ] T033 Ensure specs/PERFORMANCE.md documents baseline and is referenced by spec (FR-010, SC-006)
 - [ ] T034 [P] Add IngestBenchmarks.cs for conversion + chunking hot path in RagDataTools.Benchmarks/ (FR-010)
 - [ ] T035 Document extractor order (CodeBlock → UnusualBlock → HtmlTable → InfoBlock → ImageLink → ExternalLink → Heading) in RagDataTools.Chunkers code or docs per plan
 - [ ] T036 Run quickstart.md validation (all code paths runnable)
-- [ ] T037 Document in docs/PERFORMANCE.md how baseline satisfies constitution IV (comparison with comparable libraries including Python analogues): e.g. describe benchmark workload so it is comparable to Python chunking libs, or state "Python comparison: out of scope for v1; baseline documented for future comparison"
+- [ ] T037 Document in specs/PERFORMANCE.md how baseline satisfies constitution IV (comparison with comparable libraries including Python analogues): e.g. describe benchmark workload so it is comparable to Python chunking libs, or state "Python comparison: out of scope for v1; baseline documented for future comparison"
+- [ ] T038 Add XML documentation comments to all new public APIs introduced by US1-US3 in RagDataTools.Connectors/, RagDataTools.Ingest/, and RagDataTools.KeywordExtraction/ (public methods, interfaces, and key models)
 
 ---
 

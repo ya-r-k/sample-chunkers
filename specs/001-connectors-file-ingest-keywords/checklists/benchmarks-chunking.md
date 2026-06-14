@@ -7,7 +7,7 @@
 
 **Note**: This checklist validates the quality of the *requirements* for benchmarking, not the implementation of benchmarks.
 
-**Applied**: 2025-03-15 — plan.md references docs/PERFORMANCE.md, enumerates ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, BuildRelationsGraph; chunking strategy and refactor section added.
+**Applied**: 2025-03-15 — plan.md references specs/PERFORMANCE.md, enumerates ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply, BuildRelationsGraph; chunking strategy and refactor section added.
 
 ---
 
@@ -48,7 +48,7 @@
 
 ## Dependencies & Assumptions
 
-- [x] CHK018 Is it assumed that the **baseline** (docs/PERFORMANCE.md) includes both text and unstructured (Markdown/complex) chunking workloads, or only plain text? [Assumption, Spec §FR-010]
+- [x] CHK018 Is it assumed that the **baseline** (specs/PERFORMANCE.md) includes both text and unstructured (Markdown/complex) chunking workloads, or only plain text? [Assumption, Spec §FR-010]
 - [x] CHK019 Are dependencies on **BenchmarkDotNet** and **documented baseline location** (project docs) stated so that benchmark requirements are implementable? [Dependency, Spec §FR-010, constitution]
 
 ## Ambiguities & Conflicts

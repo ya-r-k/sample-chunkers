@@ -15,7 +15,7 @@
 
 - [x] CHK001 Are requirements or documented expectations for **processing time per document** (chunking only, or ingest + chunking) stated so that callers can reason about total time for N documents? [Completeness, Gap, Spec §FR-010]
 - [x] CHK002 Is the scenario “caller sends the library 1000 documents (1000 separate calls per FR-013)” explicitly in scope, and are requirements for **total processing time or throughput** (e.g. documents per second, or upper bound for 1000 docs) specified or intentionally deferred? [Completeness, Gap, Spec §FR-013]
-- [x] CHK003 Are requirements for **chunking process performance** (single-call latency or throughput) tied to the documented baseline (e.g. docs/PERFORMANCE.md) so that “how long one document takes” is derivable? [Completeness, Spec §FR-010, §SC-006]
+- [x] CHK003 Are requirements for **chunking process performance** (single-call latency or throughput) tied to the documented baseline (e.g. specs/PERFORMANCE.md) so that “how long one document takes” is derivable? [Completeness, Spec §FR-010, §SC-006]
 - [x] CHK004 When processing many documents in sequence (e.g. 1000), are requirements for **degradation** (e.g. constant time per doc vs slowdown) or **resource limits** (memory, concurrency) specified or marked out of scope? [Completeness, Gap]
 
 ## Requirement Clarity

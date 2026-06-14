@@ -17,7 +17,7 @@
 - Q: When a PDF/Word/HTML input is malformed, should the library return partial result + warning or always fail the whole operation? → A: Strict fail — on any malformed input the library MUST fail the operation and return a clear error (no partial result); caller retries or handles.
 - Q: Is processing or persisting multiple documents in one call in scope? → A: Single-document only — one library call accepts one document (or one set of chunks for one scope); multiple documents require multiple calls; each call has one caller-provided scope id.
 - Q: On transient connector or keyword-extraction failure, should the library retry or only report the error? → A: No retry; caller responsibility — library does not retry; on any failure it returns a clear error once; the caller is responsible for retrying if desired.
-- Q: Where must the benchmark baseline be documented for no-regression acceptance? → A: In project docs — baseline MUST live in project docs (e.g. docs/PERFORMANCE.md); this spec MUST reference that doc; acceptance is no regression vs that doc.
+- Q: Where must the benchmark baseline be documented for no-regression acceptance? → A: In project docs — baseline MUST live in project docs (e.g. specs/PERFORMANCE.md); this spec MUST reference that doc; acceptance is no regression vs that doc.
 - Q: When ingest succeeds but the document yields zero chunks (e.g. no extractable text), return empty list or error? → A: Success with empty list — ingest succeeds; library returns an empty chunk list; caller may handle zero chunks as they see fit.
 
 ### Chunking strategy (2025-03-15)
@@ -105,10 +105,11 @@ As a developer, I can run keyword extraction on chunks (using a configurable lan
 
 ### Performance
 
-- **FR-010**: Chunking performance MUST NOT regress versus the existing BenchmarkDotNet baseline (e.g. ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply). The baseline MUST be documented in project docs (e.g. docs/PERFORMANCE.md); this spec references that document for acceptance. New features (e.g. file conversion, connector writes) SHOULD have benchmarks where they affect hot paths.
+- **FR-010**: Chunking performance MUST NOT regress versus the existing BenchmarkDotNet baseline (e.g. ExtractSemanticChunksFromText, ExtractSemanticChunksDeeply). The baseline MUST be documented in project docs (e.g. specs/PERFORMANCE.md); this spec references that document for acceptance. New features (e.g. file conversion, connector writes) SHOULD have benchmarks where they affect hot paths.
 - **FR-011**: A maximum input size (or equivalent, e.g. page cap) MUST be documented per supported format (PDF, Word, HTML). Input that exceeds the documented maximum for that format MUST be rejected or handled with a defined error (no silent truncation).
 - **FR-012**: When persisting chunks for a document/scope that already has chunks in the store, the default behavior MUST be replace-by-scope: existing chunks for that document/scope are replaced (upsert by document/scope id); no duplicate chunks for the same scope without explicit caller opt-in. Scope identity is determined by a caller-provided scope (or document) identifier at save time; the library does not derive it.
 - **FR-013**: One library call MUST accept at most one document (for ingest) or one set of chunks under one scope id (for persist). Multiple documents or scopes require multiple calls; batch processing is out of scope for this feature.
+- **FR-014**: All new public APIs introduced by this feature MUST include XML documentation comments and brief usage examples in the relevant API docs/contracts.
 
 ### Key Entities
 
@@ -135,4 +136,5 @@ As a developer, I can run keyword extraction on chunks (using a configurable lan
 - **SC-003**: A developer can obtain keywords for chunks via a configured extraction backend and use those keywords when persisting chunks (e.g. in metadata).
 - **SC-004**: Invalid or unsupported input results in a clear, handleable error in 100% of specified edge cases (no unhandled exceptions or silent data loss).
 - **SC-005**: Test suite is limited to edge-case scenarios and is easier to maintain (e.g. fewer tests than a full matrix, with clear coverage of boundaries and failure modes).
-- **SC-006**: Chunking benchmarks show no regression against the baseline documented in project docs (e.g. docs/PERFORMANCE.md); same or better results for the existing benchmarked operations.
+- **SC-006**: Chunking benchmarks show no regression against the baseline documented in project docs (e.g. specs/PERFORMANCE.md); same or better results for the existing benchmarked operations.
+- **SC-007**: New public APIs are documented with XML comments and example-oriented API references.
