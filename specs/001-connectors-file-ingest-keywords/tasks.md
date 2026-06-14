@@ -76,17 +76,17 @@
 
 ### Implementation for User Story 2
 
-- [ ] T016 Create RagDataTools.Ingest project with references to RagDataTools.Chunkers and conversion packages (if not exists)
-- [ ] T017 [P] [US2] Define IDocumentToMarkdownConverter in RagDataTools.Ingest/Conversion/ and implement PDF converter with page boundaries in RagDataTools.Ingest/Conversion/
-- [ ] T018 [P] [US2] Implement Word-to-Markdown converter with page boundaries in RagDataTools.Ingest/Conversion/
-- [ ] T019 [P] [US2] Implement HTML-to-Markdown converter in RagDataTools.Ingest/Conversion/
-- [ ] T020 [US2] Implement document size validation and documented max per format (FR-011) in RagDataTools.Ingest
-- [ ] T021 [US2] Implement ingest pipeline: validate → convert → call ExtractSemanticChunksDeeply → attach page_number to chunks in RagDataTools.Ingest/
-- [ ] T022 [US2] Add IngestAsync(path or stream, format) API in RagDataTools.Ingest/Extensions/ or service (contract ingest-api.md)
-- [ ] T023 [US2] Document max input size per format in XML or docs (FR-011)
-- [ ] T024 [P] [US2] Edge-case test: valid document yielding zero chunks returns empty list in RagDataTools.UnitTests/Ingest/
-- [ ] T025 [P] [US2] Edge-case test: malformed or unsupported file returns clear error (no partial result) in RagDataTools.UnitTests/Ingest/
-- [ ] T026 [US2] Edge-case test: PDF/Word chunks carry page_number in metadata in RagDataTools.UnitTests/Ingest/
+- [x] T016 Create RagDataTools.Ingest project with references to RagDataTools.Chunkers and conversion packages (if not exists)
+- [x] T017 [P] [US2] Define IDocumentToMarkdownConverter in RagDataTools.Ingest/Conversion/ and implement PDF converter with page boundaries in RagDataTools.Ingest/Conversion/
+- [x] T018 [P] [US2] Implement Word-to-Markdown converter with page boundaries in RagDataTools.Ingest/Conversion/
+- [x] T019 [P] [US2] Implement HTML-to-Markdown converter in RagDataTools.Ingest/Conversion/
+- [x] T020 [US2] Implement document size validation and documented max per format (FR-011) in RagDataTools.Ingest
+- [x] T021 [US2] Implement ingest pipeline: validate → convert → call ExtractSemanticChunksDeeply → attach page_number to chunks in RagDataTools.Ingest/
+- [x] T022 [US2] Add IngestAsync(path or stream, format) API in RagDataTools.Ingest/Extensions/ or service (contract ingest-api.md)
+- [x] T023 [US2] Document max input size per format in XML or docs (FR-011)
+- [x] T024 [P] [US2] Edge-case test: valid document yielding zero chunks returns empty list in RagDataTools.UnitTests/Ingest/
+- [x] T025 [P] [US2] Edge-case test: malformed or unsupported file returns clear error (no partial result) in RagDataTools.UnitTests/Ingest/
+- [x] T026 [US2] Edge-case test: PDF/Word chunks carry page_number in metadata in RagDataTools.UnitTests/Ingest/
 
 **Checkpoint**: User Story 2 independently testable — ingest → chunks with page numbers; edge cases covered.
 

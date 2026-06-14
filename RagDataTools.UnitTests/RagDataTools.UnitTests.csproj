@@ -28,6 +28,7 @@
     <ProjectReference Include="..\RagDataTools.Connectors\RagDataTools.Connectors.csproj" />
     <ProjectReference Include="..\RagDataTools.Connectors.Neo4j\RagDataTools.Connectors.Neo4j.csproj" />
     <ProjectReference Include="..\RagDataTools.Connectors.Qdrant\RagDataTools.Connectors.Qdrant.csproj" />
+    <ProjectReference Include="..\RagDataTools.Ingest\RagDataTools.Ingest.csproj" />
   </ItemGroup>
 
   <ItemGroup>
